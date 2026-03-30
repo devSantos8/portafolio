@@ -1,22 +1,87 @@
+---
+import Header from '../components/Header.astro';
+import '@fontsource-variable/onest';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+
 <!doctype html>
-<html lang="en">
+<html lang="es" class="dark">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="description" content="Portafolio de Joain Monroy - Desarrollador Full Stack y Estudiante de Ingeniería en Informática" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
 	</head>
+
+
 	<body>
+		<Header />
 		<slot />
 	</body>
 </html>
 
-<style>
-	html,
+<style is:global>
+	:root {
+		color-scheme: light dark;
+	}
+
+	:root.dark {
+		--bg-color: #050505;
+		--text-color: #ffffff;
+		--gradient: radial-gradient(ellipse 80% 80% at 50% -20%, rgba(120,119,198,0.3), rgba(255,255,255,0));
+	}
+
+	:root:not(.dark) {
+		--bg-color: #ffffff;
+		--text-color: #000000;
+		--gradient: radial-gradient(ellipse 80% 80% at 50% -20%, rgba(120,119,198,0.1), rgba(255,255,255,0));
+	}
+
+	html {
+		font-family: "Onest Variable", system-ui, sans-serif;
+		scroll-behavior: smooth;
+		overflow-x: hidden; /* Prevent horizontal scrolling */
+	}
+
 	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
+		background: var(--bg-color);
+		background-image: var(--gradient);
+		color: var(--text-color);
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		overflow-x: hidden; /* Prevent horizontal scrolling */
+	}
+
+	h1, h2, h3, p, span, a {
+		color: var(--text-color);
+	}
+
+	.dark .social-pill {
+		background: rgba(255, 255, 255, 0.05);
+		color: #fff;
+	}
+
+	:not(.dark) .social-pill {
+		background: rgba(0, 0, 0, 0.05);
+		color: #000;
+	}
+
+	header {
+		transition: all 0.3s ease;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			scroll-behavior: auto;
+		}
 	}
 </style>
