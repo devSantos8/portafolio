@@ -1,4 +1,5 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
 // @ts-ignore
 import '@fontsource-variable/inter';
 import '../styles/global.css';
@@ -21,6 +22,7 @@ const { title, showHeader = true } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<ViewTransitions />
 	</head>
 	<body class="bg-[#FAFAFA] dark:bg-[#0A0A0A] selection:bg-red-500/20 selection:text-red-900 dark:selection:text-red-100 font-['Inter_Variable',sans-serif] antialiased text-gray-900 dark:text-gray-100 transition-colors duration-500">
 		<div class="fixed inset-0 z-[-2] bg-[#FAFAFA] dark:bg-[#0A0A0A] transition-colors duration-500"></div>
@@ -30,14 +32,20 @@ const { title, showHeader = true } = Astro.props;
 </html>
 
 <script>
-	// Esperar a que el DOM esté listo antes de cargar animaciones
-	document.addEventListener('DOMContentLoaded', async () => {
+	// Función para cargar y ejecutar las animaciones
+	const setupAnimations = async () => {
 		try {
 			const module = await import('../scripts/animations.js');
+			if (module.initAnimations) {
+				module.initAnimations();
+			}
 		} catch (error) {
 			console.error('Error loading animations:', error);
 		}
-	});
+	};
+
+	// Ejecutar en la carga inicial y en cada navegación de astro:transitions
+	document.addEventListener('astro:page-load', setupAnimations);
 </script>
 
 <style is:global>
@@ -124,17 +132,13 @@ const { title, showHeader = true } = Astro.props;
 		transform: scale(1);
 	}
 
-	/* Animación de entrada inicial */
+	/* Animación de entrada inicial - Deshabilitada para GSAP */
+	/*
 	@keyframes fadeUp {
-		from {
-			opacity: 0;
-			transform: translateY(40px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
+		from { opacity: 0; transform: translateY(40px); }
+		to { opacity: 1; transform: translateY(0); }
 	}
+	*/
 
 	@keyframes fadeIn {
 		from { opacity: 0; }
@@ -162,24 +166,8 @@ const { title, showHeader = true } = Astro.props;
 		50% { opacity: 0.25; transform: scale(1.02); }
 	}
 
-	.animate-fade-up {
-		animation: fadeUp 1s ease-out forwards;
-	}
-
-	.animate-fade-up-delay-1 {
-		animation: fadeUp 1s ease-out 0.2s forwards;
-		opacity: 0;
-	}
-
-	.animate-fade-up-delay-2 {
-		animation: fadeUp 1s ease-out 0.4s forwards;
-		opacity: 0;
-	}
-
-	.animate-fade-up-delay-3 {
-		animation: fadeUp 1s ease-out 0.6s forwards;
-		opacity: 0;
-	}
+	/* CSS classes ahora manejadas por GSAP al cargar: 
+	.animate-fade-up, .animate-fade-up-delay-X etc... */
 
 	.animate-float {
 		animation: float 6s ease-in-out infinite;

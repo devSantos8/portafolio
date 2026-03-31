@@ -1,17 +1,21 @@
-// Solo ejecutar en el navegador (cliente)
-if (typeof window !== 'undefined') {
-	Promise.all([
-		import('gsap'),
-		import('gsap/ScrollTrigger'),
-		import('lenis')
-	]).then(([gsapModule, scrollTriggerModule, lenisModule]) => {
-		const gsap = gsapModule.default;
-		const { ScrollTrigger } = scrollTriggerModule;
-		const Lenis = lenisModule.default;
+// Exportamos la función para poder llamarla desde Astro en cada cambio de ruta
+export const initAnimations = () => {
+	if (typeof window !== 'undefined') {
+		Promise.all([
+			import('gsap'),
+			import('gsap/ScrollTrigger'),
+			import('lenis')
+		]).then(([gsapModule, scrollTriggerModule, lenisModule]) => {
+			const gsap = gsapModule.default;
+			const { ScrollTrigger } = scrollTriggerModule;
+			const Lenis = lenisModule.default;
 
-		gsap.registerPlugin(ScrollTrigger);
+			gsap.registerPlugin(ScrollTrigger);
 
-		const forceMotion = true;
+			// Matar triggers anteriores si existen (para evitar duplicados en navegaciones SPA)
+			ScrollTrigger.getAll().forEach(t => t.kill());
+
+			const forceMotion = true;
 		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 		const shouldAnimate = forceMotion || !prefersReducedMotion;
 
@@ -217,6 +221,33 @@ if (typeof window !== 'undefined') {
 		gsap.set('body', { overscrollBehavior: 'none' });
 
 		// ============================================
+		// INITIAL PAGE LOAD TRANSITION
+		// ============================================
+		const pageLoadTl = gsap.timeline();
+		
+		// Ocultar elementos iniciales para la entrada
+		gsap.set('.animate-fade-up, .animate-fade-up-delay-1, .animate-fade-up-delay-2, .animate-fade-up-delay-3', {
+			autoAlpha: 0,
+			y: 60,
+			rotationX: 5,
+			filter: 'blur(8px)',
+			scale: 0.98
+		});
+
+		pageLoadTl
+			.to('.animate-fade-up, .animate-fade-up-delay-1, .animate-fade-up-delay-2, .animate-fade-up-delay-3', {
+				y: 0,
+				rotationX: 0,
+				autoAlpha: 1,
+				filter: 'blur(0px)',
+				scale: 1,
+				duration: 1.2,
+				stagger: 0.15,
+				ease: 'power3.out',
+				clearProps: 'all' // Limpiar para que no interfiera CSS o hover effects después
+			});
+
+		// ============================================
 		// PROJECT CARDS HOVER ANIMATIONS
 		// ============================================
 		const projectCards = document.querySelectorAll('.carousel-item');
@@ -330,4 +361,5 @@ if (typeof window !== 'undefined') {
 			});
 		});
 	});
-}
+	}
+};
