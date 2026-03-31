@@ -48,69 +48,83 @@ const PROJECTS = [
   }
 
   .project-item:hover .project-image {
-    transform: scale(1.02);
+    transform: scale(1.03);
+  }
+
+  .project-card {
+    background: linear-gradient(135deg, rgba(250,250,250,0.8) 0%, rgba(245,245,245,0.4) 100%);
+  }
+
+  :global(.dark) .project-card {
+    background: linear-gradient(135deg, rgba(20,20,20,0.8) 0%, rgba(15,15,15,0.4) 100%);
   }
 </style>
 
-<div class="space-y-28">
+<div class="space-y-8">
   {
     PROJECTS.map((project, index) => (
       <article class="project-item group">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          <div class={`overflow-hidden rounded-2xl ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
-            <img
-              src={project.image}
-              alt={project.title}
-              class="project-image w-full h-[260px] md:h-[340px] object-cover"
-            />
-          </div>
-
-          <div class={`space-y-6 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-            {project.featured && project.badge && (
-              <p class="text-[11px] font-medium uppercase tracking-[0.3em] text-blue-600 dark:text-blue-400">
-                {project.badge}
-              </p>
-            )}
-            
-            <h3 class="text-2xl md:text-3xl font-medium text-black dark:text-white tracking-tight leading-tight">
-              {project.title}
-            </h3>
-            
-            <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-              {project.description}
-            </p>
-
-            <div class="flex flex-wrap gap-3 pt-2">
-              {project.tags.map((tag) => (
-                <span class="text-[11px] font-medium tracking-wide text-gray-400 dark:text-gray-500 px-3 py-1 bg-gray-100 dark:bg-white/5 rounded-full">
-                  {tag}
-                </span>
-              ))}
+        <div class="project-card rounded-3xl border border-gray-200/80 dark:border-white/10 overflow-hidden hover:border-[#DC2626]/30 transition-all duration-500">
+          <div class="grid grid-cols-1 lg:grid-cols-2">
+            <div class={`overflow-hidden ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+              <img
+                src={project.image}
+                alt={project.title}
+                class="project-image w-full h-[260px] md:h-[320px] object-cover"
+              />
             </div>
 
-            <div class="flex gap-8 pt-4">
-              {project.github && (
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener"
-                  class="group/link flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors duration-500"
-                >
-                  <span class="w-6 h-[1px] bg-current opacity-0 group-hover/link:opacity-100 transition-opacity duration-500"></span>
-                  Código
-                </a>
+            <div class={`p-8 md:p-10 flex flex-col justify-center ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+              {project.featured && project.badge && (
+                <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-[#DC2626] mb-4">
+                  {project.badge}
+                </p>
               )}
-              {project.link && (
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener"
-                  class="group/link flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors duration-500"
-                >
-                  <span class="w-6 h-[1px] bg-current opacity-0 group-hover/link:opacity-100 transition-opacity duration-500"></span>
-                  Ver proyecto
-                </a>
-              )}
+              
+              <h3 class="text-2xl md:text-3xl font-medium text-gray-900 dark:text-white tracking-tight leading-tight mb-4">
+                {project.title}
+              </h3>
+              
+              <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                {project.description}
+              </p>
+
+              <div class="flex flex-wrap gap-2 mb-8">
+                {project.tags.map((tag) => (
+                  <span class="text-[10px] font-medium tracking-wide text-gray-500 dark:text-gray-400 px-3 py-1.5 bg-gray-100 dark:bg-white/5 rounded-full border border-gray-200 dark:border-white/10">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <div class="flex gap-6 mt-auto">
+                {project.github && (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener"
+                    class="group/link flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.15em] text-gray-500 dark:text-gray-400 hover:text-[#DC2626] transition-colors duration-300"
+                  >
+                    Código
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                    </svg>
+                  </a>
+                )}
+                {project.link && (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener"
+                    class="group/link flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.15em] text-gray-500 dark:text-gray-400 hover:text-[#DC2626] transition-colors duration-300"
+                  >
+                    Ver proyecto
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                    </svg>
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         </div>

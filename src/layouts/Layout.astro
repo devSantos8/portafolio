@@ -192,6 +192,29 @@ const { title, showHeader = true } = Astro.props;
 	.stagger-children.is-visible > *:nth-child(5) { transition-delay: 0.5s; opacity: 1; transform: translateY(0); }
 	.stagger-children.is-visible > *:nth-child(6) { transition-delay: 0.6s; opacity: 1; transform: translateY(0); }
 
+	/* Skills container animation */
+	.skills-container .skill-category {
+		opacity: 0;
+		transform: translateY(30px);
+		transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+	}
+
+	.skills-container.is-visible .skill-category:nth-child(1) { 
+		transition-delay: 0.1s; 
+		opacity: 1; 
+		transform: translateY(0); 
+	}
+	.skills-container.is-visible .skill-category:nth-child(2) { 
+		transition-delay: 0.25s; 
+		opacity: 1; 
+		transform: translateY(0); 
+	}
+	.skills-container.is-visible .skill-category:nth-child(3) { 
+		transition-delay: 0.4s; 
+		opacity: 1; 
+		transform: translateY(0); 
+	}
+
 	/* Selection */
 	::selection {
 		background: rgba(37, 99, 235, 0.2);
@@ -252,7 +275,27 @@ const { title, showHeader = true } = Astro.props;
 		});
 	}, observerOptions);
 
-	document.querySelectorAll('.fade-in-section, .slide-in-left, .slide-in-right, .scale-in, .stagger-children').forEach(section => {
+	document.querySelectorAll('.fade-in-section, .slide-in-left, .slide-in-right, .scale-in, .stagger-children, .skills-container').forEach(section => {
 		observer.observe(section);
 	});
+</script>
+
+<script type="module">
+	// Lenis smooth scroll - configuración fluida e instantánea
+	import Lenis from '@studio-freight/lenis';
+
+	const lenis = new Lenis({
+		duration: 1.0,
+		easing: (t) => 1 - Math.pow(1 - t, 4),
+		smoothWheel: true,
+		wheelMultiplier: 1,
+		touchMultiplier: 2,
+	});
+
+	function raf(time) {
+		lenis.raf(time);
+		requestAnimationFrame(raf);
+	}
+
+	requestAnimationFrame(raf);
 </script>
