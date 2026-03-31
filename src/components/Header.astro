@@ -1,9 +1,10 @@
 ---
+const navButtonClass = 'nav-link text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100/90 dark:hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DC2626]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-[#0F1115] px-4 py-2.5 rounded-full transition-all duration-300';
 ---
 
 <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 -translate-y-full opacity-0" id="header">
     <div class="flex justify-center w-full px-4 pt-4">
-        <nav class="flex items-center gap-1 px-2 py-2 rounded-full bg-white/80 dark:bg-[#1A1A1F]/80 backdrop-blur-xl border border-gray-200/60 dark:border-white/10 shadow-lg shadow-black/5 dark:shadow-black/20 transition-all duration-500">
+        <nav id="main-nav" class="flex items-center gap-1 px-2 py-2 rounded-full bg-white/80 dark:bg-[#1A1A1F]/80 backdrop-blur-xl border border-gray-200/60 dark:border-white/10 shadow-lg shadow-black/5 dark:shadow-black/20 transition-all duration-500">
             <a href="#top" class="text-sm font-bold tracking-[0.1em] text-gray-900 dark:text-white hover:text-[#DC2626] dark:hover:text-[#DC2626] transition-colors duration-300 px-4 py-2">
                 JMS
             </a>
@@ -11,23 +12,23 @@
             <div class="w-[1px] h-4 bg-gray-200 dark:bg-gray-700 mx-1 hidden md:block"></div>
 
             <div class="hidden md:flex items-center gap-0.5 text-[11px] font-semibold uppercase tracking-[0.15em]">
-                <a href="#Proyectos" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 px-4 py-2 rounded-full transition-all duration-300">
+                <a href="#Proyectos" data-section-link="Proyectos" class={navButtonClass}>
                     Proyectos
                 </a>
-                <a href="#Sobre-mi" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 px-4 py-2 rounded-full transition-all duration-300">
+                <a href="#Sobre-mi" data-section-link="Sobre-mi" class={navButtonClass}>
                     Sobre mí
                 </a>
-                <a href="#Habilidades" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 px-4 py-2 rounded-full transition-all duration-300">
-                    Skills
+                <a href="#Habilidades" data-section-link="Habilidades" class={navButtonClass}>
+                    Habilidades
                 </a>
-                <a href="#Contacto" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 px-4 py-2 rounded-full transition-all duration-300">
+                <a href="#Contacto" data-section-link="Contacto" class={navButtonClass}>
                     Contacto
                 </a>
             </div>
 
             <div class="w-[1px] h-4 bg-gray-200 dark:bg-gray-700 mx-1 hidden md:block"></div>
 
-            <button id="theme-toggle" class="w-9 h-9 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-[#DC2626] dark:hover:text-[#DC2626] hover:bg-gray-100 dark:hover:bg-white/10 rounded-full transition-all duration-300">
+            <button id="theme-toggle" class="w-10 h-10 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-[#DC2626] dark:hover:text-[#DC2626] hover:bg-gray-100/90 dark:hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DC2626]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-[#0F1115] rounded-full transition-all duration-300">
                 <span id="sun-icon" class="hidden dark:block">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="12" cy="12" r="4"/>
@@ -46,6 +47,27 @@
 
 <script>
     const header = document.getElementById('header');
+    const nav = document.getElementById('main-nav');
+    const navLinks = Array.from(document.querySelectorAll('[data-section-link]'));
+
+    const setActiveNavLink = (id: string) => {
+        navLinks.forEach((link) => {
+            const isActive = link.getAttribute('data-section-link') === id;
+            link.classList.toggle('bg-gray-900', isActive);
+            link.classList.toggle('text-white', isActive);
+            link.classList.toggle('dark:bg-white', isActive);
+            link.classList.toggle('dark:text-[#0F1115]', isActive);
+            link.classList.toggle('shadow-sm', isActive);
+            link.classList.toggle('shadow-black/10', isActive);
+            link.classList.toggle('dark:shadow-white/10', isActive);
+            link.setAttribute('aria-current', isActive ? 'page' : 'false');
+        });
+    };
+
+    const sectionIds = ['Proyectos', 'Sobre-mi', 'Habilidades', 'Contacto'];
+    const observedSections = sectionIds
+        .map((id) => document.getElementById(id))
+        .filter((section): section is HTMLElement => section !== null);
 
     window.addEventListener('scroll', () => {
         const currentScroll = window.scrollY;
@@ -53,11 +75,36 @@
         if (header) {
             if (currentScroll > 150) {
                 header.classList.remove('-translate-y-full', 'opacity-0');
+                nav?.classList.add('shadow-xl', 'shadow-black/10', 'dark:shadow-black/35', 'border-gray-300/80', 'dark:border-white/15');
             } else {
                 header.classList.add('-translate-y-full', 'opacity-0');
+                nav?.classList.remove('shadow-xl', 'shadow-black/10', 'dark:shadow-black/35', 'border-gray-300/80', 'dark:border-white/15');
             }
         }
     });
+
+    if (observedSections.length > 0) {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const visibleSection = entries
+                    .filter((entry) => entry.isIntersecting)
+                    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+                if (visibleSection?.target?.id) {
+                    setActiveNavLink(visibleSection.target.id);
+                }
+            },
+            {
+                root: null,
+                rootMargin: '-20% 0px -60% 0px',
+                threshold: [0.2, 0.35, 0.5],
+            }
+        );
+
+        observedSections.forEach((section) => observer.observe(section));
+    }
+
+    setActiveNavLink('Proyectos');
 
     const themeToggle = document.getElementById('theme-toggle');
     
