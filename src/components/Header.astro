@@ -1,59 +1,60 @@
 ---
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" id="header">
-    <nav class="flex items-center justify-between w-full max-w-7xl mx-auto py-8 px-8 md:px-16 lg:px-24 transition-all duration-500">
-        <a href="#top" class="text-sm font-semibold tracking-[0.15em] text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300">
-            JMS
-        </a>
-        
-        <div class="hidden md:flex items-center gap-10 text-[11px] font-semibold uppercase tracking-[0.2em]">
-            <a href="#Proyectos" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300">
-                Proyectos
+<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 -translate-y-full opacity-0" id="header">
+    <div class="flex justify-center w-full px-4 pt-4">
+        <nav class="flex items-center gap-1 px-2 py-2 rounded-full bg-white/80 dark:bg-[#1A1A1F]/80 backdrop-blur-xl border border-gray-200/60 dark:border-white/10 shadow-lg shadow-black/5 dark:shadow-black/20 transition-all duration-500">
+            <a href="#top" class="text-sm font-bold tracking-[0.1em] text-gray-900 dark:text-white hover:text-[#DC2626] dark:hover:text-[#DC2626] transition-colors duration-300 px-4 py-2">
+                JMS
             </a>
-            <a href="#Sobre-mi" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300">
-                Sobre mí
-            </a>
-            <a href="#Habilidades" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300">
-                Skills
-            </a>
-            <a href="#Contacto" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300">
-                Contacto
-            </a>
-        </div>
+            
+            <div class="w-[1px] h-4 bg-gray-200 dark:bg-gray-700 mx-1 hidden md:block"></div>
 
-        <button id="theme-toggle" class="w-5 h-5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300">
-            <span id="sun-icon" class="hidden dark:block">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="4"/>
-                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-                </svg>
-            </span>
-            <span id="moon-icon" class="block dark:hidden">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                </svg>
-            </span>
-        </button>
-    </nav>
+            <div class="hidden md:flex items-center gap-0.5 text-[11px] font-semibold uppercase tracking-[0.15em]">
+                <a href="#Proyectos" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 px-4 py-2 rounded-full transition-all duration-300">
+                    Proyectos
+                </a>
+                <a href="#Sobre-mi" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 px-4 py-2 rounded-full transition-all duration-300">
+                    Sobre mí
+                </a>
+                <a href="#Habilidades" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 px-4 py-2 rounded-full transition-all duration-300">
+                    Skills
+                </a>
+                <a href="#Contacto" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 px-4 py-2 rounded-full transition-all duration-300">
+                    Contacto
+                </a>
+            </div>
+
+            <div class="w-[1px] h-4 bg-gray-200 dark:bg-gray-700 mx-1 hidden md:block"></div>
+
+            <button id="theme-toggle" class="w-9 h-9 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-[#DC2626] dark:hover:text-[#DC2626] hover:bg-gray-100 dark:hover:bg-white/10 rounded-full transition-all duration-300">
+                <span id="sun-icon" class="hidden dark:block">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="4"/>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                    </svg>
+                </span>
+                <span id="moon-icon" class="block dark:hidden">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </span>
+            </button>
+        </nav>
+    </div>
 </header>
 
 <script>
     const header = document.getElementById('header');
-    const nav = header?.querySelector('nav');
 
     window.addEventListener('scroll', () => {
         const currentScroll = window.scrollY;
         
-        if (header && nav) {
-            if (currentScroll > 50) {
-                header.classList.add('backdrop-blur-md', 'bg-white/80', 'dark:bg-black/80');
-                nav.classList.remove('py-8');
-                nav.classList.add('py-5');
+        if (header) {
+            if (currentScroll > 150) {
+                header.classList.remove('-translate-y-full', 'opacity-0');
             } else {
-                header.classList.remove('backdrop-blur-md', 'bg-white/80', 'dark:bg-black/80');
-                nav.classList.add('py-8');
-                nav.classList.remove('py-5');
+                header.classList.add('-translate-y-full', 'opacity-0');
             }
         }
     });
