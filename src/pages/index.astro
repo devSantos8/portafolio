@@ -27,6 +27,45 @@ import '@fontsource/barlow/300.css';
 import '@fontsource/barlow/400.css';
 import '@fontsource/barlow/500.css';
 import '@fontsource/instrument-serif/400-italic.css';
+
+const certificates = [
+	{
+		title: 'Desarrollo Full Stack',
+		issuer: 'INACAP',
+		year: '2025',
+		description: 'Desarrollo de aplicaciones web completas con frontend, backend y buenas prácticas de despliegue.',
+		url: '',
+		featured: true,
+	},
+	{
+		title: 'Git Fundamentals',
+		issuer: 'DataCamp',
+		year: '2025',
+		description: 'Fundamentos de Git y GitHub para control de versiones, trabajo colaborativo y flujos de desarrollo modernos.',
+		url: '',
+		featured: true,
+	},
+	{
+		title: 'AWS Academy Graduate - AWS Academy Cloud Foundations',
+		issuer: 'AWS Academy',
+		year: '2024',
+		description: 'Curso de fundamentos cloud en AWS: conceptos de nube, servicios principales, seguridad y buenas prácticas iniciales.',
+		url: '',
+		featured: true,
+	},
+	{
+		title: 'Soporte Computacional',
+		issuer: 'INACAP',
+		year: '2023',
+		description: 'Diagnóstico, mantenimiento y resolución de incidencias en entornos de hardware y software.',
+		url: '',
+		featured: false,
+	},
+];
+
+const featuredCertificates = certificates.filter((certificate) => certificate.featured);
+const linkedInCertificationsUrl = 'https://www.linkedin.com/in/jmonroys17/details/certifications/';
+const googleAccentClasses = ['bg-[#4285F4]', 'bg-[#EA4335]', 'bg-[#FBBC05]', 'bg-[#34A853]'];
 ---
 
 <Layout title="Joain Monroy - Ingeniero en Informatica">
@@ -39,14 +78,12 @@ import '@fontsource/instrument-serif/400-italic.css';
 		<!-- ======================= -->
 		<SectionContainer id="Experiencia" class="py-32 md:py-40" bg="bg-slate-50/50 dark:bg-[#0F1115]">
 			<div class="fade-in-section">
-				<div class="flex flex-col md:flex-row md:items-end gap-6 mb-20">
-					<p class="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#DC2626] md:pb-1">
-						Trayectoria
-					</p>
-					<h2 class="text-4xl md:text-5xl font-medium text-gray-900 dark:text-white tracking-tight">
-						Experiencia
-					</h2>
-					<span class="hidden md:block flex-1 h-[1px] bg-gray-200 dark:bg-gray-800 mb-3"></span>
+				<div class="mb-12 md:mb-14 flex items-end justify-between gap-6">
+					<div>
+						<p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#DC2626] mb-3">Trayectoria</p>
+						<h2 class="text-4xl md:text-5xl font-medium text-gray-900 dark:text-white tracking-tight">Experiencia</h2>
+					</div>
+					<span class="hidden md:inline-flex items-center rounded-full px-3 py-1 text-[11px] font-medium bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-gray-300">01</span>
 				</div>
 				
 				<div class="relative">
@@ -282,98 +319,93 @@ import '@fontsource/instrument-serif/400-italic.css';
 		<section id="Proyectos" class="px-4 md:px-8 lg:px-16 xl:px-24 py-32 md:py-44">
 			<div class="max-w-7xl mx-auto">
 				<!-- Header -->
-				<div class="fade-in-section mb-20 md:mb-28">
-					<div class="flex items-start gap-6 md:gap-10">
-						<div class="flex flex-col items-center gap-3">
-							<span class="text-[11px] font-bold tracking-[0.3em] text-[#DC2626]">01</span>
-							<div class="w-px h-16 bg-gradient-to-b from-[#DC2626] to-transparent"></div>
-						</div>
-						<div>
-							<p class="text-[10px] font-semibold uppercase tracking-[0.4em] text-gray-400 dark:text-gray-500 mb-3">
-								Trabajos Recientes
-							</p>
-							<h2 class="text-4xl md:text-5xl font-medium text-gray-900 dark:text-white tracking-tight">
-								Proyectos
-							</h2>
-						</div>
+				<div class="fade-in-section mb-20 md:mb-24 flex items-end justify-between gap-6">
+					<div>
+						<p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#DC2626] mb-3">Trabajos Recientes</p>
+						<h2 class="text-4xl md:text-5xl font-medium text-gray-900 dark:text-white tracking-tight">Proyectos</h2>
 					</div>
+					<span class="hidden md:inline-flex items-center rounded-full px-3 py-1 text-[11px] font-medium bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-gray-300">02</span>
 				</div>
 
 				<!-- Projects -->
-				<div class="space-y-32">
+				<div class="space-y-8 md:space-y-10">
 					
 					<!-- Proyecto 1: CommitFlow -->
-					<article class="fade-in-section group">
-						<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+					<article class="fade-in-section group rounded-3xl border border-gray-200/80 dark:border-white/10 bg-white/85 dark:bg-white/[0.03] shadow-[0_12px_32px_rgba(15,23,42,0.06)] dark:shadow-none p-4 md:p-5 hover:border-[#1A73E8]/40 hover:shadow-[0_14px_34px_rgba(26,115,232,0.14)] transition-all duration-300">
+						<div class="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-6 lg:gap-8 items-center">
 							<div class="relative overflow-hidden rounded-2xl">
-								<img src="../projects/workco.webp" alt="CommitFlow" class="w-full h-[280px] md:h-[360px] object-cover transition-transform duration-700 group-hover:scale-105" />
-								<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
+								<img src="../projects/workco.webp" alt="CommitFlow" class="w-full h-[260px] md:h-[320px] object-cover transition-transform duration-700 group-hover:scale-105" />
+								<div class="absolute inset-0 bg-gradient-to-tr from-black/10 to-transparent"></div>
 							</div>
-							<div class="space-y-6">
-								<div class="flex items-center gap-4">
-									<span class="text-[10px] font-mono text-[#DC2626]">01</span>
-									<div class="flex-1 h-px bg-gray-200 dark:bg-white/10"></div>
-									<span class="text-[10px] uppercase tracking-[0.2em] text-[#DC2626]">Destacado</span>
+							<div class="space-y-4">
+								<div class="flex items-center justify-between gap-4">
+									<div class="flex items-center gap-2.5">
+										<span class="w-2.5 h-2.5 rounded-full bg-[#4285F4]"></span>
+										<span class="text-[11px] uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">Proyecto de Título</span>
+									</div>
+									<span class="text-[10px] uppercase tracking-[0.2em] text-[#DC2626]">01</span>
 								</div>
-								<h3 class="text-3xl md:text-4xl font-light text-gray-900 dark:text-white tracking-tight">CommitFlow</h3>
-								<p class="text-[10px] uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500">Proyecto de Título</p>
-								<p class="text-base text-gray-500 dark:text-gray-400 leading-relaxed">Plataforma que conecta profesionales y empresas TI. Sistema de perfiles, búsqueda avanzada y gestión de ofertas laborales.</p>
-								<div class="flex flex-wrap gap-2 pt-2">
-									<span class="text-[10px] text-gray-500 dark:text-gray-400 px-4 py-2 bg-gray-100 dark:bg-white/5 rounded-full">Django</span>
-									<span class="text-[10px] text-gray-500 dark:text-gray-400 px-4 py-2 bg-gray-100 dark:bg-white/5 rounded-full">Python</span>
-									<span class="text-[10px] text-gray-500 dark:text-gray-400 px-4 py-2 bg-gray-100 dark:bg-white/5 rounded-full">PostgreSQL</span>
+								<h3 class="text-2xl md:text-3xl font-medium text-gray-900 dark:text-white tracking-tight">CommitFlow</h3>
+								<p class="text-sm md:text-base text-gray-600 dark:text-gray-400 leading-relaxed">Plataforma que conecta profesionales y empresas TI. Sistema de perfiles, búsqueda avanzada y gestión de ofertas laborales.</p>
+								<div class="flex flex-wrap gap-2 pt-1">
+									<span class="text-xs text-gray-700 dark:text-gray-300 px-3 py-1.5 bg-gray-100 dark:bg-white/10 rounded-full">Django</span>
+									<span class="text-xs text-gray-700 dark:text-gray-300 px-3 py-1.5 bg-gray-100 dark:bg-white/10 rounded-full">Python</span>
+									<span class="text-xs text-gray-700 dark:text-gray-300 px-3 py-1.5 bg-gray-100 dark:bg-white/10 rounded-full">PostgreSQL</span>
 								</div>
 							</div>
 						</div>
 					</article>
 
 					<!-- Proyecto 2: Dashboard -->
-					<article class="fade-in-section group">
-						<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+					<article class="fade-in-section group rounded-3xl border border-gray-200/80 dark:border-white/10 bg-white/85 dark:bg-white/[0.03] shadow-[0_12px_32px_rgba(15,23,42,0.06)] dark:shadow-none p-4 md:p-5 hover:border-[#1A73E8]/40 hover:shadow-[0_14px_34px_rgba(26,115,232,0.14)] transition-all duration-300">
+						<div class="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-6 lg:gap-8 items-center">
 							<div class="relative overflow-hidden rounded-2xl lg:order-2">
-								<img src="../projects/dashboard.webp" alt="Dashboard E-commerce" class="w-full h-[280px] md:h-[360px] object-cover transition-transform duration-700 group-hover:scale-105" />
-								<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
+								<img src="../projects/dashboard.webp" alt="Dashboard E-commerce" class="w-full h-[260px] md:h-[320px] object-cover transition-transform duration-700 group-hover:scale-105" />
+								<div class="absolute inset-0 bg-gradient-to-tr from-black/10 to-transparent"></div>
 							</div>
-							<div class="space-y-6 lg:order-1">
-								<div class="flex items-center gap-4">
-									<span class="text-[10px] font-mono text-[#DC2626]/60">02</span>
-									<div class="flex-1 h-px bg-gray-200 dark:bg-white/10"></div>
+							<div class="space-y-4 lg:order-1">
+								<div class="flex items-center justify-between gap-4">
+									<div class="flex items-center gap-2.5">
+										<span class="w-2.5 h-2.5 rounded-full bg-[#34A853]"></span>
+										<span class="text-[11px] uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">Panel de Control</span>
+									</div>
+									<span class="text-[10px] uppercase tracking-[0.2em] text-[#DC2626]">02</span>
 								</div>
-								<h3 class="text-3xl md:text-4xl font-light text-gray-900 dark:text-white tracking-tight">Dashboard E-commerce</h3>
-								<p class="text-[10px] uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500">Panel de Control</p>
-								<p class="text-base text-gray-500 dark:text-gray-400 leading-relaxed">Panel de control para análisis de usuarios registrados y gestión de usuarios con visualización de datos en tiempo real.</p>
-								<div class="flex flex-wrap gap-2 pt-2">
-									<span class="text-[10px] text-gray-500 dark:text-gray-400 px-4 py-2 bg-gray-100 dark:bg-white/5 rounded-full">Django</span>
-									<span class="text-[10px] text-gray-500 dark:text-gray-400 px-4 py-2 bg-gray-100 dark:bg-white/5 rounded-full">Python</span>
-									<span class="text-[10px] text-gray-500 dark:text-gray-400 px-4 py-2 bg-gray-100 dark:bg-white/5 rounded-full">JavaScript</span>
+								<h3 class="text-2xl md:text-3xl font-medium text-gray-900 dark:text-white tracking-tight">Dashboard E-commerce</h3>
+								<p class="text-sm md:text-base text-gray-600 dark:text-gray-400 leading-relaxed">Panel de control para análisis de usuarios registrados y gestión de usuarios con visualización de datos en tiempo real.</p>
+								<div class="flex flex-wrap gap-2 pt-1">
+									<span class="text-xs text-gray-700 dark:text-gray-300 px-3 py-1.5 bg-gray-100 dark:bg-white/10 rounded-full">Django</span>
+									<span class="text-xs text-gray-700 dark:text-gray-300 px-3 py-1.5 bg-gray-100 dark:bg-white/10 rounded-full">Python</span>
+									<span class="text-xs text-gray-700 dark:text-gray-300 px-3 py-1.5 bg-gray-100 dark:bg-white/10 rounded-full">JavaScript</span>
 								</div>
 							</div>
 						</div>
 					</article>
 
 					<!-- Proyecto 3: Lubricentro -->
-					<article class="fade-in-section group">
-						<a href="https://lubricentro-la-esquina.vercel.app" target="_blank" rel="noopener" class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+					<article class="fade-in-section group rounded-3xl border border-gray-200/80 dark:border-white/10 bg-white/85 dark:bg-white/[0.03] shadow-[0_12px_32px_rgba(15,23,42,0.06)] dark:shadow-none p-4 md:p-5 hover:border-[#1A73E8]/40 hover:shadow-[0_14px_34px_rgba(26,115,232,0.14)] transition-all duration-300">
+						<a href="https://lubricentro-la-esquina.vercel.app" target="_blank" rel="noopener" class="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-6 lg:gap-8 items-center">
 							<div class="relative overflow-hidden rounded-2xl">
-								<img src="../projects/lubricentro.webp" alt="Lubricentro La Esquina" class="w-full h-[280px] md:h-[360px] object-cover transition-transform duration-700 group-hover:scale-105" />
-								<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
+								<img src="../projects/lubricentro.webp" alt="Lubricentro La Esquina" class="w-full h-[260px] md:h-[320px] object-cover transition-transform duration-700 group-hover:scale-105" />
+								<div class="absolute inset-0 bg-gradient-to-tr from-black/10 to-transparent"></div>
 							</div>
-							<div class="space-y-6">
-								<div class="flex items-center gap-4">
-									<span class="text-[10px] font-mono text-[#DC2626]/40">03</span>
-									<div class="flex-1 h-px bg-gray-200 dark:bg-white/10"></div>
-									<span class="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-gray-400 group-hover:text-[#DC2626] transition-colors">
+							<div class="space-y-4">
+								<div class="flex items-center justify-between gap-4">
+									<div class="flex items-center gap-2.5">
+										<span class="w-2.5 h-2.5 rounded-full bg-[#FBBC05]"></span>
+										<span class="text-[11px] uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">Sitio Web</span>
+									</div>
+									<span class="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.2em] text-[#DC2626]">
 										Live
-										<svg class="w-3 h-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+										<svg class="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
 									</span>
 								</div>
-								<h3 class="text-3xl md:text-4xl font-light text-gray-900 dark:text-white tracking-tight group-hover:text-[#DC2626] transition-colors">Lubricentro La Esquina</h3>
-								<p class="text-[10px] uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500">Sitio Web</p>
-								<p class="text-base text-gray-500 dark:text-gray-400 leading-relaxed">Sitio web informativo para un negocio de lubricantes y repuestos automotrices ubicado en Santiago.</p>
-								<div class="flex flex-wrap gap-2 pt-2">
-									<span class="text-[10px] text-gray-500 dark:text-gray-400 px-4 py-2 bg-gray-100 dark:bg-white/5 rounded-full">Astro</span>
-									<span class="text-[10px] text-gray-500 dark:text-gray-400 px-4 py-2 bg-gray-100 dark:bg-white/5 rounded-full">Tailwind</span>
-									<span class="text-[10px] text-gray-500 dark:text-gray-400 px-4 py-2 bg-gray-100 dark:bg-white/5 rounded-full">JavaScript</span>
+								<h3 class="text-2xl md:text-3xl font-medium text-gray-900 dark:text-white tracking-tight">Lubricentro La Esquina</h3>
+								<p class="text-sm md:text-base text-gray-600 dark:text-gray-400 leading-relaxed">Sitio web informativo para un negocio de lubricantes y repuestos automotrices ubicado en Santiago.</p>
+								<div class="flex flex-wrap gap-2 pt-1">
+									<span class="text-xs text-gray-700 dark:text-gray-300 px-3 py-1.5 bg-gray-100 dark:bg-white/10 rounded-full">Astro</span>
+									<span class="text-xs text-gray-700 dark:text-gray-300 px-3 py-1.5 bg-gray-100 dark:bg-white/10 rounded-full">Tailwind</span>
+									<span class="text-xs text-gray-700 dark:text-gray-300 px-3 py-1.5 bg-gray-100 dark:bg-white/10 rounded-full">JavaScript</span>
 								</div>
 							</div>
 						</a>
@@ -382,11 +414,10 @@ import '@fontsource/instrument-serif/400-italic.css';
 				</div>
 
 				<!-- Ver más -->
-				<div class="fade-in-section mt-24 text-center">
-					<a href="https://github.com/17santo" target="_blank" rel="noopener" class="group inline-flex items-center gap-4 text-gray-400 hover:text-[#DC2626] transition-colors duration-300">
-						<span class="w-12 h-px bg-current"></span>
-						<span class="text-sm uppercase tracking-[0.2em]">Ver más en GitHub</span>
-						<span class="w-12 h-px bg-current"></span>
+				<div class="fade-in-section mt-14 text-center">
+					<a href="https://github.com/17santo" target="_blank" rel="noopener" class="group inline-flex items-center gap-2.5 rounded-full px-5 py-2.5 border border-gray-200 dark:border-white/10 text-sm font-medium text-gray-700 dark:text-gray-200 hover:border-[#DC2626]/40 hover:text-[#DC2626] transition-colors duration-300">
+						Ver más en GitHub
+						<svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
 					</a>
 				</div>
 			</div>
@@ -394,170 +425,160 @@ import '@fontsource/instrument-serif/400-italic.css';
 
 		<!-- About Section -->
 		<SectionContainer id="Sobre-mi" class="py-32 md:py-40" bg="bg-slate-50/50 dark:bg-[#0F1115]">
-			<div class="fade-in-section flex flex-col md:flex-row md:items-end gap-6 mb-20">
-				<p class="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#DC2626] md:pb-1">
-					02
-				</p>
-				<h2 class="text-4xl md:text-5xl font-medium text-gray-900 dark:text-white tracking-tight">
-					Sobre mí
-				</h2>
-				<span class="hidden md:block flex-1 h-[1px] bg-gray-200 dark:bg-gray-800 mb-3"></span>
+			<div class="fade-in-section mb-12 md:mb-14 flex items-end justify-between gap-6">
+				<div>
+					<p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#DC2626] mb-3">Perfil Profesional</p>
+					<h2 class="text-4xl md:text-5xl font-medium text-gray-900 dark:text-white tracking-tight">Sobre mí</h2>
+				</div>
+				<span class="hidden md:inline-flex items-center rounded-full px-3 py-1 text-[11px] font-medium bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-gray-300">03</span>
 			</div>
 			
-			<div class="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-32">
-				<div class="fade-in-section space-y-8">
-					<p class="text-2xl md:text-3xl font-medium text-gray-900 dark:text-white leading-relaxed tracking-tight">
-						Soy Joain Monroy Santos,<br/>
-						<span class="text-gray-400 dark:text-gray-500">Ingeniero en Informática orientado al desarrollo de software y DevOps.</span>
+			<div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,370px)] gap-6 md:gap-8 items-start">
+				<article class="fade-in-section rounded-3xl border border-gray-200/80 dark:border-white/10 bg-white/85 dark:bg-white/[0.03] shadow-[0_12px_32px_rgba(15,23,42,0.06)] dark:shadow-none p-6 md:p-8">
+					<p class="text-2xl md:text-3xl font-medium text-gray-900 dark:text-white leading-[1.25] tracking-tight max-w-2xl">
+						Soy Joain Monroy Santos,
+						<span class="text-gray-500 dark:text-gray-400"> Ingeniero en Informática orientado al desarrollo de software y DevOps.</span>
 					</p>
-					<p class="text-base text-gray-600 dark:text-gray-400 leading-loose">
-						Me especializo en crear soluciones web que combinan
-						buenas prácticas de desarrollo con automatización.
-						Cada proyecto es una oportunidad para escribir código
-						limpio y construir sistemas escalables.
-					</p>
-					<p class="text-base text-gray-600 dark:text-gray-400 leading-loose">
-						Egresado de INACAP Santiago Centro, donde desarrollé
-						habilidades en desarrollo full stack, diseño de sistemas
-						y gestión de bases de datos.
-					</p>
-				</div>
-
-				<div class="fade-in-section space-y-14">
-					<div>
-						<p class="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#DC2626] mb-5">
-							Educación
+					<div class="mt-7 space-y-5 text-[15px] leading-7 text-gray-600 dark:text-gray-400">
+						<p>
+							Me especializo en crear soluciones web que combinan buenas prácticas de desarrollo con automatización.
+							Cada proyecto es una oportunidad para escribir código limpio y construir sistemas escalables.
 						</p>
-						<p class="text-lg font-medium text-gray-900 dark:text-white tracking-tight">Ingeniería en Informática</p>
+						<p>
+							Egresado de INACAP Santiago Centro, donde desarrollé habilidades en desarrollo full stack,
+							diseño de sistemas y gestión de bases de datos.
+						</p>
+					</div>
+				</article>
+
+				<aside class="fade-in-section rounded-3xl border border-gray-200/80 dark:border-white/10 bg-white/85 dark:bg-white/[0.03] shadow-[0_12px_32px_rgba(15,23,42,0.06)] dark:shadow-none p-6 md:p-7 space-y-6">
+					<div>
+						<p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#DC2626] mb-3">Educación</p>
+						<p class="text-base font-medium text-gray-900 dark:text-white">Ingeniería en Informática</p>
 						<p class="text-sm text-gray-500 dark:text-gray-500 mt-1">INACAP Santiago Centro · 2022 — 2025</p>
 					</div>
 
-					<div>
-						<p class="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#DC2626] mb-5">
-							Certificaciones
-						</p>
-						<ul class="space-y-3 text-sm text-gray-600 dark:text-gray-400">
-							<li class="hover:text-gray-900 dark:hover:text-white transition-colors duration-300">Desarrollo Full Stack</li>
-							<li class="hover:text-gray-900 dark:hover:text-white transition-colors duration-300">Diseño Ágil de Sistemas</li>
-							<li class="hover:text-gray-900 dark:hover:text-white transition-colors duration-300">Diseño y Gestión de BDD</li>
-							<li class="hover:text-gray-900 dark:hover:text-white transition-colors duration-300">Soporte Computacional</li>
-						</ul>
-					</div>
+					<div class="h-px bg-gray-200 dark:bg-white/10"></div>
 
 					<div>
-						<p class="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#DC2626] mb-5">
-							Idiomas
-						</p>
-						<p class="text-sm text-gray-600 dark:text-gray-400">Español — Nativo</p>
-						<p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Inglés — Basico</p>
+						<p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#DC2626] mb-3">Idiomas</p>
+						<div class="flex flex-wrap gap-2">
+							<span class="px-3 py-1.5 rounded-full text-xs font-medium bg-[#4285F4]/10 text-[#1A73E8] dark:bg-[#4285F4]/20 dark:text-[#8AB4F8]">Español · Nativo</span>
+							<span class="px-3 py-1.5 rounded-full text-xs font-medium bg-[#34A853]/10 text-[#137333] dark:bg-[#34A853]/20 dark:text-[#81C995]">Inglés · Basico</span>
+						</div>
 					</div>
+				</aside>
+			</div>
+
+			<div class="fade-in-section mt-7 rounded-3xl border border-gray-200/80 dark:border-white/10 bg-white/85 dark:bg-white/[0.03] shadow-[0_12px_32px_rgba(15,23,42,0.06)] dark:shadow-none p-6 md:p-7">
+				<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+					<div>
+						<p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#DC2626] mb-2">Certificaciones importantes</p>
+						<p class="text-sm text-gray-500 dark:text-gray-500">Solo las más relevantes. El resto está en LinkedIn.</p>
+					</div>
+					<a href={linkedInCertificationsUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs font-semibold rounded-full px-4 py-2 border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-200 hover:border-[#1A73E8]/40 hover:text-[#1A73E8] dark:hover:text-[#1A73E8] transition-colors duration-300">
+						Ver más en LinkedIn
+						<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 17L17 7M17 7H7M17 7v10" /></svg>
+					</a>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5">
+					{featuredCertificates.map((certificate, index) => (
+						<article class="group rounded-2xl border border-gray-200/80 dark:border-white/10 p-4 hover:shadow-[0_8px_24px_rgba(15,23,42,0.08)] dark:hover:shadow-none hover:border-gray-300 dark:hover:border-white/20 transition-all duration-300">
+							<div class="flex items-center justify-between mb-2.5">
+								<div class="flex items-center gap-2.5">
+									<span class={`w-2.5 h-2.5 rounded-full ${googleAccentClasses[index % googleAccentClasses.length]}`}></span>
+									<span class="text-[11px] uppercase tracking-[0.16em] text-gray-400 dark:text-gray-500">{certificate.year}</span>
+								</div>
+								{certificate.url ? (
+									<a href={certificate.url} target="_blank" rel="noopener noreferrer" class="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#1A73E8] dark:text-[#8AB4F8] hover:opacity-80 transition-opacity duration-300">Ver</a>
+								) : null}
+							</div>
+							<p class="text-sm font-medium text-gray-900 dark:text-white leading-snug">{certificate.title}</p>
+							<p class="mt-1 text-xs text-gray-500 dark:text-gray-500">{certificate.issuer}</p>
+							<p class="mt-3 text-xs leading-relaxed text-gray-500 dark:text-gray-500">{certificate.description}</p>
+						</article>
+					))}
 				</div>
 			</div>
 		</SectionContainer>
 
 		<!-- Skills Section -->
 		<SectionContainer id="Habilidades" class="py-32 md:py-44 relative overflow-hidden">
-			
-			<div class="fade-in-section mb-24 md:mb-32">
-				<div class="flex items-start gap-6 md:gap-10">
-					<div class="flex flex-col items-center gap-3">
-						<span class="text-[11px] font-bold tracking-[0.3em] text-[#DC2626]">03</span>
-						<div class="w-px h-16 bg-gradient-to-b from-[#DC2626] to-transparent"></div>
-					</div>
-					<div>
-						<p class="text-[10px] font-semibold uppercase tracking-[0.4em] text-gray-400 dark:text-gray-500 mb-3">
-							Stack Tecnologico
-						</p>
-						<h2 class="text-4xl md:text-5xl font-medium text-gray-900 dark:text-white tracking-tight">
-							Habilidades
-						</h2>
-					</div>
+			<div class="fade-in-section mb-12 md:mb-14 flex items-end justify-between gap-6">
+				<div>
+					<p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#DC2626] mb-3">Stack Tecnologico</p>
+					<h2 class="text-4xl md:text-5xl font-medium text-gray-900 dark:text-white tracking-tight">Habilidades</h2>
 				</div>
+				<span class="hidden md:inline-flex items-center rounded-full px-3 py-1 text-[11px] font-medium bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-gray-300">04</span>
 			</div>
 
-			<div class="skills-container">
-				<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-					
-					<div class="col-span-2 row-span-2 group relative p-8 rounded-3xl bg-gradient-to-br from-[#DC2626]/5 to-transparent border border-[#DC2626]/20 hover:border-[#DC2626]/40 transition-all duration-500">
-						<div class="absolute top-6 right-6">
-							<span class="text-[10px] font-mono text-[#DC2626]">01</span>
-						</div>
-						<h3 class="text-2xl font-light text-gray-900 dark:text-white mb-6">Frontend</h3>
-						<div class="space-y-3">
-							<div class="flex items-center gap-3 text-gray-600 dark:text-gray-400 hover:text-[#DC2626] transition-colors">
-								<HTML /><span class="text-sm">HTML / CSS</span>
-							</div>
-							<div class="flex items-center gap-3 text-gray-600 dark:text-gray-400 hover:text-[#DC2626] transition-colors">
-								<JavaScript /><span class="text-sm">JavaScript</span>
-							</div>
-							<div class="flex items-center gap-3 text-gray-600 dark:text-gray-400 hover:text-[#DC2626] transition-colors">
-								<ReactIcon /><span class="text-sm">React</span>
-							</div>
-							<div class="flex items-center gap-3 text-gray-600 dark:text-gray-400 hover:text-[#DC2626] transition-colors">
-								<Tailwind /><span class="text-sm">TailwindCSS</span>
-							</div>
-							<div class="flex items-center gap-3 text-gray-600 dark:text-gray-400 hover:text-[#DC2626] transition-colors">
-								<AstroIcon /><span class="text-sm">Astro</span>
-							</div>
-							<div class="flex items-center gap-3 text-gray-600 dark:text-gray-400 hover:text-[#DC2626] transition-colors">
-								<BootstrapIcon /><span class="text-sm">Bootstrap</span>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-span-2 group relative p-6 rounded-3xl bg-white/60 dark:bg-white/[0.03] border border-gray-200 dark:border-white/10 hover:border-[#DC2626]/30 transition-all duration-500">
+			<div class="skills-container rounded-3xl border border-gray-200/80 dark:border-white/10 bg-white/85 dark:bg-white/[0.03] shadow-[0_12px_32px_rgba(15,23,42,0.06)] dark:shadow-none p-5 md:p-7">
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<article class="group rounded-2xl border border-gray-200/80 dark:border-white/10 bg-white dark:bg-white/[0.02] p-5 hover:border-[#1A73E8]/40 hover:shadow-[0_8px_24px_rgba(26,115,232,0.12)] transition-all duration-300">
 						<div class="flex items-center justify-between mb-4">
-							<h3 class="text-lg font-medium text-gray-900 dark:text-white">Backend</h3>
-							<span class="text-[10px] font-mono text-[#DC2626]/60">02</span>
+							<div class="flex items-center gap-2">
+								<span class="w-2.5 h-2.5 rounded-full bg-[#4285F4]"></span>
+								<h3 class="text-lg font-medium text-gray-900 dark:text-white">Frontend</h3>
+							</div>
+							<span class="text-[10px] uppercase tracking-[0.2em] text-gray-400">01</span>
 						</div>
-						<div class="flex flex-wrap gap-2">
-							<div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/[0.05] text-gray-600 dark:text-gray-400 hover:text-[#DC2626] transition-colors">
-								<PythonIcon /><span class="text-xs">Python</span>
-							</div>
-							<div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/[0.05] text-gray-600 dark:text-gray-400 hover:text-[#DC2626] transition-colors">
-								<DjangoIcon /><span class="text-xs">Django</span>
-							</div>
-							<div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/[0.05] text-gray-600 dark:text-gray-400 hover:text-[#DC2626] transition-colors">
-								<APIIcon /><span class="text-xs">APIs REST</span>
-							</div>
+						<div class="grid grid-cols-2 gap-2.5">
+							<div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/[0.04] text-gray-700 dark:text-gray-300"><HTML /><span class="text-xs">HTML / CSS</span></div>
+							<div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/[0.04] text-gray-700 dark:text-gray-300"><JavaScript /><span class="text-xs">JavaScript</span></div>
+							<div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/[0.04] text-gray-700 dark:text-gray-300"><ReactIcon /><span class="text-xs">React</span></div>
+							<div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/[0.04] text-gray-700 dark:text-gray-300"><Tailwind /><span class="text-xs">TailwindCSS</span></div>
+							<div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/[0.04] text-gray-700 dark:text-gray-300"><AstroIcon /><span class="text-xs">Astro</span></div>
+							<div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/[0.04] text-gray-700 dark:text-gray-300"><BootstrapIcon /><span class="text-xs">Bootstrap</span></div>
 						</div>
-					</div>
+					</article>
 
-					<div class="col-span-2 group relative p-6 rounded-3xl bg-white/60 dark:bg-white/[0.03] border border-gray-200 dark:border-white/10 hover:border-[#DC2626]/30 transition-all duration-500">
+					<article class="group rounded-2xl border border-gray-200/80 dark:border-white/10 bg-white dark:bg-white/[0.02] p-5 hover:border-[#1A73E8]/40 hover:shadow-[0_8px_24px_rgba(26,115,232,0.12)] transition-all duration-300">
 						<div class="flex items-center justify-between mb-4">
-							<h3 class="text-lg font-medium text-gray-900 dark:text-white">Databases</h3>
-							<span class="text-[10px] font-mono text-[#DC2626]/60">03</span>
+							<div class="flex items-center gap-2">
+								<span class="w-2.5 h-2.5 rounded-full bg-[#34A853]"></span>
+								<h3 class="text-lg font-medium text-gray-900 dark:text-white">Backend</h3>
+							</div>
+							<span class="text-[10px] uppercase tracking-[0.2em] text-gray-400">02</span>
 						</div>
-						<div class="flex flex-wrap gap-2">
-							<div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/[0.05] text-gray-600 dark:text-gray-400 hover:text-[#DC2626] transition-colors">
-								<PostgresIcon /><span class="text-xs">PostgreSQL</span>
-							</div>
-							<div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/[0.05] text-gray-600 dark:text-gray-400 hover:text-[#DC2626] transition-colors">
-								<MongoIcon /><span class="text-xs">MongoDB</span>
-							</div>
-							<div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/[0.05] text-gray-600 dark:text-gray-400 hover:text-[#DC2626] transition-colors">
-								<MariaIcon /><span class="text-xs">MariaDB</span>
-							</div>
+						<div class="flex flex-wrap gap-2.5">
+							<div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/[0.04] text-gray-700 dark:text-gray-300"><PythonIcon /><span class="text-xs">Python</span></div>
+							<div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/[0.04] text-gray-700 dark:text-gray-300"><DjangoIcon /><span class="text-xs">Django</span></div>
+							<div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/[0.04] text-gray-700 dark:text-gray-300"><APIIcon /><span class="text-xs">APIs REST</span></div>
 						</div>
-					</div>
+					</article>
 
-					<div class="col-span-2 md:col-span-4 group relative p-6 rounded-3xl bg-gray-900 dark:bg-white/[0.05] border border-gray-800 dark:border-white/10">
-						<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-							<div>
-								<p class="text-[10px] uppercase tracking-[0.3em] text-gray-400 mb-2">DevOps & Tools</p>
-								<div class="flex flex-wrap gap-3">
-									<span class="px-4 py-2 text-xs text-gray-300 bg-white/10 rounded-full">Git</span>
-									<span class="px-4 py-2 text-xs text-gray-300 bg-white/10 rounded-full">Docker</span>
-									<span class="px-4 py-2 text-xs text-gray-300 bg-white/10 rounded-full">Linux</span>
-									<span class="px-4 py-2 text-xs text-gray-300 bg-white/10 rounded-full">AWS</span>
-									<span class="px-4 py-2 text-xs text-gray-300 bg-white/10 rounded-full">CI/CD</span>
-								</div>
+					<article class="group rounded-2xl border border-gray-200/80 dark:border-white/10 bg-white dark:bg-white/[0.02] p-5 hover:border-[#1A73E8]/40 hover:shadow-[0_8px_24px_rgba(26,115,232,0.12)] transition-all duration-300">
+						<div class="flex items-center justify-between mb-4">
+							<div class="flex items-center gap-2">
+								<span class="w-2.5 h-2.5 rounded-full bg-[#FBBC05]"></span>
+								<h3 class="text-lg font-medium text-gray-900 dark:text-white">Databases</h3>
 							</div>
-							<div class="hidden md:block text-right">
-								<span class="text-[10px] font-mono text-[#DC2626]">04</span>
-							</div>
+							<span class="text-[10px] uppercase tracking-[0.2em] text-gray-400">03</span>
 						</div>
-					</div>
+						<div class="flex flex-wrap gap-2.5">
+							<div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/[0.04] text-gray-700 dark:text-gray-300"><PostgresIcon /><span class="text-xs">PostgreSQL</span></div>
+							<div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/[0.04] text-gray-700 dark:text-gray-300"><MongoIcon /><span class="text-xs">MongoDB</span></div>
+							<div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/[0.04] text-gray-700 dark:text-gray-300"><MariaIcon /><span class="text-xs">MariaDB</span></div>
+						</div>
+					</article>
+
+					<article class="group rounded-2xl border border-gray-200/80 dark:border-white/10 bg-gradient-to-br from-[#EA4335]/7 to-transparent dark:from-[#EA4335]/15 dark:to-transparent p-5 hover:border-[#1A73E8]/40 hover:shadow-[0_8px_24px_rgba(26,115,232,0.12)] transition-all duration-300">
+						<div class="flex items-center justify-between mb-4">
+							<div class="flex items-center gap-2">
+								<span class="w-2.5 h-2.5 rounded-full bg-[#EA4335]"></span>
+								<h3 class="text-lg font-medium text-gray-900 dark:text-white">DevOps & Tools</h3>
+							</div>
+							<span class="text-[10px] uppercase tracking-[0.2em] text-gray-400">04</span>
+						</div>
+						<div class="flex flex-wrap gap-2.5">
+							<span class="px-3 py-2 text-xs rounded-xl bg-white/80 dark:bg-white/[0.08] text-gray-700 dark:text-gray-300">Git</span>
+							<span class="px-3 py-2 text-xs rounded-xl bg-white/80 dark:bg-white/[0.08] text-gray-700 dark:text-gray-300">Docker</span>
+							<span class="px-3 py-2 text-xs rounded-xl bg-white/80 dark:bg-white/[0.08] text-gray-700 dark:text-gray-300">Linux</span>
+							<span class="px-3 py-2 text-xs rounded-xl bg-white/80 dark:bg-white/[0.08] text-gray-700 dark:text-gray-300">AWS</span>
+							<span class="px-3 py-2 text-xs rounded-xl bg-white/80 dark:bg-white/[0.08] text-gray-700 dark:text-gray-300">CI/CD</span>
+						</div>
+					</article>
 				</div>
 			</div>
 		</SectionContainer>
