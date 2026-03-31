@@ -248,6 +248,29 @@ export const initAnimations = () => {
 			});
 
 		// ============================================
+		// HERO PARALLAX SCROLL ANIMATION
+		// ============================================
+		const heroSection = document.getElementById('top');
+		const heroContainer = heroSection?.querySelector('.relative');
+		
+		if (heroSection && heroContainer) {
+			gsap.to(heroContainer, {
+				scrollTrigger: {
+					trigger: heroSection,
+					start: 'top top',
+					end: 'bottom top',
+					scrub: true,
+				},
+				y: window.innerHeight * 0.2, // Baja la imagen suavemente creando paraláx
+				scale: 0.85,                 // Se achica en el fondo
+				opacity: 0,                  // Se desvanece
+				filter: 'blur(10px)',        // Se desenfoca un poco
+				transformOrigin: 'top center',
+				ease: 'none'
+			});
+		}
+
+		// ============================================
 		// PROJECT CARDS HOVER ANIMATIONS
 		// ============================================
 		const projectCards = document.querySelectorAll('.carousel-item');
