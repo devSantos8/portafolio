@@ -12,6 +12,9 @@ const navButtonClass = 'nav-link text-gray-600 dark:text-gray-300 hover:text-gra
             <div class="w-[1px] h-4 bg-gray-200 dark:bg-gray-700 mx-1 hidden md:block"></div>
 
             <div class="hidden md:flex items-center gap-0.5 text-[11px] font-semibold uppercase tracking-[0.15em]">
+                <a href="#Experiencia" data-section-link="Experiencia" class={navButtonClass}>
+                    Experiencia
+                </a>
                 <a href="#Proyectos" data-section-link="Proyectos" class={navButtonClass}>
                     Proyectos
                 </a>
@@ -20,9 +23,6 @@ const navButtonClass = 'nav-link text-gray-600 dark:text-gray-300 hover:text-gra
                 </a>
                 <a href="#Habilidades" data-section-link="Habilidades" class={navButtonClass}>
                     Habilidades
-                </a>
-                <a href="#Contacto" data-section-link="Contacto" class={navButtonClass}>
-                    Contacto
                 </a>
             </div>
 
@@ -64,10 +64,41 @@ const navButtonClass = 'nav-link text-gray-600 dark:text-gray-300 hover:text-gra
         });
     };
 
-    const sectionIds = ['Proyectos', 'Sobre-mi', 'Habilidades', 'Contacto'];
+    const sectionIds = ['Experiencia', 'Proyectos', 'Sobre-mi', 'Habilidades'];
     const observedSections = sectionIds
         .map((id) => document.getElementById(id))
         .filter((section): section is HTMLElement => section !== null);
+
+    const updateActiveFromScroll = () => {
+        if (observedSections.length === 0) {
+            return;
+        }
+
+        const marker = window.scrollY + window.innerHeight * 0.35;
+        let activeId = observedSections[0].id;
+
+        observedSections.forEach((section) => {
+            if (section.offsetTop <= marker) {
+                activeId = section.id;
+            }
+        });
+
+        const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 8;
+        if (nearBottom) {
+            activeId = observedSections[observedSections.length - 1].id;
+        }
+
+        setActiveNavLink(activeId);
+    };
+
+    navLinks.forEach((link) => {
+        link.addEventListener('click', () => {
+            const id = link.getAttribute('data-section-link');
+            if (id) {
+                setActiveNavLink(id);
+            }
+        });
+    });
 
     window.addEventListener('scroll', () => {
         const currentScroll = window.scrollY;
@@ -81,30 +112,11 @@ const navButtonClass = 'nav-link text-gray-600 dark:text-gray-300 hover:text-gra
                 nav?.classList.remove('shadow-xl', 'shadow-black/10', 'dark:shadow-black/35', 'border-gray-300/80', 'dark:border-white/15');
             }
         }
-    });
+        updateActiveFromScroll();
+    }, { passive: true });
 
-    if (observedSections.length > 0) {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                const visibleSection = entries
-                    .filter((entry) => entry.isIntersecting)
-                    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-                if (visibleSection?.target?.id) {
-                    setActiveNavLink(visibleSection.target.id);
-                }
-            },
-            {
-                root: null,
-                rootMargin: '-20% 0px -60% 0px',
-                threshold: [0.2, 0.35, 0.5],
-            }
-        );
-
-        observedSections.forEach((section) => observer.observe(section));
-    }
-
-    setActiveNavLink('Proyectos');
+    setActiveNavLink('Experiencia');
+    updateActiveFromScroll();
 
     const themeToggle = document.getElementById('theme-toggle');
     
