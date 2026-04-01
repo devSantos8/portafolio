@@ -74,16 +74,18 @@ const navButtonClass = 'nav-link text-gray-600 dark:text-gray-300 hover:text-gra
             return;
         }
 
-        const marker = window.scrollY + window.innerHeight * 0.35;
         let activeId = observedSections[0].id;
+        const triggerPoint = window.innerHeight * 0.4; // 40% de la pantalla desde arriba
 
         observedSections.forEach((section) => {
-            if (section.offsetTop <= marker) {
+            const rect = section.getBoundingClientRect();
+            // Si la parte superior de la sección superó el punto de gatillo, la consideramos activa
+            if (rect.top <= triggerPoint) {
                 activeId = section.id;
             }
         });
 
-        const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 8;
+        const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 10;
         if (nearBottom) {
             activeId = observedSections[observedSections.length - 1].id;
         }
@@ -92,12 +94,31 @@ const navButtonClass = 'nav-link text-gray-600 dark:text-gray-300 hover:text-gra
     };
 
     navLinks.forEach((link) => {
-        link.addEventListener('click', () => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault(); // Evitamos el salto instantáneo del navegador que rompe GSAP/Lenis
+            
             const id = link.getAttribute('data-section-link');
             if (id) {
                 setActiveNavLink(id);
+                // Si Lenis está disponible (cargado en animations.js), lo usamos para un scroll fluido perfecto
+                if ((window as any).lenis) {
+                    (window as any).lenis.scrollTo(`#${id}`, { offset: -50, duration: 1.2 });
+                } else {
+                    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+                }
             }
         });
+    });
+
+    // Delegamos el volver arriba con Lenis también
+    const logoLink = document.querySelector('a[href="#top"]');
+    logoLink?.addEventListener('click', (e) => {
+        e.preventDefault();
+        if ((window as any).lenis) {
+            (window as any).lenis.scrollTo(0, { duration: 1.2 });
+        } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     });
 
     window.addEventListener('scroll', () => {

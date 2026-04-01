@@ -54,21 +54,6 @@ export const initAnimations = () => {
 				itemStagger: 0.09,
 				itemDelay: 0.12,
 			},
-			Habilidades: {
-				fromTransform: 'translate3d(0,110px,0) scale(0.94) rotateX(5deg)',
-				sectionAnimation: {
-					y: 0,
-					scale: 1,
-					rotateX: 0,
-					filter: 'blur(0px)',
-					duration: 1.02,
-					ease: 'power3.out',
-				},
-				itemFromTransform: 'translateY(28px) scale(0.96)',
-				itemAnimation: { y: 0, scale: 1, duration: 0.76, ease: 'power3.out' },
-				itemStagger: 0.08,
-				itemDelay: 0.13,
-			},
 			Contacto: {
 				fromTransform: 'translate3d(0,130px,0) scale(0.92)',
 				sectionAnimation: {
@@ -107,9 +92,10 @@ export const initAnimations = () => {
 				case 'Experiencia':
 					return uniqueElements(Array.from(section.querySelectorAll('.fade-in-section, .group')));
 				case 'Proyectos':
-					return uniqueElements(Array.from(section.querySelectorAll('article, .fade-in-section')));
+					// Seleccionamos las tarjetas para que entren con una animación rápida
+					return uniqueElements(Array.from(section.querySelectorAll('.fade-in-section, .fade-in-section')));
 				case 'Sobre-mi':
-					return uniqueElements(Array.from(section.querySelectorAll('.fade-in-section, article, aside')));
+					return []; // Vaciado porque lo controlamos con el ScrollTrigger ultra agresivo más abajo
 				case 'Habilidades':
 					return uniqueElements(Array.from(section.querySelectorAll('.fade-in-section, .skills-container .grid > article')));
 				case 'Contacto':
@@ -217,6 +203,9 @@ export const initAnimations = () => {
 		gsap.ticker.add((time) => {
 			lenis.raf(time * 1000);
 		});
+		
+		// Expose Lenis globally for custom anchor routing
+		window.lenis = lenis;
 
 		gsap.set('body', { overscrollBehavior: 'none' });
 
@@ -271,50 +260,142 @@ export const initAnimations = () => {
 		}
 
 		// ============================================
-		// PROJECT CARDS HOVER ANIMATIONS
+		// PROJECT CARDS SCROLL REVEAL (Despues de Trayectoria)
 		// ============================================
-		const projectCards = document.querySelectorAll('.carousel-item');
-		projectCards.forEach((card) => {
-			const image = card.querySelector('img');
-			const cardContent = card.querySelector('.space-y-4') || card.querySelector('a > div:last-child');
-
-			// Hover effect on card
-			card.addEventListener('mouseenter', () => {
-				gsap.to(card, {
-					duration: 0.4,
-					backgroundColor: 'rgba(255, 255, 255, 0.1)',
-					boxShadow: '0 20px 50px rgba(26, 115, 232, 0.2)',
-					ease: 'power2.out',
-				});
-
-				if (image) {
-					gsap.to(image, {
-						duration: 0.6,
-						scale: 1.08,
-						filter: 'brightness(1.1)',
-						ease: 'power2.out',
-					});
+		const projCards = document.querySelectorAll('#Proyectos .fade-in-section');
+		
+		projCards.forEach((card, index) => {
+			gsap.fromTo(card,
+				{
+					opacity: 0,
+					y: 60,
+					scale: 0.98,
+				},
+				{
+					scrollTrigger: {
+						trigger: card,
+						start: 'top 85%', // Asoma cuando la tarjeta entra al 85% de la ventana
+						toggleActions: 'play none none none' // Se reproduce una sola vez cuando scrolleas hacia abajo
+					},
+					opacity: 1,
+					y: 0,
+					scale: 1,
+					duration: 1,
+					delay: index * 0.1, // Delay escalonado (cascada fluida)
+					ease: 'power3.out',
+					clearProps: 'transform' // Evita que afecte a la animación del hover luego
 				}
-			});
-
-			card.addEventListener('mouseleave', () => {
-				gsap.to(card, {
-					duration: 0.4,
-					backgroundColor: 'rgba(255, 255, 255, 0)',
-					boxShadow: '0 12px 32px rgba(15, 23, 42, 0.06)',
-					ease: 'power2.out',
-				});
-
-				if (image) {
-					gsap.to(image, {
-						duration: 0.6,
-						scale: 1,
-						filter: 'brightness(1)',
-						ease: 'power2.out',
-					});
-				}
-			});
+			);
 		});
+
+		// ============================================
+		// ABOUT ME (Sobre mí) HORIZONTAL SCROLL
+		// ============================================
+		const aboutSection = document.getElementById('Sobre-mi');
+		if(aboutSection) {
+			const horizontalWrapper = aboutSection.querySelector('.horizontal-scroll-wrapper');
+			const bgOverlay = document.getElementById('about-bg-overlay');
+			
+			if (horizontalWrapper) {
+				gsap.to(horizontalWrapper, {
+					x: () => -(horizontalWrapper.scrollWidth - window.innerWidth), 
+					ease: "none",
+					scrollTrigger: {
+						trigger: aboutSection,
+						start: "center center", 
+						end: () => "+=" + (horizontalWrapper.scrollWidth * 0.85), // Reducido para que termine un poco más rápido
+						pin: true,
+						scrub: 0.3, // Reducido de 1.2 a 0.3 para una respuesta casi inmediata, eliminando el "lag"
+						invalidateOnRefresh: true, 
+						onEnter: () => bgOverlay && (bgOverlay.style.opacity = '1'),
+						onLeave: () => bgOverlay && (bgOverlay.style.opacity = '0'),
+						onEnterBack: () => bgOverlay && (bgOverlay.style.opacity = '1'),
+						onLeaveBack: () => bgOverlay && (bgOverlay.style.opacity = '0'),
+					}
+				});
+			}
+		}
+
+		// ============================================
+		// HABILIDADES REVEAL (Complemento a Sobre Mí)
+		// ============================================
+		const habilidadesSection = document.getElementById('Habilidades');
+		if(habilidadesSection && aboutSection) {
+			// 1. Transición de salida de "Sobre mí": Se difumina pero SIN afectar la escala 
+			// para no romper el pin-spacer de GSAP (Bug de layout)
+			const aboutContent = aboutSection.querySelector('.horizontal-scroll-wrapper');
+			
+			if (aboutContent) {
+				gsap.to(aboutContent, {
+					opacity: 0,
+					// Quitamos el blur porque puede causar bugs gráficos severos en algunos navegadores al combinarse con transform/pin
+					scrollTrigger: {
+						trigger: habilidadesSection,
+						start: "top 95%", 
+						end: "top 40%",   
+						scrub: true,
+					}
+				});
+			}
+
+			const header = habilidadesSection.querySelector('.skills-header');
+			const container = habilidadesSection.querySelector('.skills-container');
+			const cards = habilidadesSection.querySelectorAll('.skill-card');
+
+			// 2. Animación de entrada de Habilidades muy limpia
+			let tlHabilidades = gsap.timeline({
+				scrollTrigger: {
+					trigger: habilidadesSection,
+					start: "top 75%", // Inicia un poco después de que Sobre Mí empieza a desaparecer
+					end: "top 20%",
+					toggleActions: "play none none reverse",
+				}
+			});
+
+			tlHabilidades.fromTo([header, container], 
+				{ y: 60, opacity: 0 },
+				{ y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power3.out" }
+			).fromTo(cards, 
+				{ y: 40, opacity: 0 },
+				{ y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "back.out(1.2)" },
+				"-=0.4" // Se solapa con la aparición del contenedor principal
+			);
+		}
+
+		// ============================================
+		// CONTACTO FIN / MARQUEE ANIMATION
+		// ============================================
+		const contactSection = document.getElementById('Contacto');
+		const marqueeContainer = contactSection?.querySelector('.marquee-container');
+		const marqueeText = contactSection?.querySelector('.marquee-text');
+
+		if (contactSection && marqueeContainer && marqueeText) {
+			// Calculamos el ancho del texto vs el contenedor para un scroll perfecto
+			let textWidth = marqueeText.offsetWidth;
+			let containerWidth = marqueeContainer.offsetWidth;
+			
+			// Si el texto es mas pequeño que la panatalla se asegura un minimo de desplazamiento
+			let distance = textWidth > containerWidth ? -(textWidth - containerWidth) : -(containerWidth * 0.5);
+
+			gsap.fromTo(marqueeText, 
+				{ x: window.innerWidth * 0.2 }, // Empieza asomandose por derecha
+				{
+					x: distance - (window.innerWidth * 0.3), // Termina perdiéndose por izquierda
+					ease: "none",
+					scrollTrigger: {
+						trigger: contactSection,
+						start: "top bottom", // Inicia al revelar el section de contacto
+						end: "bottom center", // Termina cuando llegas al footer
+						scrub: 0.5, // Suavizado para que se vea premium y sin saltos bruscos
+					}
+				}
+			);
+		}
+
+		// ============================================
+		// PROJECT CARDS HOVER ANIMATIONS (Removido para usar CSS puro Tailwind)
+		// ============================================
+		// Animaciones controladas ahora por CSS (hover:shadow, dark:hover:bg, etc.) para soportar bien Light/Dark mode.
 
 		// ============================================
 		// BUTTON HOVER ANIMATIONS
