@@ -19,7 +19,7 @@ export const initAnimations = () => {
 		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 		const shouldAnimate = forceMotion || !prefersReducedMotion;
 
-		const sectionTargets = Array.from(document.querySelectorAll('section[id]')).filter((section) => section.id !== 'top');
+		const sectionTargets = Array.from(document.querySelectorAll('section[id]')).filter((section) => section.id !== 'top' && section.id !== 'Proyectos' && section.id !== 'Sobre-mi');
 		const sectionChildrenMap = new Map();
 
 		const uniqueElements = (elements) => Array.from(new Set(elements)).filter(Boolean);
@@ -92,8 +92,8 @@ export const initAnimations = () => {
 				case 'Experiencia':
 					return uniqueElements(Array.from(section.querySelectorAll('.fade-in-section, .group')));
 				case 'Proyectos':
-					// Seleccionamos las tarjetas para que entren con una animación rápida
-					return uniqueElements(Array.from(section.querySelectorAll('.fade-in-section, .fade-in-section')));
+					// El reveal de tarjetas de proyectos se controla abajo con una timeline dedicada
+					return uniqueElements(Array.from(section.querySelectorAll('.projects-header, .projects-more')));
 				case 'Sobre-mi':
 					return []; // Vaciado porque lo controlamos con el ScrollTrigger ultra agresivo más abajo
 				case 'Habilidades':
@@ -260,33 +260,197 @@ export const initAnimations = () => {
 		}
 
 		// ============================================
-		// PROJECT CARDS SCROLL REVEAL (Despues de Trayectoria)
+		// PROJECT CARDS (GSAP SCROLL + HOVER)
 		// ============================================
-		const projCards = document.querySelectorAll('#Proyectos .fade-in-section');
-		
-		projCards.forEach((card, index) => {
-			gsap.fromTo(card,
+		const projCards = gsap.utils.toArray('#Proyectos .project-card');
+		const projectsGrid = document.querySelector('#Proyectos .projects-grid');
+		const projectsHeaderTargets = gsap.utils.toArray('#Proyectos .projects-header, #Proyectos .projects-more');
+
+		if (projectsHeaderTargets.length > 0) {
+			gsap.fromTo(projectsHeaderTargets,
+				{ autoAlpha: 0, y: 28 },
 				{
-					opacity: 0,
-					y: 60,
-					scale: 0.98,
-				},
-				{
-					scrollTrigger: {
-						trigger: card,
-						start: 'top 85%', // Asoma cuando la tarjeta entra al 85% de la ventana
-						toggleActions: 'play none none none' // Se reproduce una sola vez cuando scrolleas hacia abajo
-					},
-					opacity: 1,
+					autoAlpha: 1,
 					y: 0,
-					scale: 1,
-					duration: 1,
-					delay: index * 0.1, // Delay escalonado (cascada fluida)
-					ease: 'power3.out',
-					clearProps: 'transform' // Evita que afecte a la animación del hover luego
+					duration: 0.72,
+					stagger: 0.12,
+					ease: 'power2.out',
+					scrollTrigger: {
+						trigger: '#Proyectos',
+						start: 'top 82%',
+						once: true,
+					}
 				}
 			);
-		});
+		}
+
+		if (projCards.length > 0 && projectsGrid) {
+			// Reveal estable: evitamos clip-path y blur porque suelen causar parpadeo.
+			gsap.set(projCards, {
+				autoAlpha: 0,
+				y: 52,
+				scale: 0.985,
+				force3D: true,
+				transformOrigin: '50% 50%',
+				willChange: 'transform, opacity'
+			});
+
+			gsap.to(projCards, {
+				autoAlpha: 1,
+				y: 0,
+				scale: 1,
+				duration: 0.86,
+				stagger: 0.12,
+				ease: 'power3.out',
+				force3D: true,
+				scrollTrigger: {
+					trigger: projectsGrid,
+					start: 'top 80%',
+					once: true,
+				},
+				onComplete: () => {
+					projCards.forEach((card) => gsap.set(card, { willChange: 'auto' }));
+				}
+			});
+
+			const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+			if (supportsHover) {
+				projCards.forEach((card) => {
+					if (card.getAttribute('data-project-hover-bound') === 'true') return;
+					card.setAttribute('data-project-hover-bound', 'true');
+
+					const image = card.querySelector('.project-card-image');
+					const overlay = card.querySelector('.project-card-overlay');
+					const glow = card.querySelector('.project-card-glow');
+					const shine = card.querySelector('.project-card-shine');
+					const title = card.querySelector('.project-card-title');
+					const divider = card.querySelector('.project-card-divider');
+					const innerContent = card.querySelector('.project-card-inner-content');
+					const arrow = card.querySelector('.project-card-arrow');
+					const indexBadge = card.querySelector('.project-card-index');
+					const chip = card.querySelector('.project-card-chip');
+
+					gsap.set(card, {
+						transformPerspective: 900,
+						transformStyle: 'preserve-3d',
+						force3D: true,
+					});
+
+					if (image) gsap.set(image, { force3D: true, backfaceVisibility: 'hidden' });
+					if (overlay) gsap.set(overlay, { force3D: true, backfaceVisibility: 'hidden' });
+					if (glow) gsap.set(glow, { force3D: true, backfaceVisibility: 'hidden' });
+
+					// Estado base: el titulo queda abajo y la descripcion colapsada.
+					if (innerContent) {
+						gsap.set(innerContent, {
+							height: 0,
+							autoAlpha: 0,
+							marginTop: 0,
+							overflow: 'hidden',
+							pointerEvents: 'none'
+						});
+					}
+					if (arrow) gsap.set(arrow, { y: 10, autoAlpha: 0 });
+					if (shine) gsap.set(shine, { xPercent: -90, autoAlpha: 0 });
+
+					const tiltX = gsap.quickTo(card, 'rotationX', { duration: 0.32, ease: 'power2.out' });
+					const tiltY = gsap.quickTo(card, 'rotationY', { duration: 0.32, ease: 'power2.out' });
+					const glowShiftX = glow ? gsap.quickTo(glow, 'x', { duration: 0.38, ease: 'power2.out' }) : null;
+					const glowShiftY = glow ? gsap.quickTo(glow, 'y', { duration: 0.38, ease: 'power2.out' }) : null;
+					const shineShiftX = shine ? gsap.quickTo(shine, 'xPercent', { duration: 0.42, ease: 'power2.out' }) : null;
+
+					const hoverTl = gsap.timeline({ paused: true, defaults: { ease: 'power2.out' } });
+
+					hoverTl
+						.to(card, {
+							boxShadow: '0 24px 45px rgba(0, 0, 0, 0.28)',
+							y: -3,
+							duration: 0.38,
+						}, 0)
+						.to(image, {
+							scale: 1.06,
+							duration: 0.42,
+							force3D: true,
+						}, 0)
+						.to(overlay, { opacity: 0.95, duration: 0.35 }, 0)
+						.to(glow, { opacity: 0.68, duration: 0.35 }, 0.02)
+						.to(shine, { xPercent: 70, autoAlpha: 0.42, duration: 0.62, ease: 'power2.inOut' }, 0.04)
+						.to(title, { y: -2, color: '#fff', duration: 0.28 }, 0.04)
+						.to(indexBadge, { color: 'rgba(255,255,255,0.95)', duration: 0.3 }, 0.05)
+						.to(divider, { width: 54, backgroundColor: '#DC2626', duration: 0.3 }, 0.08)
+						.to(innerContent, {
+							height: 'auto',
+							autoAlpha: 1,
+							marginTop: 12,
+							duration: 0.34,
+							onStart: () => {
+								if (innerContent) gsap.set(innerContent, { pointerEvents: 'auto' });
+							},
+						}, 0.12)
+						.to(arrow, { y: 0, autoAlpha: 1, duration: 0.28 }, 0.16);
+
+					if (chip) {
+						hoverTl.to(chip, { autoAlpha: 1, scale: 1.02, duration: 0.24 }, 0.08);
+					}
+
+					hoverTl.eventCallback('onReverseComplete', () => {
+						if (innerContent) gsap.set(innerContent, { pointerEvents: 'none' });
+					});
+
+					const onMove = (event) => {
+						const rect = card.getBoundingClientRect();
+						const relX = (event.clientX - rect.left) / rect.width - 0.5;
+						const relY = (event.clientY - rect.top) / rect.height - 0.5;
+
+						tiltY(relX * 5.2);
+						tiltX(relY * -4.4);
+
+						if (glowShiftX) glowShiftX(relX * 14);
+						if (glowShiftY) glowShiftY(relY * 10);
+						if (shineShiftX) shineShiftX(70 + relX * 18);
+					};
+
+					const resetTilt = () => {
+						tiltX(0);
+						tiltY(0);
+						if (glowShiftX) glowShiftX(0);
+						if (glowShiftY) glowShiftY(0);
+						if (shineShiftX) shineShiftX(0);
+					};
+
+					const onEnter = () => hoverTl.play();
+					const onLeave = () => {
+						hoverTl.reverse();
+						resetTilt();
+					};
+
+					card.addEventListener('mouseenter', onEnter);
+					card.addEventListener('mouseleave', onLeave);
+					card.addEventListener('mousemove', onMove);
+
+					card.addEventListener('focusin', onEnter);
+					card.addEventListener('focusout', onLeave);
+				});
+			} else {
+				projCards.forEach((card) => {
+					const innerContent = card.querySelector('.project-card-inner-content');
+					const arrow = card.querySelector('.project-card-arrow');
+					if (innerContent) {
+						gsap.set(innerContent, {
+							height: 'auto',
+							autoAlpha: 1,
+							marginTop: 12,
+							overflow: 'visible',
+							pointerEvents: 'auto'
+						});
+					}
+					if (arrow) {
+						gsap.set(arrow, { y: 0, autoAlpha: 1 });
+					}
+				});
+			}
+		}
 
 		// ============================================
 		// ABOUT ME (Sobre mí) HORIZONTAL SCROLL
@@ -295,24 +459,82 @@ export const initAnimations = () => {
 		if(aboutSection) {
 			const horizontalWrapper = aboutSection.querySelector('.horizontal-scroll-wrapper');
 			const bgOverlay = document.getElementById('about-bg-overlay');
+			const aboutOrbOne = document.getElementById('about-color-orb');
+			const aboutOrbTwo = document.getElementById('about-color-orb-2');
 			
 			if (horizontalWrapper) {
+				const aboutScrollDistance = () => horizontalWrapper.scrollWidth * 0.85;
+
 				gsap.to(horizontalWrapper, {
 					x: () => -(horizontalWrapper.scrollWidth - window.innerWidth), 
 					ease: "none",
 					scrollTrigger: {
 						trigger: aboutSection,
 						start: "center center", 
-						end: () => "+=" + (horizontalWrapper.scrollWidth * 0.85), // Reducido para que termine un poco más rápido
+						end: () => "+=" + aboutScrollDistance(), // Reducido para que termine un poco más rápido
 						pin: true,
 						scrub: 0.3, // Reducido de 1.2 a 0.3 para una respuesta casi inmediata, eliminando el "lag"
 						invalidateOnRefresh: true, 
-						onEnter: () => bgOverlay && (bgOverlay.style.opacity = '1'),
-						onLeave: () => bgOverlay && (bgOverlay.style.opacity = '0'),
-						onEnterBack: () => bgOverlay && (bgOverlay.style.opacity = '1'),
-						onLeaveBack: () => bgOverlay && (bgOverlay.style.opacity = '0'),
 					}
 				});
+
+				if (bgOverlay) {
+					gsap.fromTo(bgOverlay,
+						{ autoAlpha: 0.22, backgroundPosition: '0% 0%' },
+						{
+							autoAlpha: 0.56,
+							backgroundPosition: '100% 58%',
+							ease: 'none',
+							scrollTrigger: {
+								trigger: aboutSection,
+								start: 'top bottom',
+								end: () => '+=' + aboutScrollDistance(),
+								scrub: 0.45,
+								invalidateOnRefresh: true,
+							}
+						}
+					);
+				}
+
+				if (aboutOrbOne) {
+					gsap.fromTo(aboutOrbOne,
+						{ autoAlpha: 0.14, xPercent: -24, yPercent: 10, scale: 0.92 },
+						{
+							autoAlpha: 0.38,
+							xPercent: 32,
+							yPercent: -10,
+							scale: 1.2,
+							ease: 'none',
+							scrollTrigger: {
+								trigger: aboutSection,
+								start: 'top bottom',
+								end: () => '+=' + aboutScrollDistance(),
+								scrub: 0.5,
+								invalidateOnRefresh: true,
+							}
+						}
+					);
+				}
+
+				if (aboutOrbTwo) {
+					gsap.fromTo(aboutOrbTwo,
+						{ autoAlpha: 0.1, xPercent: 16, yPercent: 6, scale: 0.9 },
+						{
+							autoAlpha: 0.34,
+							xPercent: -26,
+							yPercent: 18,
+							scale: 1.18,
+							ease: 'none',
+							scrollTrigger: {
+								trigger: aboutSection,
+								start: 'top bottom',
+								end: () => '+=' + aboutScrollDistance(),
+								scrub: 0.5,
+								invalidateOnRefresh: true,
+							}
+						}
+					);
+				}
 			}
 		}
 
@@ -393,9 +615,9 @@ export const initAnimations = () => {
 		}
 
 		// ============================================
-		// PROJECT CARDS HOVER ANIMATIONS (Removido para usar CSS puro Tailwind)
+		// PROJECT CARDS HOVER ANIMATIONS
 		// ============================================
-		// Animaciones controladas ahora por CSS (hover:shadow, dark:hover:bg, etc.) para soportar bien Light/Dark mode.
+		// Controladas por la timeline GSAP declarada arriba para evitar conflictos entre CSS y JS.
 
 		// ============================================
 		// BUTTON HOVER ANIMATIONS
