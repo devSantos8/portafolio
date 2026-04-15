@@ -609,23 +609,6 @@ export const initAnimations = () => {
 		// ============================================
 		const habilidadesSection = document.getElementById('Habilidades');
 		if(habilidadesSection && aboutSection) {
-			// 1. Transición de salida de "Sobre mí": Se difumina pero SIN afectar la escala 
-			// para no romper el pin-spacer de GSAP (Bug de layout)
-			const aboutContent = aboutSection.querySelector('.about-panels-wrapper');
-			
-			if (aboutContent) {
-				gsap.to(aboutContent, {
-					opacity: 0.9,
-					y: 8,
-					scrollTrigger: {
-						trigger: habilidadesSection,
-						start: "top 84%", 
-						end: "top 34%",   
-						scrub: true,
-					}
-				});
-			}
-
 			const header = habilidadesSection.querySelector('.skills-header');
 			const container = habilidadesSection.querySelector('.skills-container');
 			const cards = habilidadesSection.querySelectorAll('.skill-card');
@@ -634,7 +617,7 @@ export const initAnimations = () => {
 			let tlHabilidades = gsap.timeline({
 				scrollTrigger: {
 					trigger: habilidadesSection,
-					start: "top 75%", // Inicia un poco después de que Sobre Mí empieza a desaparecer
+					start: "top 75%", // Inicia un poco después de que Sobre Mí termina
 					end: "top 20%",
 					toggleActions: "play none none reverse",
 				}

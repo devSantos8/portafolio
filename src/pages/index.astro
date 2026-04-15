@@ -360,129 +360,106 @@ const googleAccentClasses = [
 		<!-- Projects Section - Premium Edition -->
 		<section
 			id="Proyectos"
-			class="relative px-4 md:px-8 lg:px-16 xl:px-24 py-24 md:py-32 lg:py-40 bg-transparent overflow-hidden"
+			class="relative px-4 md:px-8 lg:px-16 xl:px-24 py-32 md:py-44 bg-transparent overflow-hidden"
 		>
 			<style is:inline>
 				@keyframes projectSlideUp {
-					from {
-						opacity: 0;
-						transform: translateY(12px);
-					}
-					to {
-						opacity: 1;
-						transform: translateY(0);
-					}
+					from { opacity: 0; transform: translateY(40px) scale(0.95); }
+					to { opacity: 1; transform: translateY(0) scale(1); }
 				}
 
-				.project-new-card {
-					transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-								box-shadow 0.4s ease,
-								border-color 0.3s ease;
-					border: 1px solid;
-				}
-
-				.project-new-card:hover {
-					transform: translateY(-8px);
-					box-shadow: var(--shadow-active);
-					border-color: currentColor;
-				}
-
-				.project-image-container {
-					overflow: hidden;
-					position: relative;
-					background: linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0.1));
-				}
-
-				.project-image-container img {
-					transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-					width: 100%;
-					height: 100%;
-				}
-
-				.project-new-card:hover .project-image-container img {
-					transform: scale(1.06);
-				}
-
-				.project-overlay {
-					position: absolute;
-					inset: 0;
-					background: linear-gradient(135deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0.2) 100%);
+				.project-premium-card {
 					opacity: 0;
-					transition: opacity 0.5s ease;
-					pointer-events: none;
+					animation: projectSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+					transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 				}
 
-				.project-new-card:hover .project-overlay {
+				.project-premium-card:nth-child(1) { animation-delay: 0.1s; }
+				.project-premium-card:nth-child(2) { animation-delay: 0.2s; }
+				.project-premium-card:nth-child(3) { animation-delay: 0.3s; }
+
+				.project-premium-card:hover {
+					transform: translateY(-8px);
+				}
+
+				.project-image-wrapper {
+					overflow: hidden;
+					transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+				}
+
+				.project-image-wrapper img {
+					transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+					will-change: transform;
+					filter: brightness(0.95) saturate(1.05);
+				}
+
+				.project-premium-card:hover .project-image-wrapper img {
+					transform: scale(1.08) rotate(-1deg);
+					filter: brightness(1.05) saturate(1.1);
+				}
+				
+				.project-glow {
+					transition: opacity 0.6s ease;
+				}
+				.project-premium-card:hover .project-glow {
 					opacity: 1;
 				}
 			</style>
 
-			<div class="absolute inset-0 pointer-events-none">
-				<div class="absolute -top-24 right-0 w-72 h-72 bg-[#DC2626]/10 blur-[120px] rounded-full"></div>
-				<div class="absolute -bottom-24 left-0 w-72 h-72 bg-[#1E293B]/10 dark:bg-[#334155]/16 blur-[120px] rounded-full"></div>
-				<div class="absolute top-1/4 left-1/4 w-56 h-56 bg-[#0EA5E9]/8 blur-[110px] rounded-full"></div>
-			</div>
-
 			<div class="relative z-10 max-w-7xl mx-auto">
 				<!-- Header -->
-				<div class="fade-in-section mb-14 md:mb-20">
-					<div class="mb-5">
-						<span class="inline-block text-[10px] font-semibold uppercase tracking-[0.28em] text-[#DC2626] mb-3">
-							━ Portfolio Visual
-						</span>
-					</div>
-					<div class="max-w-4xl">
-						<h2 class="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 dark:text-white leading-[1.05] mb-5 tracking-tight">
-							Proyectos que <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#DC2626] via-[#f87171] to-[#fca5a5]">transforman</span> visiones
-						</h2>
-						<p class="text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed max-w-3xl">
-							Cada proyecto es una experiencia cuidadosamente diseñada. Desde plataformas complejas de conexión laboral hasta interfaces de análisis en tiempo real. Interactividad, rendimiento y belleza visual en cada píxel.
+				<div class="flex flex-col md:flex-row md:items-end gap-6 mb-24 relative fade-in-section">
+					<div class="absolute -top-32 right-0 w-96 h-96 bg-red-500/[0.03] dark:bg-white/[0.02] rounded-full blur-[100px] pointer-events-none"></div>
+					<div class="flex-1">
+						<p class="text-[10px] font-semibold uppercase tracking-[0.3em] text-gray-500 dark:text-white/50 md:pb-2 mb-2 font-mono">
+							[ Creación Digital ]
 						</p>
+						<h2 class="text-5xl md:text-7xl font-semibold text-gray-900 dark:text-white tracking-tighter leading-none">
+							Proyectos
+						</h2>
+					</div>
+					<div class="hidden md:flex flex-1 items-center">
+						<span class="flex-1 h-[1px] bg-gradient-to-r from-transparent via-gray-200 dark:via-white/10 to-transparent"></span>
 					</div>
 				</div>
 
 				<!-- Projects Grid - Modern Minimalist Design -->
-				<div class="projects-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6 auto-rows-max">
+				<div class="projects-grid grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 auto-rows-[400px]">
 
 					<!-- Project 1: CommitFlow - Featured (Spans 2 cols) -->
 					<a
 						href="https://github.com/17santo"
 						target="_blank"
 						rel="noopener noreferrer"
-						class="group project-new-card md:col-span-2 md:row-span-1 overflow-hidden rounded-xl bg-white dark:bg-slate-950 border-gray-200 dark:border-slate-800"
+						class="group project-premium-card md:col-span-2 row-span-1 rounded-[2rem] bg-white/70 dark:bg-[#0a0a0a]/90 border border-gray-100 dark:border-white/5 shadow-xl shadow-gray-200/50 dark:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-all duration-500 hover:border-gray-300 dark:hover:border-white/10 hover:shadow-2xl dark:hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] flex flex-col md:flex-row overflow-hidden relative"
 					>
-						<div class="grid md:grid-cols-2 gap-0 h-full">
-							<!-- Image -->
-							<div class="project-image-container relative h-64 md:h-full min-h-80 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-50 dark:from-slate-900 dark:to-slate-950">
-								<img
-									src="../projects/workco.webp"
-									alt="CommitFlow"
-									class="w-full h-full object-cover"
-									loading="lazy"
-								/>
-								<div class="project-overlay"></div>
+						<div class="absolute inset-0 bg-gradient-to-r from-red-500/0 via-red-500/0 to-red-500/5 dark:to-red-500/10 project-glow opacity-0 pointer-events-none"></div>
+						
+						<!-- Content -->
+						<div class="p-8 md:p-12 pl-8 md:pl-12 flex flex-col justify-center flex-1 order-2 md:order-1 relative z-10 w-full md:w-1/2">
+							<div class="flex items-center gap-3 mb-6">
+								<span class="h-2 w-2 rounded-full bg-red-500 animate-pulse"></span>
+								<span class="text-[10px] font-mono uppercase tracking-[0.2em] text-red-600 dark:text-red-400">Destacado</span>
 							</div>
-							<!-- Content -->
-							<div class="p-6 md:p-8 flex flex-col justify-between">
-								<div>
-									<div class="flex items-center gap-2 mb-3">
-										<span class="px-2.5 py-1 rounded-md bg-red-100 dark:bg-red-950/40 text-red-700 dark:text-red-300 text-xs font-semibold">Featured</span>
-									</div>
-									<h3 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">CommitFlow</h3>
-									<p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-5 line-clamp-3">Plataforma integral de conexión laboral que une talento TI con oportunidades. Sistemas avanzados de matching y gestión de ofertas.</p>
-									<div class="flex flex-wrap gap-2">
-										<span class="px-3 py-1 rounded-md text-xs font-medium bg-gray-100 dark:bg-slate-800/60 text-gray-700 dark:text-gray-300">Django</span>
-										<span class="px-3 py-1 rounded-md text-xs font-medium bg-gray-100 dark:bg-slate-800/60 text-gray-700 dark:text-gray-300">React</span>
-										<span class="px-3 py-1 rounded-md text-xs font-medium bg-gray-100 dark:bg-slate-800/60 text-gray-700 dark:text-gray-300">PostgreSQL</span>
-									</div>
-								</div>
-								<div class="flex items-center gap-2 text-red-600 dark:text-red-400 mt-6 group-hover:gap-3 transition-all">
-									<span class="text-sm font-semibold">Ver proyecto</span>
-									<svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-									</svg>
-								</div>
+							<h3 class="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-white mb-4 tracking-tight">CommitFlow</h3>
+							<p class="text-base text-gray-600 dark:text-white/60 leading-relaxed mb-8 max-w-sm font-light">Plataforma integral de conexión laboral que une talento TI con oportunidades y sistemas avanzados de matching.</p>
+							<div class="flex flex-wrap gap-2 mt-auto relative z-20">
+								<span class="px-4 py-2 rounded-full text-xs font-mono text-gray-600 dark:text-white/60 bg-gray-100 dark:bg-white/[0.03] border border-gray-200 dark:border-white/5">Django</span>
+								<span class="px-4 py-2 rounded-full text-xs font-mono text-gray-600 dark:text-white/60 bg-gray-100 dark:bg-white/[0.03] border border-gray-200 dark:border-white/5">React</span>
+								<span class="px-4 py-2 rounded-full text-xs font-mono text-gray-600 dark:text-white/60 bg-gray-100 dark:bg-white/[0.03] border border-gray-200 dark:border-white/5">SQL</span>
 							</div>
+						</div>
+						
+						<!-- Image -->
+						<div class="project-image-wrapper relative w-full md:w-1/2 h-64 md:h-full order-1 md:order-2 overflow-hidden bg-gray-100 dark:bg-slate-900">
+							<div class="absolute inset-0 bg-gradient-to-l from-transparent to-white/70 dark:to-[#0a0a0a]/90 z-10 hidden md:block"></div>
+							<div class="absolute inset-0 bg-gradient-to-t from-white/70 dark:from-[#0a0a0a]/90 to-transparent z-10 md:hidden"></div>
+							<img
+								src="../projects/workco.webp"
+								alt="CommitFlow"
+								class="w-full h-full object-cover object-left"
+								loading="lazy"
+							/>
 						</div>
 					</a>
 
@@ -491,33 +468,27 @@ const googleAccentClasses = [
 						href="https://github.com/17santo"
 						target="_blank"
 						rel="noopener noreferrer"
-						class="group project-new-card md:col-span-1 md:row-span-2 flex flex-col overflow-hidden rounded-xl bg-white dark:bg-slate-950 border-gray-200 dark:border-slate-800"
+						class="group project-premium-card md:col-span-1 row-span-1 md:row-span-2 rounded-[2rem] bg-white/70 dark:bg-[#0a0a0a]/90 border border-gray-100 dark:border-white/5 shadow-xl shadow-gray-200/50 dark:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-all duration-500 hover:border-gray-300 dark:hover:border-white/10 hover:shadow-2xl dark:hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] flex flex-col overflow-hidden relative"
 					>
 						<!-- Image -->
-						<div class="project-image-container relative h-64 md:h-full min-h-64 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-50 dark:from-slate-900 dark:to-slate-950">
+						<div class="project-image-wrapper relative h-64 md:h-[55%] w-full overflow-hidden bg-gray-100 dark:bg-slate-900">
+							<div class="absolute inset-0 bg-gradient-to-b from-transparent to-white/70 dark:to-[#0a0a0a]/90 z-10"></div>
 							<img
 								src="../projects/dashboard.webp"
 								alt="Dashboard Analytics"
-								class="w-full h-full object-cover"
+								class="w-full h-full object-cover object-center"
 								loading="lazy"
 							/>
-							<div class="project-overlay"></div>
 						</div>
 						<!-- Content -->
-						<div class="p-5 md:p-6 flex flex-col justify-between flex-1">
-							<div>
-								<h3 class="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-2">Dashboard Analytics</h3>
-								<p class="text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-3 line-clamp-2">Interfaz moderna para visualizar métricas de e-commerce en tiempo real.</p>
-								<div class="flex gap-2">
-									<span class="px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 dark:bg-slate-800/60 text-gray-700 dark:text-gray-300">Django</span>
-									<span class="px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 dark:bg-slate-800/60 text-gray-700 dark:text-gray-300">JS</span>
+						<div class="p-8 flex flex-col justify-between flex-1 relative z-10 -mt-10 md:-mt-8">
+							<div class="bg-white dark:bg-[#0a0a0a] rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-white/5 relative z-20 flex-1 flex flex-col">
+								<h3 class="text-xl md:text-2xl font-semibold text-gray-900 dark:text-white mb-3 tracking-tight">Dashboard Data</h3>
+								<p class="text-sm text-gray-600 dark:text-white/60 leading-relaxed mb-6 font-light flex-1">Interfaz moderna para visualizar métricas en tiempo real con componentes dinámicos y analítica profunda.</p>
+								<div class="flex flex-wrap gap-2 mt-auto">
+									<span class="px-3 py-1.5 rounded-full text-xs font-mono text-gray-600 dark:text-white/60 bg-gray-100 dark:bg-white/[0.03] border border-gray-200 dark:border-white/5">Django</span>
+									<span class="px-3 py-1.5 rounded-full text-xs font-mono text-gray-600 dark:text-white/60 bg-gray-100 dark:bg-white/[0.03] border border-gray-200 dark:border-white/5">JS Vanilla</span>
 								</div>
-							</div>
-							<div class="flex items-center gap-2 text-blue-600 dark:text-blue-400 mt-4 group-hover:gap-3 transition-all">
-								<span class="text-xs font-semibold">Ver</span>
-								<svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-								</svg>
 							</div>
 						</div>
 					</a>
@@ -527,55 +498,54 @@ const googleAccentClasses = [
 						href="https://lubricentro-la-esquina.vercel.app"
 						target="_blank"
 						rel="noopener noreferrer"
-						class="group project-new-card md:col-span-1 md:row-span-1 flex flex-col overflow-hidden rounded-xl bg-white dark:bg-slate-950 border-gray-200 dark:border-slate-800"
+						class="group project-premium-card md:col-span-2 row-span-1 rounded-[2rem] bg-white/70 dark:bg-[#0a0a0a]/90 border border-gray-100 dark:border-white/5 shadow-xl shadow-gray-200/50 dark:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-all duration-500 hover:border-gray-300 dark:hover:border-white/10 hover:shadow-2xl dark:hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] flex flex-col md:flex-row-reverse overflow-hidden relative"
 					>
+						<div class="absolute inset-0 bg-gradient-to-l from-emerald-500/0 via-emerald-500/0 to-emerald-500/5 dark:to-emerald-500/10 project-glow opacity-0 pointer-events-none"></div>
+						
+						<!-- Content -->
+						<div class="p-8 md:p-12 pr-8 md:pr-12 flex flex-col justify-center flex-1 order-2 md:order-1 relative z-10 w-full md:w-1/2 lg:w-[45%]">
+							<div class="flex items-center gap-3 mb-6">
+								<span class="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-[10px] font-mono font-semibold uppercase tracking-[0.1em] flex items-center gap-2 w-fit">
+									<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse"></span>
+									Desplegado
+								</span>
+							</div>
+							<h3 class="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-white mb-4 tracking-tight">Lubricentro</h3>
+							<p class="text-base text-gray-600 dark:text-white/60 leading-relaxed mb-8 font-light">Presencia digital de alto rendimiento orientada a SEO local para impulsar visibilidad e captación de clientes de forma orgánica y fluida.</p>
+							<div class="flex flex-wrap gap-2 mt-auto relative z-20">
+								<span class="px-4 py-2 rounded-full text-xs font-mono text-gray-600 dark:text-white/60 bg-gray-100 dark:bg-white/[0.03] border border-gray-200 dark:border-white/5">Astro</span>
+								<span class="px-4 py-2 rounded-full text-xs font-mono text-gray-600 dark:text-white/60 bg-gray-100 dark:bg-white/[0.03] border border-gray-200 dark:border-white/5">Tailwind</span>
+							</div>
+						</div>
+
 						<!-- Image -->
-						<div class="project-image-container relative h-48 md:h-56 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-50 dark:from-slate-900 dark:to-slate-950">
+						<div class="project-image-wrapper relative w-full md:w-1/2 lg:w-[55%] h-64 md:h-full order-1 md:order-2 overflow-hidden bg-gray-100 dark:bg-slate-900">
+							<div class="absolute inset-0 bg-gradient-to-r from-transparent to-white/70 dark:to-[#0a0a0a]/90 z-10 hidden md:block"></div>
+							<div class="absolute inset-0 bg-gradient-to-t from-white/70 dark:from-[#0a0a0a]/90 to-transparent z-10 md:hidden"></div>
 							<img
 								src="../projects/lubricentro.webp"
 								alt="Lubricentro La Esquina"
-								class="w-full h-full object-cover"
+								class="w-full h-full object-cover object-right"
 								loading="lazy"
 							/>
-							<div class="project-overlay"></div>
-							<div class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 text-xs font-semibold flex items-center gap-1.5">
-								<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-								En vivo
-							</div>
-						</div>
-						<!-- Content -->
-						<div class="p-5 md:p-6 flex flex-col justify-between flex-1">
-							<div>
-								<h3 class="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-2">Lubricentro La Esquina</h3>
-								<p class="text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-3 line-clamp-2">Presencia digital local con SEO optimizado.</p>
-								<div class="flex gap-2">
-									<span class="px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 dark:bg-slate-800/60 text-gray-700 dark:text-gray-300">Astro</span>
-									<span class="px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 dark:bg-slate-800/60 text-gray-700 dark:text-gray-300">Tailwind</span>
-								</div>
-							</div>
-							<div class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 mt-4 group-hover:gap-3 transition-all">
-								<span class="text-xs font-semibold">Visitar</span>
-								<svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-								</svg>
-							</div>
 						</div>
 					</a>
 
 				</div>
 
 				<!-- View more CTA -->
-				<div class="fade-in-section projects-more mt-12 md:mt-16 text-center">
+				<div class="fade-in-section flex justify-center mt-16 md:mt-24">
 					<a
 						href="https://github.com/17santo"
 						target="_blank"
 						rel="noopener"
-						class="group inline-flex items-center gap-2.5 rounded-full px-5 md:px-6 py-2.5 md:py-3 border border-gray-300/80 dark:border-white/15 bg-white/70 dark:bg-white/[0.05] backdrop-blur-md text-sm md:text-base font-semibold text-gray-900 dark:text-white hover:border-[#DC2626]/60 hover:text-[#DC2626] dark:hover:text-[#DC2626] hover:bg-white/90 dark:hover:bg-white/10 transition-all duration-300 shadow-lg dark:shadow-xl hover:shadow-2xl"
+						class="group relative inline-flex items-center gap-3 rounded-full px-8 py-4 bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/10 shadow-lg dark:shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-gray-300 dark:hover:border-white/20"
 					>
-						Explorar más proyectos
-						<svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+						<span class="relative z-10 text-sm md:text-base font-semibold text-gray-900 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300">Explorar Archivos en GitHub</span>
+						<svg class="relative z-10 w-5 h-5 text-gray-900 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-400 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
 						</svg>
+						<div class="absolute inset-0 bg-gradient-to-r from-red-500/0 via-red-500/5 to-red-500/10 dark:from-red-500/0 dark:via-red-500/5 dark:to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
 					</a>
 				</div>
 			</div>
@@ -626,107 +596,107 @@ const googleAccentClasses = [
 					</header>
 
 					<div class="grid grid-cols-1 lg:grid-cols-[minmax(290px,380px)_1fr] gap-8 lg:gap-12 items-start">
-						<aside class="about-sticky-head lg:sticky lg:top-28 lg:self-start rounded-[2rem] border border-slate-700/60 bg-[linear-gradient(145deg,rgba(15,23,42,0.96)_0%,rgba(30,41,59,0.92)_52%,rgba(15,23,42,0.96)_100%)] p-7 md:p-8 lg:p-9 shadow-[0_26px_60px_rgba(2,6,23,0.35)]">
-							<p class="text-[10px] font-semibold uppercase tracking-[0.28em] text-slate-400 mb-4">
+						<aside class="about-sticky-head lg:sticky lg:top-28 lg:self-start rounded-[2rem] border border-gray-200/50 dark:border-white/5 bg-white/70 dark:bg-[#0a0a0a]/90 backdrop-blur-xl p-7 md:p-8 lg:p-9 shadow-xl shadow-gray-200/40 dark:shadow-none">
+							<p class="text-[10px] font-semibold uppercase tracking-[0.28em] text-gray-400 dark:text-gray-500 mb-4">
 								Manifesto
 							</p>
-							<h3 class="text-2xl md:text-[2rem] font-medium leading-[1.08] tracking-[-0.02em] text-slate-100">
+							<h3 class="text-2xl md:text-[2rem] font-medium leading-[1.08] tracking-[-0.02em] text-gray-900 dark:text-white">
 								Sistemas sólidos,
-								<span class="block text-slate-300 mt-1">
+								<span class="block text-gray-600 dark:text-gray-400 mt-1">
 									experiencias con carácter.
 								</span>
 							</h3>
-							<p class="mt-6 text-sm md:text-base text-slate-300/90 leading-[1.75]">
+							<p class="mt-6 text-sm md:text-base text-gray-600 dark:text-gray-400 leading-[1.75]">
 								Trabajo con arquitectura escalable, automatización y precisión visual para que el producto final se sienta rápido, claro y memorable.
 							</p>
 
 							<div class="mt-8 flex flex-wrap gap-2.5">
-								<span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-semibold border border-red-400/45 bg-red-500/15 text-red-200">Full-Stack</span>
-								<span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-medium border border-slate-500/50 bg-slate-700/40 text-slate-200">DevOps</span>
-								<span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-medium border border-slate-500/50 bg-slate-700/40 text-slate-200">Arquitectura</span>
+								<span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-semibold border border-indigo-200 dark:border-indigo-400/30 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-300">Full-Stack</span>
+								<span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-medium border border-gray-200 dark:border-white/10 bg-white/50 dark:bg-white/5 text-gray-700 dark:text-gray-300">DevOps</span>
+								<span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-medium border border-gray-200 dark:border-white/10 bg-white/50 dark:bg-white/5 text-gray-700 dark:text-gray-300">Arquitectura</span>
 							</div>
 
-							<div class="mt-8 space-y-3 border-t border-slate-600/70 pt-6">
-								<div class="flex items-center justify-between text-xs uppercase tracking-[0.16em] text-slate-300/80">
+							<div class="mt-8 space-y-3 border-t border-gray-200 dark:border-white/10 pt-6">
+								<div class="flex items-center justify-between text-xs uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400">
 									<span>Formación</span>
-									<span>INACAP</span>
+									<span class="text-gray-900 dark:text-gray-200 font-medium">INACAP</span>
 								</div>
-								<div class="flex items-center justify-between text-xs uppercase tracking-[0.16em] text-slate-300/80">
+								<div class="flex items-center justify-between text-xs uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400">
 									<span>Enfoque</span>
-									<span>Backend + UX</span>
+									<span class="text-gray-900 dark:text-gray-200 font-medium">Backend + UX</span>
 								</div>
-								<div class="flex items-center justify-between text-xs uppercase tracking-[0.16em] text-slate-300/80">
+								<div class="flex items-center justify-between text-xs uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400">
 									<span>Modalidad</span>
-									<span>Entrega End-to-End</span>
+									<span class="text-gray-900 dark:text-gray-200 font-medium">Entrega End-to-End</span>
 								</div>
 							</div>
 						</aside>
 
 						<div class="about-panels-wrapper flex flex-col gap-8 md:gap-9">
-							<article class="about-panel group relative overflow-hidden min-h-[300px] rounded-[1.75rem] border border-slate-700/70 bg-[linear-gradient(145deg,rgba(15,23,42,0.98)_0%,rgba(17,24,39,0.94)_58%,rgba(15,23,42,0.98)_100%)] p-8 md:p-10 lg:p-12 shadow-[0_28px_70px_rgba(2,6,23,0.38)] transition-transform duration-500 hover:-translate-y-1">
-								<div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(248,113,113,0.16)_0%,rgba(248,113,113,0.02)_52%,transparent_72%)]"></div>
+							<article class="about-panel group relative overflow-hidden min-h-[300px] rounded-[1.75rem] border border-gray-200/50 dark:border-white/5 bg-white/70 dark:bg-[#0a0a0a]/90 backdrop-blur-xl p-8 md:p-10 lg:p-12 shadow-xl shadow-gray-200/40 dark:shadow-none transition-transform duration-500 hover:-translate-y-1">
+								<div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent dark:from-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[1.75rem]"></div>
 								<div class="relative z-10">
 									<div class="flex items-center gap-3 mb-6">
-										<span class="text-[11px] uppercase tracking-[0.3em] text-slate-400">Scene 01</span>
-										<span class="h-px flex-1 bg-slate-600/70"></span>
+										<span class="text-[11px] uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500">Scene 01</span>
+										<span class="h-px flex-1 bg-gray-200 dark:bg-white/10"></span>
 									</div>
-									<p class="text-2xl md:text-3xl lg:text-[2rem] font-medium text-slate-100 leading-[1.2] tracking-tight max-w-3xl">
+									<p class="text-2xl md:text-3xl lg:text-[2rem] font-medium text-gray-900 dark:text-white leading-[1.2] tracking-tight max-w-3xl">
 										Soy Joain Monroy Santos, Ingeniero en Informática orientado al desarrollo de software y prácticas DevOps.
 									</p>
-									<div class="mt-7 space-y-4 text-base md:text-lg leading-[1.75] text-slate-300 max-w-3xl">
+									<div class="mt-7 space-y-4 text-base md:text-lg leading-[1.75] text-gray-600 dark:text-gray-400 max-w-3xl">
 										<p>Construyo plataformas web robustas donde arquitectura, automatización y diseño se convierten en una experiencia fluida para el usuario final.</p>
 										<p>Cada entrega busca impacto técnico real: estabilidad, escalabilidad y una estética que transmita calidad desde el primer scroll.</p>
 									</div>
 								</div>
 							</article>
 
-							<article class="about-panel group relative overflow-hidden min-h-[300px] rounded-[1.75rem] border border-slate-700/70 bg-[linear-gradient(145deg,rgba(15,23,42,0.98)_0%,rgba(17,24,39,0.94)_58%,rgba(15,23,42,0.98)_100%)] p-8 md:p-10 lg:p-12 shadow-[0_28px_70px_rgba(2,6,23,0.38)] transition-transform duration-500 hover:-translate-y-1">
-								<div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_82%_22%,rgba(96,165,250,0.15)_0%,rgba(96,165,250,0.02)_52%,transparent_72%)]"></div>
+							<article class="about-panel group relative overflow-hidden min-h-[300px] rounded-[1.75rem] border border-gray-200/50 dark:border-white/5 bg-white/70 dark:bg-[#0a0a0a]/90 backdrop-blur-xl p-8 md:p-10 lg:p-12 shadow-xl shadow-gray-200/40 dark:shadow-none transition-transform duration-500 hover:-translate-y-1">
+								<div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent dark:from-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[1.75rem]"></div>
 								<div class="relative z-10">
 									<div class="flex items-center gap-3 mb-6">
-										<span class="text-[11px] uppercase tracking-[0.3em] text-slate-400">Scene 02</span>
-										<span class="h-px flex-1 bg-slate-600/70"></span>
+										<span class="text-[11px] uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500">Scene 02</span>
+										<span class="h-px flex-1 bg-gray-200 dark:bg-white/10"></span>
 									</div>
 									<div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
 										<div>
-											<p class="text-[12px] font-semibold uppercase tracking-[0.28em] text-red-300 mb-4">Habilidades Blandas</p>
+											<p class="text-[12px] font-semibold uppercase tracking-[0.28em] text-indigo-500 dark:text-indigo-400 mb-4">Habilidades Blandas</p>
 											<div class="flex flex-wrap gap-2">
-												<span class="inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-medium border border-slate-500/50 bg-slate-700/40 text-slate-200">Aprendizaje continuo</span>
-												<span class="inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-medium border border-slate-500/50 bg-slate-700/40 text-slate-200">Pensamiento crítico</span>
-												<span class="inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-medium border border-slate-500/50 bg-slate-700/40 text-slate-200">Resolución de problemas</span>
-												<span class="inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-medium border border-slate-500/50 bg-slate-700/40 text-slate-200">Comunicación efectiva</span>
-												<span class="inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-medium border border-slate-500/50 bg-slate-700/40 text-slate-200">Trabajo en equipo</span>
+												<span class="inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-medium border border-gray-200 dark:border-white/10 bg-white/50 dark:bg-white/5 text-gray-700 dark:text-gray-300">Aprendizaje continuo</span>
+												<span class="inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-medium border border-gray-200 dark:border-white/10 bg-white/50 dark:bg-white/5 text-gray-700 dark:text-gray-300">Pensamiento crítico</span>
+												<span class="inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-medium border border-gray-200 dark:border-white/10 bg-white/50 dark:bg-white/5 text-gray-700 dark:text-gray-300">Resolución de problemas</span>
+												<span class="inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-medium border border-gray-200 dark:border-white/10 bg-white/50 dark:bg-white/5 text-gray-700 dark:text-gray-300">Comunicación efectiva</span>
+												<span class="inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-medium border border-gray-200 dark:border-white/10 bg-white/50 dark:bg-white/5 text-gray-700 dark:text-gray-300">Trabajo en equipo</span>
 											</div>
 										</div>
 										<div>
-											<p class="text-[12px] font-semibold uppercase tracking-[0.28em] text-red-300 mb-4">Idiomas</p>
+											<p class="text-[12px] font-semibold uppercase tracking-[0.28em] text-indigo-500 dark:text-indigo-400 mb-4">Idiomas</p>
 											<div class="flex flex-wrap gap-2.5 mb-6">
-												<span class="inline-flex items-center px-4 py-2 rounded-full text-xs font-medium border border-slate-500/50 bg-slate-700/40 text-slate-200">Español · Nativo</span>
-												<span class="inline-flex items-center px-4 py-2 rounded-full text-xs font-medium border border-slate-500/50 bg-slate-700/40 text-slate-200">Inglés · Básico</span>
+												<span class="inline-flex items-center px-4 py-2 rounded-full text-xs font-medium border border-gray-200 dark:border-white/10 bg-white/50 dark:bg-white/5 text-gray-700 dark:text-gray-300">Español · Nativo</span>
+												<span class="inline-flex items-center px-4 py-2 rounded-full text-xs font-medium border border-gray-200 dark:border-white/10 bg-white/50 dark:bg-white/5 text-gray-700 dark:text-gray-300">Inglés · Básico</span>
 											</div>
-											<p class="text-sm text-slate-300 leading-relaxed">Formación en INACAP Santiago Centro con base sólida en desarrollo full stack, diseño de sistemas y gestión eficiente de datos.</p>
+											<p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Formación en INACAP Santiago Centro con base sólida en desarrollo full stack, diseño de sistemas y gestión eficiente de datos.</p>
 										</div>
 									</div>
 								</div>
 							</article>
 
-							<article class="about-panel group relative overflow-hidden min-h-[340px] rounded-[1.75rem] border border-slate-700/70 bg-[linear-gradient(145deg,rgba(15,23,42,0.98)_0%,rgba(17,24,39,0.94)_58%,rgba(15,23,42,0.98)_100%)] p-8 md:p-10 lg:p-12 shadow-[0_28px_70px_rgba(2,6,23,0.38)] transition-transform duration-500 hover:-translate-y-1">
-								<div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_28%_88%,rgba(244,114,182,0.14)_0%,rgba(244,114,182,0.02)_52%,transparent_72%)]"></div>
+							<article class="about-panel group relative overflow-hidden min-h-[340px] rounded-[1.75rem] border border-gray-200/50 dark:border-white/5 bg-white/70 dark:bg-[#0a0a0a]/90 backdrop-blur-xl p-8 md:p-10 lg:p-12 shadow-xl shadow-gray-200/40 dark:shadow-none transition-transform duration-500 hover:-translate-y-1">
+								<div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent dark:from-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[1.75rem]"></div>
 								<div class="relative z-10 w-full">
 									<div class="flex items-center gap-3 mb-6">
-										<span class="text-[11px] uppercase tracking-[0.3em] text-slate-400">Scene 03</span>
-										<span class="h-px flex-1 bg-slate-600/70"></span>
+										<span class="text-[11px] uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500">Scene 03</span>
+										<span class="h-px flex-1 bg-gray-200 dark:bg-white/10"></span>
 									</div>
 									<div class="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-8">
 										<div>
-											<p class="text-[12px] font-semibold uppercase tracking-[0.28em] text-red-300 mb-2">Certificaciones Destacadas</p>
-											<p class="text-sm text-slate-300">Formación validada en cloud, desarrollo y colaboración.</p>
+											<p class="text-[12px] font-semibold uppercase tracking-[0.28em] text-indigo-500 dark:text-indigo-400 mb-2">Certificaciones Destacadas</p>
+											<p class="text-sm text-gray-600 dark:text-gray-400">Formación validada en cloud, desarrollo y colaboración.</p>
 										</div>
 										<a
 											href={linkedInCertificationsUrl}
 											target="_blank"
 											rel="noopener noreferrer"
-											class="group inline-flex items-center gap-2 text-sm font-semibold rounded-full px-5 py-2.5 border border-slate-500/70 bg-slate-700/40 text-slate-100 hover:bg-slate-600/60 transition-all duration-300"
+											class="group inline-flex items-center gap-2 text-sm font-semibold rounded-full px-5 py-2.5 border border-gray-200 dark:border-white/10 bg-white/50 dark:bg-white/5 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-white/10 transition-all duration-300"
 										>
 											Ver más en LinkedIn
 											<svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 17L17 7M17 7H7M17 7v10"></path></svg>
@@ -736,13 +706,13 @@ const googleAccentClasses = [
 									<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 										{
 											featuredCertificates.map((certificate, index) => (
-												<article class="rounded-2xl border border-slate-600/80 bg-slate-800/60 p-5 transition-all duration-300 hover:bg-slate-700/65 hover:-translate-y-0.5">
+												<article class="rounded-2xl border border-gray-200 dark:border-white/5 bg-white/40 dark:bg-white/5 p-5 transition-all duration-300 hover:bg-white/60 dark:hover:bg-white/10 hover:-translate-y-0.5">
 													<div class="flex items-center gap-3 mb-3">
 														<span class={`w-2.5 h-2.5 rounded-full ${googleAccentClasses[index % googleAccentClasses.length]}`} />
-														<span class="text-[11px] uppercase tracking-[0.16em] text-slate-400">{certificate.year}</span>
+														<span class="text-[11px] uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400">{certificate.year}</span>
 													</div>
-													<p class="text-[15px] font-medium text-slate-100 leading-snug">{certificate.title}</p>
-													<p class="mt-1.5 text-xs text-slate-300 truncate">{certificate.issuer}</p>
+													<p class="text-[15px] font-medium text-gray-900 dark:text-slate-100 leading-snug">{certificate.title}</p>
+													<p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400 truncate">{certificate.issuer}</p>
 												</article>
 											))
 										}
