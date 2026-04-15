@@ -463,16 +463,16 @@ export const initAnimations = () => {
 			const aboutOrbTwo = document.getElementById('about-color-orb-2');
 			
 			if (horizontalWrapper) {
-				const aboutTravelDistance = () => Math.max(0, horizontalWrapper.scrollWidth - window.innerWidth);
-				const aboutScrollDistance = () => Math.max(window.innerHeight * 1.35, aboutTravelDistance() * 1.12);
+				const horizontalDistance = () => Math.max(0, horizontalWrapper.scrollWidth - window.innerWidth);
+				const pinDuration = () => Math.max(window.innerHeight * 1.35, horizontalDistance() * 1.12);
 
 				gsap.to(horizontalWrapper, {
-					x: () => -aboutTravelDistance(),
+					x: () => -horizontalDistance(),
 					ease: "none",
 					scrollTrigger: {
 						trigger: aboutSection,
 						start: "top top",
-						end: () => "+=" + aboutScrollDistance(),
+						end: () => "+=" + pinDuration(),
 						pin: true,
 						pinSpacing: true,
 						anticipatePin: 1,
@@ -491,7 +491,7 @@ export const initAnimations = () => {
 							scrollTrigger: {
 								trigger: aboutSection,
 								start: 'top top',
-								end: () => '+=' + aboutScrollDistance(),
+								end: () => '+=' + pinDuration(),
 								scrub: 0.45,
 								invalidateOnRefresh: true,
 							}
@@ -511,7 +511,7 @@ export const initAnimations = () => {
 							scrollTrigger: {
 								trigger: aboutSection,
 								start: 'top top',
-								end: () => '+=' + aboutScrollDistance(),
+								end: () => '+=' + pinDuration(),
 								scrub: 0.5,
 								invalidateOnRefresh: true,
 							}
@@ -531,7 +531,7 @@ export const initAnimations = () => {
 							scrollTrigger: {
 								trigger: aboutSection,
 								start: 'top top',
-								end: () => '+=' + aboutScrollDistance(),
+								end: () => '+=' + pinDuration(),
 								scrub: 0.5,
 								invalidateOnRefresh: true,
 							}
