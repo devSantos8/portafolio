@@ -27,6 +27,10 @@ const { title, showHeader = true } = Astro.props;
 	<body class="bg-[#FAFAFA] dark:bg-[#0A0A0A] selection:bg-red-500/20 selection:text-red-900 dark:selection:text-red-100 font-['Inter_Variable',sans-serif] antialiased text-gray-900 dark:text-gray-100 transition-colors duration-500">
 		{showHeader && <Header />}
 		<slot />
+
+		<!-- Custom Cursor -->
+		<div id="glow-cursor" class="pointer-events-none fixed left-0 top-0 z-[9999] hidden h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-gray-400/50 bg-white/10 opacity-0 mix-blend-difference backdrop-blur-[2px] transition-opacity duration-300 md:flex dark:border-white/30 dark:bg-white/5"></div>
+		<div id="glow-cursor-dot" class="pointer-events-none fixed left-0 top-0 z-[10000] hidden h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gray-900 opacity-0 mix-blend-difference transition-opacity duration-300 md:block dark:bg-white"></div>
 	</body>
 </html>
 
@@ -43,8 +47,64 @@ const { title, showHeader = true } = Astro.props;
 		}
 	};
 
+	// Custom Cursor Logic
+	const initCursor = () => {
+		const cursor = document.getElementById('glow-cursor');
+		const dot = document.getElementById('glow-cursor-dot');
+		
+		if (!cursor || !dot || window.matchMedia('(max-width: 768px)').matches) return;
+
+		let mouseX = window.innerWidth / 2;
+		let mouseY = window.innerHeight / 2;
+		let cursorX = mouseX;
+		let cursorY = mouseY;
+		
+		// Animación suave del borde exterior (lerp)
+		const loop = () => {
+			cursorX += (mouseX - cursorX) * 0.15;
+			cursorY += (mouseY - cursorY) * 0.15;
+			
+			cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+			dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+			
+			requestAnimationFrame(loop);
+		};
+		requestAnimationFrame(loop);
+
+		window.addEventListener('mousemove', (e) => {
+			mouseX = e.clientX;
+			mouseY = e.clientY;
+			
+			if (cursor.style.opacity === '0') {
+				cursor.style.opacity = '1';
+				dot.style.opacity = '1';
+			}
+		});
+
+		window.addEventListener('mouseout', () => {
+			cursor.style.opacity = '0';
+			dot.style.opacity = '0';
+		});
+
+		// Efecto Hover en elementos clickeables
+		const interactables = document.querySelectorAll('a, button, input, textarea, select, .skill-card, .about-panel, .project-card');
+		interactables.forEach(el => {
+			el.addEventListener('mouseenter', () => {
+				cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%) scale(1.8)`;
+				cursor.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
+			});
+			el.addEventListener('mouseleave', () => {
+				cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%) scale(1)`;
+				cursor.style.backgroundColor = 'var(--tw-bg-opacity)'; // restaura la clase de tailwind
+			});
+		});
+	};
+
 	// Ejecutar en la carga inicial y en cada navegación de astro:transitions
-	document.addEventListener('astro:page-load', setupAnimations);
+	document.addEventListener('astro:page-load', () => {
+		setupAnimations();
+		initCursor();
+	});
 </script>
 
 <style is:global>
