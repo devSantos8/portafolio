@@ -15,7 +15,7 @@ export const initAnimations = () => {
 			// Matar triggers anteriores si existen (para evitar duplicados en navegaciones SPA)
 			ScrollTrigger.getAll().forEach(t => t.kill());
 
-			const forceMotion = true;
+			const forceMotion = false;
 		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 		const shouldAnimate = forceMotion || !prefersReducedMotion;
 
@@ -453,43 +453,107 @@ export const initAnimations = () => {
 		}
 
 		// ============================================
-		// ABOUT ME (Sobre mí) HORIZONTAL SCROLL
+		// ABOUT ME (Sobre mí) STICKY SCROLL NARRATIVE
 		// ============================================
 		const aboutSection = document.getElementById('Sobre-mi');
-		if(aboutSection) {
-			const horizontalWrapper = aboutSection.querySelector('.horizontal-scroll-wrapper');
+		if (aboutSection) {
+			const wrapper = aboutSection.querySelector('.about-panels-wrapper');
+			const stickyHead = aboutSection.querySelector('.about-sticky-head');
+			const panels = gsap.utils.toArray('#Sobre-mi .about-panel');
 			const bgOverlay = document.getElementById('about-bg-overlay');
 			const aboutOrbOne = document.getElementById('about-color-orb');
 			const aboutOrbTwo = document.getElementById('about-color-orb-2');
-			
-			if (horizontalWrapper) {
-				const aboutScrollDistance = () => horizontalWrapper.scrollWidth * 0.85;
 
-				gsap.to(horizontalWrapper, {
-					x: () => -(horizontalWrapper.scrollWidth - window.innerWidth), 
-					ease: "none",
-					scrollTrigger: {
-						trigger: aboutSection,
-						start: "center center", 
-						end: () => "+=" + aboutScrollDistance(), // Reducido para que termine un poco más rápido
-						pin: true,
-						scrub: 0.3, // Reducido de 1.2 a 0.3 para una respuesta casi inmediata, eliminando el "lag"
-						invalidateOnRefresh: true, 
-					}
-				});
+			if (!shouldAnimate) {
+				if (panels.length > 0) {
+					gsap.set(panels, { autoAlpha: 1, clearProps: 'transform' });
+				}
+				if (stickyHead) {
+					gsap.set(stickyHead, { autoAlpha: 1, clearProps: 'transform' });
+				}
+				if (wrapper) {
+					gsap.set(wrapper, { autoAlpha: 1, clearProps: 'transform' });
+				}
+				if (bgOverlay) {
+					gsap.set(bgOverlay, { autoAlpha: 0.24, clearProps: 'backgroundPosition' });
+				}
+				if (aboutOrbOne) {
+					gsap.set(aboutOrbOne, { autoAlpha: 0.18, clearProps: 'transform' });
+				}
+				if (aboutOrbTwo) {
+					gsap.set(aboutOrbTwo, { autoAlpha: 0.14, clearProps: 'transform' });
+				}
+			} else {
+				if (panels.length > 0) {
+					gsap.fromTo(
+						panels,
+						{ autoAlpha: 0, y: 68, scale: 0.96, rotateX: 4, transformOrigin: '50% 100%' },
+						{
+							autoAlpha: 1,
+							y: 0,
+							scale: 1,
+							rotateX: 0,
+							duration: 1.08,
+							ease: 'power4.out',
+							stagger: 0.2,
+							scrollTrigger: {
+								trigger: aboutSection,
+								start: 'top 74%',
+								once: true,
+							}
+						}
+					);
+				}
+
+				if (stickyHead) {
+					gsap.fromTo(
+						stickyHead,
+						{ autoAlpha: 0, y: 28 },
+						{
+							autoAlpha: 1,
+							y: 0,
+							duration: 0.9,
+							ease: 'power3.out',
+							scrollTrigger: {
+								trigger: aboutSection,
+								start: 'top 82%',
+								once: true,
+							}
+						}
+					);
+				}
+
+				if (wrapper) {
+					gsap.fromTo(
+						wrapper,
+						{ autoAlpha: 0.58, y: 20 },
+						{
+							autoAlpha: 1,
+							y: 0,
+							duration: 0.86,
+							ease: 'power3.out',
+							scrollTrigger: {
+								trigger: aboutSection,
+								start: 'top 78%',
+								once: true,
+							}
+						}
+					);
+				}
 
 				if (bgOverlay) {
-					gsap.fromTo(bgOverlay,
-						{ autoAlpha: 0.22, backgroundPosition: '0% 0%' },
+					gsap.fromTo(
+						bgOverlay,
+						{ autoAlpha: 0.08, backgroundPosition: '0% 0%' },
 						{
-							autoAlpha: 0.56,
-							backgroundPosition: '100% 58%',
+							autoAlpha: 0.5,
+							backgroundPosition: '100% 56%',
 							ease: 'none',
 							scrollTrigger: {
 								trigger: aboutSection,
 								start: 'top bottom',
-								end: () => '+=' + aboutScrollDistance(),
-								scrub: 0.45,
+								end: 'bottom top',
+								scrub: 0.72,
 								invalidateOnRefresh: true,
 							}
 						}
@@ -497,19 +561,20 @@ export const initAnimations = () => {
 				}
 
 				if (aboutOrbOne) {
-					gsap.fromTo(aboutOrbOne,
-						{ autoAlpha: 0.14, xPercent: -24, yPercent: 10, scale: 0.92 },
+					gsap.fromTo(
+						aboutOrbOne,
+						{ autoAlpha: 0.06, xPercent: -16, yPercent: 12, scale: 0.9 },
 						{
-							autoAlpha: 0.38,
-							xPercent: 32,
+							autoAlpha: 0.34,
+							xPercent: 22,
 							yPercent: -10,
-							scale: 1.2,
+							scale: 1.14,
 							ease: 'none',
 							scrollTrigger: {
 								trigger: aboutSection,
 								start: 'top bottom',
-								end: () => '+=' + aboutScrollDistance(),
-								scrub: 0.5,
+								end: 'bottom top',
+								scrub: 0.74,
 								invalidateOnRefresh: true,
 							}
 						}
@@ -517,19 +582,20 @@ export const initAnimations = () => {
 				}
 
 				if (aboutOrbTwo) {
-					gsap.fromTo(aboutOrbTwo,
-						{ autoAlpha: 0.1, xPercent: 16, yPercent: 6, scale: 0.9 },
+					gsap.fromTo(
+						aboutOrbTwo,
+						{ autoAlpha: 0.06, xPercent: 16, yPercent: 6, scale: 0.9 },
 						{
-							autoAlpha: 0.34,
-							xPercent: -26,
-							yPercent: 18,
-							scale: 1.18,
+							autoAlpha: 0.3,
+							xPercent: -16,
+							yPercent: 12,
+							scale: 1.1,
 							ease: 'none',
 							scrollTrigger: {
 								trigger: aboutSection,
 								start: 'top bottom',
-								end: () => '+=' + aboutScrollDistance(),
-								scrub: 0.5,
+								end: 'bottom top',
+								scrub: 0.74,
 								invalidateOnRefresh: true,
 							}
 						}
@@ -545,16 +611,16 @@ export const initAnimations = () => {
 		if(habilidadesSection && aboutSection) {
 			// 1. Transición de salida de "Sobre mí": Se difumina pero SIN afectar la escala 
 			// para no romper el pin-spacer de GSAP (Bug de layout)
-			const aboutContent = aboutSection.querySelector('.horizontal-scroll-wrapper');
+			const aboutContent = aboutSection.querySelector('.about-panels-wrapper');
 			
 			if (aboutContent) {
 				gsap.to(aboutContent, {
-					opacity: 0,
-					// Quitamos el blur porque puede causar bugs gráficos severos en algunos navegadores al combinarse con transform/pin
+					opacity: 0.9,
+					y: 8,
 					scrollTrigger: {
 						trigger: habilidadesSection,
-						start: "top 95%", 
-						end: "top 40%",   
+						start: "top 84%", 
+						end: "top 34%",   
 						scrub: true,
 					}
 				});
@@ -622,12 +688,15 @@ export const initAnimations = () => {
 		// ============================================
 		// BUTTON HOVER ANIMATIONS
 		// ============================================
-		const buttons = document.querySelectorAll('a[class*="rounded-full"]');
+		const buttons = document.querySelectorAll('main a[class*="rounded-full"]');
 		buttons.forEach((button) => {
+			if (button.getAttribute('data-button-hover-bound') === 'true') return;
+			button.setAttribute('data-button-hover-bound', 'true');
+
 			button.addEventListener('mouseenter', () => {
 				gsap.to(button, {
 					duration: 0.3,
-					scale: 1.05,
+					scale: 1.03,
 					ease: 'back.out(1.7)',
 				});
 			});
@@ -645,12 +714,15 @@ export const initAnimations = () => {
 		// SKILL CARDS HOVER & STAGGER
 		// ============================================
 		const skillCards = document.querySelectorAll('.skills-container article');
-		skillCards.forEach((card, index) => {
+		skillCards.forEach((card) => {
+			if (card.getAttribute('data-skill-hover-bound') === 'true') return;
+			card.setAttribute('data-skill-hover-bound', 'true');
+
 			card.addEventListener('mouseenter', () => {
 				gsap.to(card, {
 					duration: 0.4,
 					y: -8,
-					boxShadow: '0 12px 40px rgba(26, 115, 232, 0.25)',
+					boxShadow: '0 12px 40px rgba(15, 23, 42, 0.16)',
 					ease: 'power2.out',
 				});
 			});
@@ -659,7 +731,7 @@ export const initAnimations = () => {
 				gsap.to(card, {
 					duration: 0.4,
 					y: 0,
-					boxShadow: '0 8px 24px rgba(26, 115, 232, 0.12)',
+					boxShadow: '0 8px 24px rgba(15, 23, 42, 0.08)',
 					ease: 'power2.out',
 				});
 			});
@@ -668,22 +740,64 @@ export const initAnimations = () => {
 		// ============================================
 		// TIMELINE ITEMS HOVER ANIMATIONS
 		// ============================================
-		const timelineItems = document.querySelectorAll('.relative.pl-16, .relative.pl-24');
+		const timelineItems = gsap.utils.toArray('#Experiencia .trajectory-card');
+
+		if (timelineItems.length > 0) {
+			gsap.fromTo(
+				timelineItems,
+				{ autoAlpha: 0, y: 34, scale: 0.98 },
+				{
+					autoAlpha: 1,
+					y: 0,
+					scale: 1,
+					duration: 0.74,
+					stagger: 0.12,
+					ease: 'power3.out',
+					scrollTrigger: {
+						trigger: '#Experiencia',
+						start: 'top 74%',
+						once: true,
+					}
+				}
+			);
+		}
+
 		timelineItems.forEach((item) => {
+			if (item.getAttribute('data-timeline-hover-bound') === 'true') return;
+			item.setAttribute('data-timeline-hover-bound', 'true');
+			const surface = item.querySelector('.trajectory-surface') || item;
+			const node = item.querySelector('.trajectory-node');
+
 			item.addEventListener('mouseenter', () => {
-				gsap.to(item, {
-					duration: 0.4,
-					x: 8,
+				gsap.to(surface, {
+					duration: 0.35,
+					y: -6,
+					boxShadow: '0 16px 36px rgba(15, 23, 42, 0.16)',
 					ease: 'power2.out',
 				});
+				if (node) {
+					gsap.to(node, {
+						duration: 0.35,
+						boxShadow: '0 0 0 6px rgba(220, 38, 38, 0.16)',
+						ease: 'power2.out',
+					});
+				}
 			});
 
 			item.addEventListener('mouseleave', () => {
-				gsap.to(item, {
-					duration: 0.4,
-					x: 0,
+				gsap.to(surface, {
+					duration: 0.35,
+					y: 0,
+					boxShadow: '0 12px 35px rgba(15, 23, 42, 0.08)',
 					ease: 'power2.out',
 				});
+				if (node) {
+					gsap.to(node, {
+						duration: 0.35,
+						boxShadow: '0 0 0 0 rgba(220, 38, 38, 0)',
+						ease: 'power2.out',
+					});
+				}
 			});
 		});
 	});

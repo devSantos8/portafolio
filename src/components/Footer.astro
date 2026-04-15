@@ -82,9 +82,12 @@ const currentYear = new Date().getFullYear();
 
 <script>
     // Interceptar el clic para usar Lenis en el "Volver arriba" y las secciones del footer
-    document.addEventListener('DOMContentLoaded', () => {
+    const bindFooterLinks = () => {
         const footerLinks = document.querySelectorAll('footer a[href^="#"]');
         footerLinks.forEach(link => {
+            if (link.getAttribute('data-footer-link-bound') === 'true') return;
+            link.setAttribute('data-footer-link-bound', 'true');
+
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const target = link.getAttribute('href');
@@ -98,5 +101,11 @@ const currentYear = new Date().getFullYear();
                 }
             });
         });
-    });
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bindFooterLinks, { once: true });
+    } else {
+        bindFooterLinks();
+    }
 </script>

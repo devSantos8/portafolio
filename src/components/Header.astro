@@ -123,15 +123,19 @@ const navButtonClass = 'nav-link text-gray-600 dark:text-gray-300 hover:text-gra
 
     window.addEventListener('scroll', () => {
         const currentScroll = window.scrollY;
-        
+
         if (header) {
             if (currentScroll > 150) {
                 header.classList.remove('-translate-y-full', 'opacity-0');
-                nav?.classList.add('shadow-xl', 'shadow-black/10', 'dark:shadow-black/35', 'border-gray-300/80', 'dark:border-white/15');
             } else {
                 header.classList.add('-translate-y-full', 'opacity-0');
-                nav?.classList.remove('shadow-xl', 'shadow-black/10', 'dark:shadow-black/35', 'border-gray-300/80', 'dark:border-white/15');
             }
+        }
+
+        if (currentScroll > 150) {
+            nav?.classList.add('shadow-xl', 'shadow-black/10', 'dark:shadow-black/35', 'border-gray-300/80', 'dark:border-white/15');
+        } else {
+            nav?.classList.remove('shadow-xl', 'shadow-black/10', 'dark:shadow-black/35', 'border-gray-300/80', 'dark:border-white/15');
         }
         updateActiveFromScroll();
     }, { passive: true });
