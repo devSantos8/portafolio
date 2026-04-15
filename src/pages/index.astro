@@ -89,157 +89,124 @@ const googleAccentClasses = [
 		<!-- Experiencia Section - Premium Edition -->
 		<SectionContainer
 			id="Experiencia"
-			class="py-24 md:py-32 lg:py-40 relative overflow-hidden"
+			class="py-32 md:py-44 relative overflow-hidden"
 			bg="bg-transparent"
 		>
 			<style is:inline>
 				@keyframes trajectorySlideUp {
-					from {
-						opacity: 0;
-						transform: translateY(48px);
-					}
-					to {
-						opacity: 1;
-						transform: translateY(0);
-					}
+					from { opacity: 0; transform: translateY(40px) scale(0.95); }
+					to { opacity: 1; transform: translateY(0) scale(1); }
 				}
-
+				@keyframes glowPulse {
+					0%, 100% { opacity: 0.5; transform: scale(1); }
+					50% { opacity: 0.8; transform: scale(1.1); }
+				}
 				.trajectory-item {
-					animation: trajectorySlideUp 0.8s cubic-bezier(0.32, 0.72, 0.06, 1) backwards;
+					opacity: 0;
+					animation: trajectorySlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 				}
-
-				.trajectory-item:nth-child(1) { animation-delay: 0.05s; }
-				.trajectory-item:nth-child(2) { animation-delay: 0.1s; }
-				.trajectory-item:nth-child(3) { animation-delay: 0.15s; }
-
-				.trajectory-card:hover .trajectory-surface {
-					transform: translateY(-12px);
-					box-shadow: var(--shadow-active);
-					border-color: var(--accent-red-border);
-				}
-
-				.trajectory-surface {
-					transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-								box-shadow 0.4s ease,
-								border-color 0.3s ease;
-					backdrop-filter: blur(8px);
-				}
-
-				.trajectory-node {
-					transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-								box-shadow 0.3s ease;
-				}
-
-				.trajectory-card:hover .trajectory-node {
-					transform: scale(1.1);
-					box-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
-				}
+				.trajectory-item:nth-child(1) { animation-delay: 0.1s; }
+				.trajectory-item:nth-child(2) { animation-delay: 0.2s; }
+				.trajectory-item:nth-child(3) { animation-delay: 0.3s; }
 			</style>
 
-			<div class="fade-in-section relative z-10 w-full max-w-6xl mx-auto px-3 md:px-6">
-				<div class="pointer-events-none absolute -top-20 -left-12 h-56 w-56 rounded-full bg-[#DC2626]/10 blur-[100px]"></div>
-				<div class="pointer-events-none absolute -bottom-20 right-0 h-64 w-64 rounded-full bg-[#0F172A]/8 dark:bg-[#475569]/16 blur-[110px]"></div>
-
-				<div class="relative mb-14 md:mb-20 grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-8 items-end">
-					<div class="max-w-3xl">
-						<span class="inline-block mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#DC2626]">
-							━ Trayectoria Profesional
-						</span>
-						<h2 class="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 dark:text-white leading-[1.04] mb-4 tracking-tight">
-							Experiencia y <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#DC2626] to-[#f87171]">Formación</span>
-						</h2>
-						<p class="text-sm md:text-base text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl">
-							Un recorrido de impacto: desde soluciones backend complejas hasta formación en arquitectura de sistemas. Cada hito representa crecimiento en calidad, precisión y visión de negocio.
+			<div class="fade-in-section relative z-10 w-full max-w-5xl mx-auto px-4 md:px-8">
+				
+				<div class="flex flex-col md:flex-row md:items-end gap-6 mb-24 relative">
+					<div class="absolute -top-32 -left-32 w-96 h-96 bg-gray-900/[0.02] dark:bg-white/[0.02] rounded-full blur-[100px] pointer-events-none"></div>
+					<div class="flex-1">
+						<p class="text-[10px] font-semibold uppercase tracking-[0.3em] text-gray-500 dark:text-white/50 md:pb-2 mb-2 font-mono">
+							[ Registro de Evolución ]
 						</p>
+						<h2 class="text-5xl md:text-7xl font-semibold text-gray-900 dark:text-white tracking-tighter leading-none">
+							Experiencia
+						</h2>
 					</div>
-					<div class="flex items-center gap-2.5 rounded-full px-4 py-2 bg-gradient-to-r from-white/80 to-white/60 dark:from-white/8 dark:to-white/5 border border-gray-200/60 dark:border-white/15 backdrop-blur-md shadow-lg dark:shadow-xl">
-						<div class="h-2 w-2 rounded-full bg-[#DC2626] animate-pulse"></div>
-						<span class="text-[11px] font-semibold uppercase tracking-[0.18em] text-gray-700 dark:text-gray-300">03 Hitos</span>
-					</div>
+					<span class="hidden md:block flex-1 h-[1px] bg-gradient-to-r from-transparent via-gray-200 dark:via-white/10 to-transparent mb-3"></span>
 				</div>
 
-				<div class="relative">
-					<div class="pointer-events-none absolute left-4 md:left-1/2 md:-translate-x-1/2 top-0 h-full w-0.5 md:w-1 bg-gradient-to-b from-[#DC2626]/0 via-[#DC2626]/40 to-[#DC2626]/0"></div>
-
+				<div class="space-y-6">
+					
 					<!-- ITEM 1 -->
-					<article class="trajectory-item trajectory-card relative flex flex-col md:flex-row md:items-center gap-6 md:gap-0 mb-12 md:mb-14 group" role="article" aria-label="Hito 1: Práctica Profesional">
-						<div class="trajectory-node absolute left-0 md:left-1/2 md:-translate-x-1/2 top-0 md:top-1/2 md:-translate-y-1/2 z-10 h-7 w-7 md:h-8 md:w-8 rounded-full border-4 border-[#FAFAFA] dark:border-[#000000] bg-white dark:bg-slate-900 shadow-lg transition-all duration-300 group-hover:scale-125 group-hover:shadow-2xl">
-							<span class="absolute inset-0 m-auto h-3 w-3 md:h-3.5 md:w-3.5 rounded-full bg-gradient-to-br from-[#DC2626] to-[#991b1b]"></span>
-						</div>
-
-						<div class="trajectory-surface relative overflow-hidden w-full md:w-[calc(50%-2rem)] ml-8 md:ml-0 rounded-2xl border border-gray-200/80 dark:border-slate-700/60 bg-gradient-to-br from-white/95 via-white/90 to-gray-50/85 dark:from-slate-900/95 dark:via-slate-900/90 dark:to-slate-800/85 p-6 md:p-7 shadow-[0_12px_36px_rgba(15,23,42,0.08)] dark:shadow-[0_14px_34px_rgba(0,0,0,0.35)] relative before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/30 before:to-transparent before:rounded-2xl before:pointer-events-none">
-							<div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#DC2626]/8 to-transparent rounded-full blur-2xl -mr-16 -mt-16"></div>
-							<div class="relative z-10">
-								<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
-									<div class="flex items-center gap-3">
-										<span class="inline-flex items-center rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-[0.15em] border border-[#DC2626]/40 bg-gradient-to-r from-[#DC2626]/15 to-[#DC2626]/5 text-[#DC2626] dark:from-red-500/20 dark:to-red-500/5 dark:text-red-300 shadow-sm">● Actual</span>
-										<span class="text-xs font-medium uppercase tracking-[0.12em] text-gray-500 dark:text-slate-400">Mar 2025 - Presente</span>
-									</div>
-									<span class="text-2xl md:text-3xl font-light text-gray-300 dark:text-slate-600">01</span>
+					<article class="trajectory-item rounded-[2rem] p-8 md:p-10 relative overflow-hidden group bg-white/70 dark:bg-[#0a0a0a]/90 border border-gray-100 dark:border-white/5 shadow-xl shadow-gray-200/50 dark:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-gray-300 dark:hover:border-white/10 hover:shadow-2xl dark:hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)]">
+						<div class="absolute right-0 top-0 w-64 h-64 bg-gray-900/[0.02] dark:bg-white/[0.02] rounded-full blur-[80px] group-hover:bg-gray-900/[0.04] dark:group-hover:bg-white/[0.04] transition-colors duration-700"></div>
+						
+						<div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 relative z-10">
+							<div class="flex flex-col gap-2 border-l-2 border-gray-200 dark:border-white/10 pl-6 h-fit group-hover:border-gray-300 dark:group-hover:border-white/20 transition-colors">
+								<span class="text-sm font-mono text-gray-500 dark:text-white/40 tracking-wider">Mar 2025 — Presente</span>
+								<span class="text-xs font-bold px-3 py-1 rounded-full bg-gray-900 text-white dark:bg-white/10 dark:text-white w-fit mt-1">ACTUAL</span>
+							</div>
+							
+							<div>
+								<div class="flex flex-col gap-1.5 mb-6">
+									<h3 class="text-2xl md:text-3xl font-medium text-gray-900 dark:text-white tracking-tight">Práctica Profesional</h3>
+									<p class="text-base text-gray-500 dark:text-white/50">Empresa / Institución</p>
 								</div>
-								<h3 class="text-xl md:text-2xl font-semibold text-gray-900 dark:text-slate-50 mb-1 tracking-tight">Práctica Profesional</h3>
-								<p class="text-xs font-semibold text-[#DC2626] mb-2 uppercase tracking-wider">Empresa / Institución</p>
-								<p class="text-sm md:text-[15px] text-gray-700 dark:text-slate-300/95 leading-relaxed mb-4">Implementación de soluciones backend escalables, arquitectura de sistemas y optimización de rendimiento con foco en DevOps y buenas prácticas.</p>
+								
+								<p class="text-base leading-relaxed text-gray-600 dark:text-white/70 mb-8 max-w-2xl font-light">
+									Implementación de soluciones backend escalables, arquitectura de sistemas y optimización de rendimiento con foco en DevOps y buenas prácticas de despliegue continuo.
+								</p>
+								
 								<div class="flex flex-wrap gap-2">
-									<span class="px-3 py-1.5 rounded-full text-xs font-semibold text-gray-700 dark:text-gray-300 bg-gray-200/60 dark:bg-slate-700/60 border border-gray-300/40 dark:border-slate-600/40 backdrop-blur-sm">Backend</span>
-									<span class="px-3 py-1.5 rounded-full text-xs font-semibold text-gray-700 dark:text-gray-300 bg-gray-200/60 dark:bg-slate-700/60 border border-gray-300/40 dark:border-slate-600/40 backdrop-blur-sm">DevOps</span>
-									<span class="px-3 py-1.5 rounded-full text-xs font-semibold text-gray-700 dark:text-gray-300 bg-gray-200/60 dark:bg-slate-700/60 border border-gray-300/40 dark:border-slate-600/40 backdrop-blur-sm">Escalabilidad</span>
+									<span class="px-4 py-2 rounded-full text-xs font-mono text-gray-600 dark:text-white/60 bg-gray-100 dark:bg-white/[0.03] border border-gray-200 dark:border-white/5 group-hover:bg-gray-200 dark:group-hover:bg-white/[0.06] transition-colors">Backend</span>
+									<span class="px-4 py-2 rounded-full text-xs font-mono text-gray-600 dark:text-white/60 bg-gray-100 dark:bg-white/[0.03] border border-gray-200 dark:border-white/5 group-hover:bg-gray-200 dark:group-hover:bg-white/[0.06] transition-colors">DevOps</span>
+									<span class="px-4 py-2 rounded-full text-xs font-mono text-gray-600 dark:text-white/60 bg-gray-100 dark:bg-white/[0.03] border border-gray-200 dark:border-white/5 group-hover:bg-gray-200 dark:group-hover:bg-white/[0.06] transition-colors">Escalabilidad</span>
 								</div>
 							</div>
 						</div>
 					</article>
 
 					<!-- ITEM 2 -->
-					<article class="trajectory-item trajectory-card relative flex flex-col md:flex-row md:items-center gap-6 md:gap-0 mb-12 md:mb-14 md:flex-row-reverse group" role="article" aria-label="Hito 2: Desarrollo Web Freelance">
-						<div class="trajectory-node absolute left-0 md:left-1/2 md:-translate-x-1/2 top-0 md:top-1/2 md:-translate-y-1/2 z-10 h-7 w-7 md:h-8 md:w-8 rounded-full border-4 border-[#FAFAFA] dark:border-[#000000] bg-white dark:bg-slate-900 shadow-lg transition-all duration-300 group-hover:scale-125 group-hover:shadow-2xl">
-							<span class="absolute inset-0 m-auto h-3 w-3 md:h-3.5 md:w-3.5 rounded-full bg-gradient-to-br from-[#2563EB] to-[#1e40af]"></span>
-						</div>
-
-						<div class="trajectory-surface relative overflow-hidden w-full md:w-[calc(50%-2rem)] ml-8 md:ml-0 rounded-2xl border border-gray-200/80 dark:border-slate-700/60 bg-gradient-to-br from-white/95 via-white/90 to-gray-50/85 dark:from-slate-900/95 dark:via-slate-900/90 dark:to-slate-800/85 p-6 md:p-7 shadow-[0_12px_36px_rgba(15,23,42,0.08)] dark:shadow-[0_14px_34px_rgba(0,0,0,0.35)] relative before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/30 before:to-transparent before:rounded-2xl before:pointer-events-none">
-							<div class="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-[#2563EB]/8 to-transparent rounded-full blur-2xl -ml-16 -mt-16"></div>
-							<div class="relative z-10">
-								<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
-									<div class="flex items-center gap-3">
-										<span class="inline-flex items-center rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-[0.15em] border border-[#2563EB]/40 bg-gradient-to-r from-[#2563EB]/15 to-[#2563EB]/5 text-[#1D4ED8] dark:from-blue-500/20 dark:to-blue-500/5 dark:text-blue-300 shadow-sm">◆ Proyecto</span>
-										<span class="text-xs font-medium uppercase tracking-[0.12em] text-gray-500 dark:text-slate-400">Ene - Feb 2025</span>
-									</div>
-									<span class="text-2xl md:text-3xl font-light text-gray-300 dark:text-slate-600">02</span>
+					<article class="trajectory-item rounded-[2rem] p-8 md:p-10 relative overflow-hidden group bg-white/70 dark:bg-[#0a0a0a]/90 border border-gray-100 dark:border-white/5 shadow-xl shadow-gray-200/50 dark:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-gray-300 dark:hover:border-white/10 hover:shadow-2xl dark:hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)]">
+						<div class="absolute right-0 top-0 w-64 h-64 bg-gray-900/[0.02] dark:bg-white/[0.02] rounded-full blur-[80px] group-hover:bg-gray-900/[0.04] dark:group-hover:bg-white/[0.04] transition-colors duration-700"></div>
+						
+						<div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 relative z-10">
+							<div class="flex flex-col gap-2 border-l-2 border-gray-200 dark:border-white/10 pl-6 h-fit group-hover:border-gray-300 dark:group-hover:border-white/20 transition-colors">
+								<span class="text-sm font-mono text-gray-500 dark:text-white/40 tracking-wider">Ene — Feb 2025</span>
+							</div>
+							
+							<div>
+								<div class="flex flex-col gap-1.5 mb-6">
+									<h3 class="text-2xl md:text-3xl font-medium text-gray-900 dark:text-white tracking-tight">Desarrollo Web Freelance</h3>
+									<p class="text-base text-gray-500 dark:text-white/50">Independiente</p>
 								</div>
-								<h3 class="text-xl md:text-2xl font-semibold text-gray-900 dark:text-slate-50 mb-1 tracking-tight">Desarrollo Web Freelance</h3>
-								<p class="text-xs font-semibold text-[#2563EB] mb-2 uppercase tracking-wider">Independiente</p>
-								<p class="text-sm md:text-[15px] text-gray-700 dark:text-slate-300/95 leading-relaxed mb-4">Diseño y desarrollo de landing pages, sistemas web personalizados con optimización SEO técnico, experiencia de usuario intuitiva y rendimiento premium.</p>
+								
+								<p class="text-base leading-relaxed text-gray-600 dark:text-white/70 mb-8 max-w-2xl font-light">
+									Diseño y desarrollo de plataformas web personalizadas con optimización SEO técnico, enfocadas en rendimiento premium y experiencias de usuario inmersivas.
+								</p>
+								
 								<div class="flex flex-wrap gap-2">
-									<span class="px-3 py-1.5 rounded-full text-xs font-semibold text-gray-700 dark:text-gray-300 bg-gray-200/60 dark:bg-slate-700/60 border border-gray-300/40 dark:border-slate-600/40 backdrop-blur-sm">Frontend</span>
-									<span class="px-3 py-1.5 rounded-full text-xs font-semibold text-gray-700 dark:text-gray-300 bg-gray-200/60 dark:bg-slate-700/60 border border-gray-300/40 dark:border-slate-600/40 backdrop-blur-sm">UX Design</span>
-									<span class="px-3 py-1.5 rounded-full text-xs font-semibold text-gray-700 dark:text-gray-300 bg-gray-200/60 dark:bg-slate-700/60 border border-gray-300/40 dark:border-slate-600/40 backdrop-blur-sm">SEO</span>
+									<span class="px-4 py-2 rounded-full text-xs font-mono text-gray-600 dark:text-white/60 bg-gray-100 dark:bg-white/[0.03] border border-gray-200 dark:border-white/5 group-hover:bg-gray-200 dark:group-hover:bg-white/[0.06] transition-colors">Frontend</span>
+									<span class="px-4 py-2 rounded-full text-xs font-mono text-gray-600 dark:text-white/60 bg-gray-100 dark:bg-white/[0.03] border border-gray-200 dark:border-white/5 group-hover:bg-gray-200 dark:group-hover:bg-white/[0.06] transition-colors">UX/UI</span>
+									<span class="px-4 py-2 rounded-full text-xs font-mono text-gray-600 dark:text-white/60 bg-gray-100 dark:bg-white/[0.03] border border-gray-200 dark:border-white/5 group-hover:bg-gray-200 dark:group-hover:bg-white/[0.06] transition-colors">Performance</span>
 								</div>
 							</div>
 						</div>
 					</article>
 
 					<!-- ITEM 3 -->
-					<article class="trajectory-item trajectory-card relative flex flex-col md:flex-row md:items-center gap-6 md:gap-0 group" role="article" aria-label="Hito 3: Ingeniería en Informática">
-						<div class="trajectory-node absolute left-0 md:left-1/2 md:-translate-x-1/2 top-0 md:top-1/2 md:-translate-y-1/2 z-10 h-7 w-7 md:h-8 md:w-8 rounded-full border-4 border-[#FAFAFA] dark:border-[#000000] bg-white dark:bg-slate-900 shadow-lg transition-all duration-300 group-hover:scale-125 group-hover:shadow-2xl">
-							<span class="absolute inset-0 m-auto h-3 w-3 md:h-3.5 md:w-3.5 rounded-full bg-gradient-to-br from-[#0EA5E9] to-[#0369a1]"></span>
-						</div>
-
-						<div class="trajectory-surface relative overflow-hidden w-full md:w-[calc(50%-2rem)] ml-8 md:ml-0 rounded-2xl border border-gray-200/80 dark:border-slate-700/60 bg-gradient-to-br from-white/95 via-white/90 to-gray-50/85 dark:from-slate-900/95 dark:via-slate-900/90 dark:to-slate-800/85 p-6 md:p-7 shadow-[0_12px_36px_rgba(15,23,42,0.08)] dark:shadow-[0_14px_34px_rgba(0,0,0,0.35)] relative before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/30 before:to-transparent before:rounded-2xl before:pointer-events-none">
-							<div class="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-br from-[#0EA5E9]/8 to-transparent rounded-full blur-2xl -mr-16 -mb-16"></div>
-							<div class="relative z-10">
-								<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
-									<div class="flex items-center gap-3">
-										<span class="inline-flex items-center rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-[0.15em] border border-[#0EA5E9]/40 bg-gradient-to-r from-[#0EA5E9]/15 to-[#0EA5E9]/5 text-[#0284C7] dark:from-sky-500/20 dark:to-sky-500/5 dark:text-sky-300 shadow-sm">★ Educación</span>
-										<span class="text-xs font-medium uppercase tracking-[0.12em] text-gray-500 dark:text-slate-400">2022 - 2025</span>
-									</div>
-									<span class="text-2xl md:text-3xl font-light text-gray-300 dark:text-slate-600">03</span>
+					<article class="trajectory-item rounded-[2rem] p-8 md:p-10 relative overflow-hidden group bg-white/70 dark:bg-[#0a0a0a]/90 border border-gray-100 dark:border-white/5 shadow-xl shadow-gray-200/50 dark:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-gray-300 dark:hover:border-white/10 hover:shadow-2xl dark:hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)]">
+						<div class="absolute right-0 top-0 w-64 h-64 bg-gray-900/[0.02] dark:bg-white/[0.02] rounded-full blur-[80px] group-hover:bg-gray-900/[0.04] dark:group-hover:bg-white/[0.04] transition-colors duration-700"></div>
+						
+						<div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 relative z-10">
+							<div class="flex flex-col gap-2 border-l-2 border-gray-200 dark:border-white/10 pl-6 h-fit group-hover:border-gray-300 dark:group-hover:border-white/20 transition-colors">
+								<span class="text-sm font-mono text-gray-500 dark:text-white/40 tracking-wider">2022 — 2025</span>
+							</div>
+							
+							<div>
+								<div class="flex flex-col gap-1.5 mb-6">
+									<h3 class="text-2xl md:text-3xl font-medium text-gray-900 dark:text-white tracking-tight">Ingeniería en Informática</h3>
+									<p class="text-base text-gray-500 dark:text-white/50">INACAP Santiago Centro</p>
 								</div>
-								<h3 class="text-xl md:text-2xl font-semibold text-gray-900 dark:text-slate-50 mb-1 tracking-tight">Ingeniería en Informática</h3>
-								<p class="text-xs font-semibold text-[#0EA5E9] mb-2 uppercase tracking-wider">INACAP Santiago Centro</p>
-								<p class="text-sm md:text-[15px] text-gray-700 dark:text-slate-300/95 leading-relaxed mb-4">Formación integral en ciencias de la computación: arquitectura de software, bases de datos avanzadas, algoritmos complejos y metodologías de desarrollo profesional.</p>
+								
+								<p class="text-base leading-relaxed text-gray-600 dark:text-white/70 mb-8 max-w-2xl font-light">
+									Formación integral en ciencias de la computación, abarcando arquitectura de software, bases de datos avanzadas, algoritmia y metodologías ágiles.
+								</p>
+								
 								<div class="flex flex-wrap gap-2">
-									<span class="px-3 py-1.5 rounded-full text-xs font-semibold text-gray-700 dark:text-gray-300 bg-gray-200/60 dark:bg-slate-700/60 border border-gray-300/40 dark:border-slate-600/40 backdrop-blur-sm">Computación</span>
-									<span class="px-3 py-1.5 rounded-full text-xs font-semibold text-gray-700 dark:text-gray-300 bg-gray-200/60 dark:bg-slate-700/60 border border-gray-300/40 dark:border-slate-600/40 backdrop-blur-sm">Algoritmos</span>
-									<span class="px-3 py-1.5 rounded-full text-xs font-semibold text-gray-700 dark:text-gray-300 bg-gray-200/60 dark:bg-slate-700/60 border border-gray-300/40 dark:border-slate-600/40 backdrop-blur-sm">Arquitectura</span>
+									<span class="px-4 py-2 rounded-full text-xs font-mono text-gray-600 dark:text-white/60 bg-gray-100 dark:bg-white/[0.03] border border-gray-200 dark:border-white/5 group-hover:bg-gray-200 dark:group-hover:bg-white/[0.06] transition-colors">CS</span>
+									<span class="px-4 py-2 rounded-full text-xs font-mono text-gray-600 dark:text-white/60 bg-gray-100 dark:bg-white/[0.03] border border-gray-200 dark:border-white/5 group-hover:bg-gray-200 dark:group-hover:bg-white/[0.06] transition-colors">Arquitectura</span>
+									<span class="px-4 py-2 rounded-full text-xs font-mono text-gray-600 dark:text-white/60 bg-gray-100 dark:bg-white/[0.03] border border-gray-200 dark:border-white/5 group-hover:bg-gray-200 dark:group-hover:bg-white/[0.06] transition-colors">Datos</span>
 								</div>
 							</div>
 						</div>
