@@ -88,266 +88,168 @@ const googleAccentClasses = [
 		<!-- ======================= -->
 		<!-- Rediseño Trayectoria: Hover Accordion Cards (Estilo Japonés) -->
 		<!-- ======================= -->
+		<!-- EXPERIENCIA - Timeline Profesional -->
+		<!-- ======================= -->
 		<SectionContainer
 			id="Experiencia"
 			class="py-32 md:py-40 relative overflow-hidden"
-			bg="bg-gray-50/80 dark:bg-[#0A0C10]"
+			bg="bg-neutral-50/80 dark:bg-neutral-950"
 		>
-			<!-- Fondo de Contraste y Brillo -->
-			<div
-				class="absolute inset-0 pointer-events-none data-bg-grid opacity-20 dark:opacity-40"
-				style="background-image: radial-gradient(#DC2626 1px, transparent 1px); background-size: 40px 40px;"
-			>
-			</div>
-			<div
-				class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#DC2626]/5 dark:bg-[#DC2626]/10 blur-[120px] rounded-full pointer-events-none"
-			>
+			<!-- Gradient Background -->
+			<div class="absolute inset-0 pointer-events-none overflow-hidden">
+				<div class="absolute top-0 right-1/4 w-96 h-96 bg-brand-primary/10 rounded-full blur-3xl opacity-20 dark:opacity-10"></div>
+				<div class="absolute bottom-0 left-1/4 w-96 h-96 bg-brand-secondary/10 rounded-full blur-3xl opacity-20 dark:opacity-10"></div>
 			</div>
 
-			<div
-				class="fade-in-section relative z-10 w-full max-w-7xl mx-auto px-4 md:px-8"
-			>
-				<div
-					class="mb-12 md:mb-16 flex items-end justify-between gap-6"
-				>
-					<div>
-						<p
-							class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#DC2626] mb-3"
-						>
-							Trayectoria
-						</p>
-						<h2
-							class="text-4xl md:text-5xl font-medium text-gray-900 dark:text-white tracking-tight"
-						>
-							Experiencia
-						</h2>
+			<div class="fade-in-section relative z-10 w-full max-w-5xl mx-auto px-4 md:px-8">
+				<!-- Header -->
+				<div class="mb-16 md:mb-20">
+					<p class="text-[11px] font-semibold uppercase tracking-[0.3em] text-brand-primary mb-3">
+						Recorrido Profesional
+					</p>
+					<div class="flex items-end justify-between gap-6">
+						<div>
+							<h2 class="text-4xl md:text-5xl font-medium text-neutral-900 dark:text-white tracking-tight">
+								Trayectoria & Experiencia
+							</h2>
+							<p class="text-neutral-600 dark:text-neutral-400 mt-2 text-base md:text-lg">
+								Mi evolución en desarrollo, tecnología e ingeniería
+							</p>
+						</div>
 					</div>
-					<span
-						class="hidden md:inline-flex items-center rounded-full px-3 py-1 text-[11px] font-medium bg-gray-200 text-gray-800 dark:bg-white/10 dark:text-gray-300 backdrop-blur-md border border-gray-300/50 dark:border-white/10"
-						>01</span
-					>
 				</div>
 
-				<!-- CONTENEDOR CON FONDO DE CONTRASTE -->
-				<div
-					class="p-4 md:p-6 rounded-[2.5rem] bg-white/40 dark:bg-[#12141A]/60 backdrop-blur-xl border border-gray-200/50 dark:border-white/5 shadow-2xl"
-				>
-					<!-- ACCORDION LAYOUT -->
-					<div
-						class="flex flex-col md:flex-row gap-3 md:gap-4 h-[800px] md:h-[550px] w-full"
-					>
-						<!-- Card 1: Práctica Profesional -->
-						<article
-							class="group relative flex-1 md:hover:flex-[2.5] hover:flex-[1.5] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] rounded-3xl overflow-hidden bg-white/80 dark:bg-[#1A1D24]/80 border border-gray-200/80 dark:border-white/10 shadow-sm hover:border-[#DC2626]/40 flex flex-col justify-end p-6 md:p-8 cursor-pointer"
-						>
-							<!-- Background Image or Glow -->
-							<div
-								class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:duration-700 z-10"
-							>
-							</div>
-							<div
-								class="absolute inset-0 bg-gradient-to-br from-[#DC2626]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:duration-700 z-0"
-							>
-							</div>
+				<!-- Timeline Container -->
+				<div class="relative">
+					<!-- Central Line -->
+					<div class="absolute left-0 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-primary to-brand-primary/20 dark:from-brand-primary dark:to-brand-primary/20"></div>
 
-							<!-- Default State (Collapsed) -->
-							<div
-								class="relative z-20 flex flex-col md:items-center justify-between md:h-full opacity-100 group-hover:opacity-0 transition-opacity duration-300 group-hover:duration-200 md:w-8 md:mx-auto"
-							>
-								<div
-									class="hidden md:block text-gray-500 dark:text-gray-400 font-medium tracking-[0.3em] uppercase transform -rotate-90 origin-bottom whitespace-nowrap mt-24"
-								>
-									2025 — Presente
-								</div>
-								<h3
-									class="text-2xl font-medium text-gray-900 dark:text-white md:transform md:-rotate-90 md:origin-bottom whitespace-nowrap md:mb-24"
-								>
-									Práctica
-								</h3>
-							</div>
+					<!-- Timeline Items -->
+					<div class="space-y-8 md:space-y-0 md:space-y-12">
+						
+						<!-- Item 1: Actual -->
+						<div class="relative">
+							<!-- Dot on timeline -->
+							<div class="absolute left-0 md:left-1/2 md:-translate-x-1/2 -translate-x-1/2 top-2 w-4 h-4 bg-brand-primary rounded-full border-4 border-neutral-50 dark:border-neutral-950 shadow-lg z-20"></div>
+							<div class="absolute left-0 md:left-1/2 md:-translate-x-1/2 -translate-x-1/2 top-2 w-4 h-4 bg-brand-primary rounded-full animate-pulse"></div>
 
-							<!-- Expanded State Content -->
-							<div
-								class="absolute bottom-0 left-0 right-0 p-6 md:p-8 z-30 opacity-0 group-hover:opacity-100 translate-y-8 group-hover:translate-y-0 transition-all duration-300 group-hover:duration-700 group-hover:delay-150 flex flex-col justify-end pointer-events-none group-hover:pointer-events-auto"
-							>
-								<div
-									class="flex items-center gap-3 mb-4 w-full"
-								>
-									<span class="flex h-2.5 w-2.5 relative">
-										<span
-											class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#DC2626] opacity-75"
-										></span>
-										<span
-											class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#DC2626]"
-										></span>
-									</span>
-									<span
-										class="text-xs font-semibold px-3 py-1 rounded-full border border-[#DC2626]/30 bg-[#DC2626]/10 text-gray-100 dark:text-[#DC2626] backdrop-blur-md"
-									>
-										Actual
-									</span>
-									<span
-										class="text-xs text-gray-300 font-medium tracking-wide"
-										>Mar 2025 — Presente</span
-									>
-								</div>
-								<div class="w-[500px] max-w-full">
-									<h3
-										class="text-3xl md:text-4xl font-medium text-white tracking-tight mb-2"
-									>
+							<!-- Content -->
+							<div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:ml-0" data-position="right">
+								<div class="group relative p-6 md:p-8 rounded-2xl bg-white dark:bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800 hover:border-brand-primary/40 dark:hover:border-brand-primary/40 transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-brand-primary/10 dark:hover:shadow-brand-primary/20">
+									
+									<!-- Status Badge -->
+									<div class="mb-4 flex items-center gap-2">
+										<span class="relative flex h-2 w-2">
+											<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-primary opacity-75"></span>
+											<span class="relative inline-flex rounded-full h-2 w-2 bg-brand-primary"></span>
+										</span>
+										<span class="text-[10px] font-bold uppercase tracking-wider text-brand-primary">En curso</span>
+										<span class="text-[10px] font-medium text-neutral-500 dark:text-neutral-400">Mar 2025 — Presente</span>
+									</div>
+
+									<!-- Title & Company -->
+									<h3 class="text-xl md:text-2xl font-semibold text-neutral-900 dark:text-white mb-1 group-hover:text-brand-primary transition-colors">
 										Práctica Profesional
 									</h3>
-									<p
-										class="text-lg text-gray-300 font-light mb-4"
-									>
+									<p class="text-sm md:text-base font-medium text-brand-primary mb-3">
 										Empresa / Institución
 									</p>
-									<p
-										class="text-sm md:text-base text-gray-300 leading-relaxed line-clamp-3 md:line-clamp-none"
-									>
-										Desarrollando e implementando soluciones
-										de software modernas. Contribución
-										activa en el diseño de arquitectura,
-										optimización de rendimiento y buenas
-										prácticas.
+
+									<!-- Description -->
+									<p class="text-neutral-600 dark:text-neutral-400 text-sm md:text-base leading-relaxed mb-4">
+										Desarrollo e implementación de soluciones de software modernas. Contribución activa en arquitectura de sistemas, optimización de rendimiento y aplicación de buenas prácticas.
 									</p>
+
+									<!-- Skills -->
+									<div class="flex flex-wrap gap-2">
+										<span class="px-3 py-1 text-xs rounded-full bg-brand-primary/10 text-brand-primary border border-brand-primary/20 font-medium">Backend</span>
+										<span class="px-3 py-1 text-xs rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 font-medium">DevOps</span>
+										<span class="px-3 py-1 text-xs rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 font-medium">APIs</span>
+									</div>
 								</div>
 							</div>
-						</article>
+						</div>
 
-						<!-- Card 2: Trabajo Anterior -->
-						<article
-							class="group relative flex-1 md:hover:flex-[2.5] hover:flex-[1.5] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] rounded-3xl overflow-hidden bg-white/80 dark:bg-[#1A1D24]/80 border border-gray-200/80 dark:border-white/10 shadow-sm hover:border-[#DC2626]/40 flex flex-col justify-end p-6 md:p-8 cursor-pointer"
-						>
-							<div
-								class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:duration-700 z-10"
-							>
-							</div>
+						<!-- Item 2: Freelance -->
+						<div class="relative">
+							<!-- Dot on timeline -->
+							<div class="absolute left-0 md:left-1/2 md:-translate-x-1/2 -translate-x-1/2 top-2 w-3 h-3 bg-neutral-300 dark:bg-neutral-700 rounded-full border-4 border-neutral-50 dark:border-neutral-950 z-20"></div>
 
-							<div
-								class="relative z-20 flex flex-col md:items-center justify-between md:h-full opacity-100 group-hover:opacity-0 transition-opacity duration-300 group-hover:duration-200 md:w-8 md:mx-auto"
-							>
-								<div
-									class="hidden md:block text-gray-500 dark:text-gray-400 font-medium tracking-[0.3em] uppercase transform -rotate-90 origin-bottom whitespace-nowrap mt-24"
-								>
-									Ene — Feb 2025
-								</div>
-								<h3
-									class="text-2xl font-medium text-gray-900 dark:text-white md:transform md:-rotate-90 md:origin-bottom whitespace-nowrap md:mb-24"
-								>
-									Freelance
-								</h3>
-							</div>
+							<!-- Content -->
+							<div class="pl-12 md:pl-0 md:w-1/2 md:pl-12 md:ml-auto" data-position="left">
+								<div class="group relative p-6 md:p-8 rounded-2xl bg-white dark:bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800 hover:border-brand-primary/40 dark:hover:border-brand-primary/40 transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-brand-primary/10 dark:hover:shadow-brand-primary/20">
+									
+									<!-- Status Badge -->
+									<div class="mb-4 flex items-center gap-2">
+										<span class="text-[10px] font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">Completado</span>
+										<span class="text-[10px] font-medium text-neutral-500 dark:text-neutral-400">Ene — Feb 2025</span>
+									</div>
 
-							<div
-								class="absolute bottom-0 left-0 right-0 p-6 md:p-8 z-30 opacity-0 group-hover:opacity-100 translate-y-8 group-hover:translate-y-0 transition-all duration-300 group-hover:duration-700 group-hover:delay-150 flex flex-col justify-end pointer-events-none group-hover:pointer-events-auto"
-							>
-								<div
-									class="flex items-center gap-3 mb-4 w-full"
-								>
-									<span
-										class="text-xs font-semibold px-3 py-1 rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md"
-									>
-										Experiencia
-									</span>
-									<span
-										class="text-xs text-gray-300 font-medium tracking-wide"
-										>Ene — Feb 2025</span
-									>
-								</div>
-								<div class="w-[500px] max-w-full">
-									<h3
-										class="text-3xl md:text-4xl font-medium text-white tracking-tight mb-2"
-									>
-										Desarrollo Web
+									<!-- Title & Company -->
+									<h3 class="text-xl md:text-2xl font-semibold text-neutral-900 dark:text-white mb-1 group-hover:text-brand-primary transition-colors">
+										Desarrollo Web Freelance
 									</h3>
-									<p
-										class="text-lg text-[#DC2626] font-medium mb-4"
-									>
+									<p class="text-sm md:text-base font-medium text-brand-primary mb-3">
 										Proyectos Independientes
 									</p>
-									<p
-										class="text-sm md:text-base text-gray-300 leading-relaxed line-clamp-3 md:line-clamp-none"
-									>
-										Creación de landing pages modernas y
-										sistemas web para clientes particulares.
-										Enfoque en rendimiento, UX/UI
-										minimalista y SEO técnico.
+
+									<!-- Description -->
+									<p class="text-neutral-600 dark:text-neutral-400 text-sm md:text-base leading-relaxed mb-4">
+										Diseño y desarrollo de landing pages modernas y sistemas web para clientes. Enfoque en rendimiento, UX/UI minimalista, SEO técnico y buenas prácticas.
 									</p>
+
+									<!-- Skills -->
+									<div class="flex flex-wrap gap-2">
+										<span class="px-3 py-1 text-xs rounded-full bg-brand-primary/10 text-brand-primary border border-brand-primary/20 font-medium">Frontend</span>
+										<span class="px-3 py-1 text-xs rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 font-medium">Diseño</span>
+										<span class="px-3 py-1 text-xs rounded-full bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20 font-medium">SEO</span>
+									</div>
 								</div>
 							</div>
-						</article>
+						</div>
 
-						<!-- Card 3: Estudios -->
-						<article
-							class="group relative flex-1 md:hover:flex-[2.5] hover:flex-[1.5] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] rounded-3xl overflow-hidden bg-white/80 dark:bg-[#1A1D24]/80 border border-gray-200/80 dark:border-white/10 shadow-sm hover:border-[#DC2626]/40 flex flex-col justify-end p-6 md:p-8 cursor-pointer"
-						>
-							<div
-								class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:duration-700 z-10"
-							>
-							</div>
-							<div
-								class="absolute inset-0 bg-gradient-to-bl from-[#DC2626]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:duration-700 z-0"
-							>
-							</div>
+						<!-- Item 3: Estudios -->
+						<div class="relative">
+							<!-- Dot on timeline -->
+							<div class="absolute left-0 md:left-1/2 md:-translate-x-1/2 -translate-x-1/2 top-2 w-3 h-3 bg-neutral-300 dark:bg-neutral-700 rounded-full border-4 border-neutral-50 dark:border-neutral-950 z-20"></div>
 
-							<div
-								class="relative z-20 flex flex-col md:items-center justify-between md:h-full opacity-100 group-hover:opacity-0 transition-opacity duration-300 group-hover:duration-200 md:w-8 md:mx-auto"
-							>
-								<div
-									class="hidden md:block text-gray-500 dark:text-gray-400 font-medium tracking-[0.3em] uppercase transform -rotate-90 origin-bottom whitespace-nowrap mt-24"
-								>
-									2022 — 2025
-								</div>
-								<h3
-									class="text-2xl font-medium text-gray-900 dark:text-white md:transform md:-rotate-90 md:origin-bottom whitespace-nowrap md:mb-24"
-								>
-									Estudios
-								</h3>
-							</div>
+							<!-- Content -->
+							<div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:ml-0" data-position="right">
+								<div class="group relative p-6 md:p-8 rounded-2xl bg-white dark:bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800 hover:border-brand-primary/40 dark:hover:border-brand-primary/40 transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-brand-primary/10 dark:hover:shadow-brand-primary/20">
+									
+									<!-- Status Badge -->
+									<div class="mb-4 flex items-center gap-2">
+										<span class="text-[10px] font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">Educación</span>
+										<span class="text-[10px] font-medium text-neutral-500 dark:text-neutral-400">2022 — 2025</span>
+									</div>
 
-							<div
-								class="absolute bottom-0 left-0 right-0 p-6 md:p-8 z-30 opacity-0 group-hover:opacity-100 translate-y-8 group-hover:translate-y-0 transition-all duration-300 group-hover:duration-700 group-hover:delay-150 flex flex-col justify-end pointer-events-none group-hover:pointer-events-auto"
-							>
-								<div
-									class="flex items-center gap-3 mb-4 w-full"
-								>
-									<span
-										class="text-xs font-semibold px-3 py-1 rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md"
-									>
-										Educación
-									</span>
-									<span
-										class="text-xs text-gray-300 font-medium tracking-wide"
-										>2022 — 2025</span
-									>
-								</div>
-								<div class="w-[500px] max-w-full">
-									<h3
-										class="text-3xl md:text-4xl font-medium text-white tracking-tight mb-2"
-									>
+									<!-- Title & Company -->
+									<h3 class="text-xl md:text-2xl font-semibold text-neutral-900 dark:text-white mb-1 group-hover:text-brand-primary transition-colors">
 										Ingeniería en Informática
 									</h3>
-									<p
-										class="text-lg text-[#DC2626] font-medium mb-4"
-									>
+									<p class="text-sm md:text-base font-medium text-brand-primary mb-3">
 										INACAP Santiago Centro
 									</p>
-									<p
-										class="text-sm md:text-base text-gray-300 leading-relaxed mb-3"
-									>
-										Formación integral en desarrollo de
-										software, enfoque en arquitecturas
-										escalables y bases de datos.
+
+									<!-- Description -->
+									<p class="text-neutral-600 dark:text-neutral-400 text-sm md:text-base leading-relaxed mb-4">
+										Formación integral en desarrollo de software, arquitecturas escalables, bases de datos relacional y NoSQL, metodologías ágiles y buenas prácticas DevOps.
 									</p>
+
+									<!-- Skills -->
 									<div class="flex flex-wrap gap-2">
-										<span
-											class="px-2 py-1 text-xs rounded border border-white/10 bg-white/10 text-white backdrop-blur-sm"
-											>Full-Stack</span
-										>
-										<span
-											class="px-2 py-1 text-xs rounded border border-white/10 bg-white/10 text-white backdrop-blur-sm"
-											>DevOps</span
+										<span class="px-3 py-1 text-xs rounded-full bg-brand-primary/10 text-brand-primary border border-brand-primary/20 font-medium">Full-Stack</span>
+										<span class="px-3 py-1 text-xs rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 font-medium">DevOps</span>
+										<span class="px-3 py-1 text-xs rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 font-medium">Agile</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</SectionContainer>
 										>
 										<span
 											class="px-2 py-1 text-xs rounded border border-white/10 bg-white/10 text-white backdrop-blur-sm"

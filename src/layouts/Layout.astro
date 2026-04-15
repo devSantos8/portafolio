@@ -24,8 +24,8 @@ const { title, showHeader = true } = Astro.props;
 		<title>{title}</title>
 		<ViewTransitions />
 	</head>
-	<body class="bg-[#FAFAFA] dark:bg-[#0A0A0A] selection:bg-red-500/20 selection:text-red-900 dark:selection:text-red-100 font-['Inter_Variable',sans-serif] antialiased text-gray-900 dark:text-gray-100 transition-colors duration-500">
-		<div class="fixed inset-0 z-[-2] bg-[#FAFAFA] dark:bg-[#0A0A0A] transition-colors duration-500"></div>
+	<body class="bg-neutral-50 dark:bg-neutral-950 selection:bg-brand-primary/20 selection:text-red-900 dark:selection:text-red-100 font-['Inter_Variable',sans-serif] antialiased text-neutral-900 dark:text-neutral-50 transition-colors duration-500">
+		<div class="fixed inset-0 z-[-2] bg-neutral-50 dark:bg-neutral-950 transition-colors duration-500"></div>
 		{showHeader && <Header />}
 		<slot />
 	</body>
@@ -51,20 +51,20 @@ const { title, showHeader = true } = Astro.props;
 <style is:global>
 	:root {
 		color-scheme: light dark;
-		--color-primary: #1a1a1a;
-		--color-secondary: #666666;
-		--color-muted: #999999;
-		--color-accent: #2563eb;
+		--color-primary: #24292F;
+		--color-secondary: #6E7681;
+		--color-muted: #8C959B;
+		--color-accent: #DC2626;
 	}
 
 	:root.dark {
-		--bg-color: #0a0a0a;
-		--text-color: #fafafa;
+		--bg-color: #0d1117;
+		--text-color: #f8f9fb;
 	}
 
 	:root:not(.dark) {
-		--bg-color: #fafafa;
-		--text-color: #171717;
+		--bg-color: #f8f9fb;
+		--text-color: #24292f;
 	}
 
 	html {

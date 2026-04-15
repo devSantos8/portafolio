@@ -1,15 +1,15 @@
 ---
-const navButtonClass = 'nav-link text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100/90 dark:hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DC2626]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-[#0F1115] px-4 py-2.5 rounded-full transition-all duration-300';
+const navButtonClass = 'nav-link text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-neutral-100/80 dark:hover:bg-neutral-800/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-50 dark:focus-visible:ring-offset-neutral-950 px-4 py-2.5 rounded-full transition-all duration-300';
 ---
 
 <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 -translate-y-full opacity-0" id="header">
     <div class="flex justify-center w-full px-4 pt-4">
-        <nav id="main-nav" class="flex items-center gap-1 px-2 py-2 rounded-full bg-white/80 dark:bg-[#1A1A1F]/80 backdrop-blur-xl border border-gray-200/60 dark:border-white/10 shadow-lg shadow-black/5 dark:shadow-black/20 transition-all duration-500">
-            <a href="#top" class="text-sm font-bold tracking-[0.1em] text-gray-900 dark:text-white hover:text-[#DC2626] dark:hover:text-[#DC2626] transition-colors duration-300 px-4 py-2">
+        <nav id="main-nav" class="flex items-center gap-1 px-2 py-2 rounded-full bg-white/80 dark:bg-neutral-900/80 backdrop-blur-xl border border-neutral-200/60 dark:border-neutral-700/60 shadow-lg shadow-black/5 dark:shadow-black/20 transition-all duration-500">
+            <a href="#top" class="text-sm font-bold tracking-[0.1em] text-neutral-900 dark:text-white hover:text-brand-primary dark:hover:text-brand-primary transition-colors duration-300 px-4 py-2">
                 JMS
             </a>
             
-            <div class="w-[1px] h-4 bg-gray-200 dark:bg-gray-700 mx-1 hidden md:block"></div>
+            <div class="w-[1px] h-4 bg-neutral-200 dark:bg-neutral-700 mx-1 hidden md:block"></div>
 
             <div class="hidden md:flex items-center gap-0.5 text-[11px] font-semibold uppercase tracking-[0.15em]">
                 <a href="#Experiencia" data-section-link="Experiencia" class={navButtonClass}>
@@ -26,9 +26,9 @@ const navButtonClass = 'nav-link text-gray-600 dark:text-gray-300 hover:text-gra
                 </a>
             </div>
 
-            <div class="w-[1px] h-4 bg-gray-200 dark:bg-gray-700 mx-1 hidden md:block"></div>
+            <div class="w-[1px] h-4 bg-neutral-200 dark:bg-neutral-700 mx-1 hidden md:block"></div>
 
-            <button id="theme-toggle" class="w-10 h-10 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-[#DC2626] dark:hover:text-[#DC2626] hover:bg-gray-100/90 dark:hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DC2626]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-[#0F1115] rounded-full transition-all duration-300">
+            <button id="theme-toggle" class="w-10 h-10 flex items-center justify-center text-neutral-600 dark:text-neutral-400 hover:text-brand-primary dark:hover:text-brand-primary hover:bg-neutral-100/80 dark:hover:bg-neutral-800/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-50 dark:focus-visible:ring-offset-neutral-950 rounded-full transition-all duration-300">
                 <span id="sun-icon" class="hidden dark:block">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="12" cy="12" r="4"/>
@@ -53,13 +53,13 @@ const navButtonClass = 'nav-link text-gray-600 dark:text-gray-300 hover:text-gra
     const setActiveNavLink = (id: string) => {
         navLinks.forEach((link) => {
             const isActive = link.getAttribute('data-section-link') === id;
-            link.classList.toggle('bg-gray-900', isActive);
+            link.classList.toggle('bg-neutral-900', isActive);
             link.classList.toggle('text-white', isActive);
-            link.classList.toggle('dark:bg-white', isActive);
-            link.classList.toggle('dark:text-[#0F1115]', isActive);
+            link.classList.toggle('dark:bg-neutral-100', isActive);
+            link.classList.toggle('dark:text-neutral-950', isActive);
             link.classList.toggle('shadow-sm', isActive);
             link.classList.toggle('shadow-black/10', isActive);
-            link.classList.toggle('dark:shadow-white/10', isActive);
+            link.classList.toggle('dark:shadow-neutral-100/10', isActive);
             link.setAttribute('aria-current', isActive ? 'page' : 'false');
         });
     };
@@ -127,10 +127,10 @@ const navButtonClass = 'nav-link text-gray-600 dark:text-gray-300 hover:text-gra
         if (header) {
             if (currentScroll > 150) {
                 header.classList.remove('-translate-y-full', 'opacity-0');
-                nav?.classList.add('shadow-xl', 'shadow-black/10', 'dark:shadow-black/35', 'border-gray-300/80', 'dark:border-white/15');
+                nav?.classList.add('shadow-xl', 'shadow-black/10', 'dark:shadow-black/35', 'border-neutral-300/80', 'dark:border-neutral-700/50');
             } else {
                 header.classList.add('-translate-y-full', 'opacity-0');
-                nav?.classList.remove('shadow-xl', 'shadow-black/10', 'dark:shadow-black/35', 'border-gray-300/80', 'dark:border-white/15');
+                nav?.classList.remove('shadow-xl', 'shadow-black/10', 'dark:shadow-black/35', 'border-neutral-300/80', 'dark:border-neutral-700/50');
             }
         }
         updateActiveFromScroll();
