@@ -20,11 +20,17 @@
 		--shadow-soft: 0 12px 32px rgba(15, 23, 42, 0.06);
 		--shadow-card: 0 16px 40px rgba(15, 23, 42, 0.08);
 		--shadow-lift: 0 22px 48px rgba(15, 23, 42, 0.14);
+		--shadow-hover: 0 24px 56px rgba(15, 23, 42, 0.12);
+		--shadow-active: 0 32px 72px rgba(15, 23, 42, 0.15);
 
 		--blur-glass: 20px;
 		--radius-shell: 2rem;
 		--radius-card: 1.5rem;
 		--radius-pill: 9999px;
+		--duration-fast: 200ms;
+		--duration-base: 300ms;
+		--duration-slow: 600ms;
+		--border-accent: rgba(220, 38, 38, 0.32);
 	}
 
 	:root.dark {
@@ -43,6 +49,8 @@
 		--shadow-soft: 0 14px 34px rgba(0, 0, 0, 0.34);
 		--shadow-card: 0 20px 50px rgba(0, 0, 0, 0.35);
 		--shadow-lift: 0 26px 62px rgba(0, 0, 0, 0.45);
+		--shadow-hover: 0 28px 64px rgba(0, 0, 0, 0.4);
+		--shadow-active: 0 36px 80px rgba(0, 0, 0, 0.5);
 	}
 }
 
@@ -109,4 +117,91 @@
 	.ui-title {
 		letter-spacing: -0.04em;
 	}
-}
+
+	/* Tech Badge Component */
+	.tech-badge {
+		@apply px-3 py-1.5 rounded-full text-xs font-semibold;
+		@apply bg-gradient-to-r border;
+		@apply text-gray-700 dark:text-gray-300;
+		@apply border-gray-300/40 dark:border-gray-600/40;
+		@apply backdrop-blur-sm transition-all duration-300;
+	}
+
+	.tech-badge:hover {
+		@apply transform scale-105 shadow-md;
+	}
+
+	/* Timeline Checkpoint */
+	.timeline-checkpoint {
+		@apply h-8 w-8 rounded-full border-4 border-white dark:border-slate-950;
+		@apply bg-white dark:bg-slate-900 shadow-lg;
+		@apply transition-all duration-300;
+		@apply flex items-center justify-center;
+	}
+
+	.timeline-checkpoint:hover {
+		@apply scale-125 shadow-2xl;
+	}
+
+	/* Project Status Badge */
+	.project-status-badge {
+		@apply absolute top-3 left-3 px-2.5 py-1 rounded-md text-xs font-semibold;
+		@apply flex items-center gap-1.5;
+		@apply transition-all duration-500;
+		animation: statusPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+	}
+
+	@keyframes statusPulse {
+		0%, 100% {
+			opacity: 1;
+			transform: scale(1);
+		}
+		50% {
+			opacity: 0.8;
+			transform: scale(1.02);
+		}
+	}
+
+	/* Skeleton Loading Animation */
+	.skeleton-loading {
+		@apply bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-700 dark:via-gray-800 dark:to-gray-700;
+		background-size: 200% 100%;
+		animation: skeletonShimmer 1.5s infinite;
+	}
+
+	@keyframes skeletonShimmer {
+		0% {
+			background-position: 200% 0;
+		}
+		100% {
+			background-position: -200% 0;
+		}
+	}
+
+	/* Reduced Motion Support */
+	@media (prefers-reduced-motion: reduce) {
+		* {
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: 0.01ms !important;
+		}
+
+		.trajectory-item {
+			animation: none;
+			opacity: 1;
+			transform: none;
+		}
+
+		.project-new-card {
+			transition: none;
+		}
+
+		.project-status-badge {
+			animation: none;
+		}
+
+		.skeleton-loading {
+			animation: none;
+			background: var(--surface-card);
+		}
+	}
