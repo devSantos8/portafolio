@@ -1,0 +1,165 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { projects, getProjectById } from "../../data/projects";
+
+interface Props {
+	id: string;
+}
+
+export async function getStaticPaths() {
+	return projects.map((project) => ({
+		params: { id: project.id },
+	}));
+}
+
+const { id } = Astro.params as Props;
+const project = getProjectById(id!);
+
+if (!project) {
+	throw new Error(`Project with id ${id} not found`);
+}
+
+const otherProjects = projects.filter((p) => p.id !== id).slice(0, 3);
+---
+
+<Layout title={`${project.title} - Joain Monroy`}>
+	<main class="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-500">
+		<!-- Header with Image -->
+		<section class="relative h-96 md:h-[500px] overflow-hidden">
+			<img
+				src={project.image}
+				alt={project.title}
+				class="w-full h-full object-cover"
+			/>
+			<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent"></div>
+		</section>
+
+		<!-- Project Info -->
+		<section class="relative py-16 md:py-24 px-4 md:px-8 lg:px-16 -mt-32 md:-mt-40 relative z-10">
+			<div class="max-w-4xl mx-auto">
+				<!-- Title & Description -->
+				<div class="bg-white dark:bg-gray-900 rounded-3xl p-8 md:p-12 border border-gray-200 dark:border-gray-800 mb-12">
+					<p class="text-sm font-mono uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-4">Proyecto</p>
+					<h1 class="text-5xl md:text-6xl font-bold mb-6">{project.title}</h1>
+					<p class="text-xl text-gray-600 dark:text-gray-300 leading-relaxed mb-8">
+						{project.fullDescription || project.description}
+					</p>
+
+					<!-- Tags -->
+					<div class="flex flex-wrap gap-3 mb-8">
+						{project.tags.map((tag) => (
+							<span class="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-sm font-mono">
+								{tag}
+							</span>
+						))}
+					</div>
+
+					<!-- Links -->
+					<div class="flex gap-4">
+						<a
+							href={project.link}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-black rounded-full font-semibold hover:shadow-lg transition-all duration-300"
+						>
+							{project.linkType === 'github' && '→ Ver en GitHub'}
+							{project.linkType === 'live' && '→ Visitar sitio'}
+							{project.linkType === 'external' && '→ Ver proyecto'}
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Details -->
+		<section class="relative py-16 md:py-24 px-4 md:px-8 lg:px-16">
+			<div class="max-w-4xl mx-auto">
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+					<div>
+						<h3 class="text-2xl font-bold mb-4">Características</h3>
+						<ul class="space-y-3 text-gray-600 dark:text-gray-400">
+							<li class="flex items-start gap-3">
+								<svg class="w-5 h-5 mt-1 flex-shrink-0 text-gray-900 dark:text-white" fill="currentColor" viewBox="0 0 20 20">
+									<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+								</svg>
+								<span>Arquitectura escalable</span>
+							</li>
+							<li class="flex items-start gap-3">
+								<svg class="w-5 h-5 mt-1 flex-shrink-0 text-gray-900 dark:text-white" fill="currentColor" viewBox="0 0 20 20">
+									<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+								</svg>
+								<span>Código limpio y mantenible</span>
+							</li>
+							<li class="flex items-start gap-3">
+								<svg class="w-5 h-5 mt-1 flex-shrink-0 text-gray-900 dark:text-white" fill="currentColor" viewBox="0 0 20 20">
+									<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+								</svg>
+								<span>Optimizado para rendimiento</span>
+							</li>
+							<li class="flex items-start gap-3">
+								<svg class="w-5 h-5 mt-1 flex-shrink-0 text-gray-900 dark:text-white" fill="currentColor" viewBox="0 0 20 20">
+									<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+								</svg>
+								<span>Experiencia usuario completa</span>
+							</li>
+						</ul>
+					</div>
+
+					<div>
+						<h3 class="text-2xl font-bold mb-4">Stack Técnico</h3>
+						<ul class="space-y-2 text-gray-600 dark:text-gray-400">
+							{project.tags.map((tag) => (
+								<li>• {tag}</li>
+							))}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Other Projects -->
+		{otherProjects.length > 0 && (
+			<section class="relative py-16 md:py-24 px-4 md:px-8 lg:px-16 bg-gray-50 dark:bg-gray-950">
+				<div class="max-w-6xl mx-auto">
+					<h3 class="text-3xl font-bold mb-12">Otros Proyectos</h3>
+					<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+						{otherProjects.map((p) => (
+							<a
+								href={`/projects/${p.id}`}
+								class="group relative rounded-xl overflow-hidden h-64 bg-gray-200 dark:bg-gray-800 hover:shadow-xl transition-all duration-300"
+							>
+								<img
+									src={p.image}
+									alt={p.title}
+									class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+								/>
+								<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+									<div>
+										<h4 class="text-xl font-bold text-white">{p.title}</h4>
+										<p class="text-gray-300 text-sm">{p.description}</p>
+									</div>
+								</div>
+							</a>
+						))}
+					</div>
+				</div>
+			</section>
+		)}
+
+		<!-- CTA -->
+		<section class="relative py-24 px-4 md:px-8 lg:px-16">
+			<div class="max-w-4xl mx-auto text-center">
+				<h3 class="text-4xl font-bold mb-6">¿Tienes un proyecto en mente?</h3>
+				<p class="text-gray-600 dark:text-gray-400 text-lg mb-8">
+					Estoy disponible para colaborar en nuevos proyectos y soluciones digitales.
+				</p>
+				<a
+					href="/contact"
+					class="inline-block px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-black rounded-full font-semibold hover:shadow-lg transition-all duration-300"
+				>
+					Contáctame
+				</a>
+			</div>
+		</section>
+	</main>
+</Layout>
