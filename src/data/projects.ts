@@ -1,78 +1,125 @@
 export interface Project {
 	id: string;
 	title: string;
+	subtitle: string;
 	description: string;
 	fullDescription?: string;
-	image: string;
-	link: string;
-	linkType: 'github' | 'live' | 'external';
+	images: string[];
+	backgroundColor: string;
 	tags: string[];
-	featured: boolean;
-	backgroundColor?: string;
-	glowColor?: string;
+	year: string;
 }
 
 export const projects: Project[] = [
 	{
 		id: 'commitflow',
 		title: 'CommitFlow',
-		description: 'Plataforma integral de conexión laboral que une talento TI con oportunidades y sistemas avanzados de matching.',
-		fullDescription: 'CommitFlow es una solución end-to-end para conectar profesionales de IT con empresas. Incluye algoritmos de matching inteligente, panel administrativo robusto y experiencia de usuario fluida. Desarrollada con arquitectura escalable y buenas prácticas de desarrollo.',
-		image: '/projects/workco.webp',
-		link: 'https://github.com/17santo',
-		linkType: 'github',
-		tags: ['Django', 'React', 'SQL'],
-		featured: true,
-		backgroundColor: 'from-red-500/0 via-red-500/0 to-red-500/5',
-		glowColor: 'to-red-500/10',
+		subtitle: 'Proyecto de Titulo - 2025',
+		description: 'Plataforma integral de conexión laboral que une talento TI con oportunidades. Incluye sistemas avanzados de matching, panel administrativo robusto y experiencia de usuario fluida.',
+		fullDescription: 'Desarrollada con arquitectura escalable y buenas prácticas. Algoritmos de matching inteligente para conectar profesionales con empresas.',
+		images: [
+			'https://images.unsplash.com/photo-1522071820081-009f0ab9ba74?w=600&h=800&fit=crop',
+			'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&h=800&fit=crop',
+			'https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&h=800&fit=crop',
+		],
+		backgroundColor: '#ffffff', // Pure White
+		tags: ['Django', 'Python', 'PostgreSQL'],
+		year: '2025',
 	},
 	{
 		id: 'dashboard-data',
-		title: 'Dashboard Data',
+		title: 'Dashboard Analytics',
+		subtitle: 'Visualización de Métricas - 2024',
 		description: 'Interfaz moderna para visualizar métricas en tiempo real con componentes dinámicos y analítica profunda.',
-		fullDescription: 'Dashboard desarrollado con arquitectura modular. Visualización de datos en tiempo real, gráficos interactivos y exportación de reportes. Optimizado para rendimiento y accesibilidad.',
-		image: '/projects/dashboard.webp',
-		link: 'https://github.com/17santo',
-		linkType: 'github',
-		tags: ['Django', 'JS Vanilla'],
-		featured: true,
+		images: [
+			'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=800&fit=crop',
+			'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=800&fit=crop',
+		],
+		backgroundColor: '#f0ece1', // Warm Washi Paper / Sand
+		tags: ['React', 'Chart.js', 'Node.js'],
+		year: '2024',
 	},
 	{
 		id: 'lubricentro',
 		title: 'Lubricentro La Esquina',
-		description: 'Ecommerce moderno con catálogo dinámico, carrito de compras y sistema de pagos integrado para lubricantes y accesorios automotrices.',
-		fullDescription: 'Plataforma de e-commerce completa para venta de productos automotrices. Incluye carrito persistente, búsqueda avanzada, integración de pagos y panel de administración. Diseño responsivo y experiencia móvil optimizada.',
-		image: '/projects/lubricentro.webp',
-		link: 'https://lubricentro-la-esquina.vercel.app',
-		linkType: 'live',
-		tags: ['Next.js', 'Tailwind', 'Stripe'],
-		featured: true,
-		backgroundColor: 'from-emerald-500/0 via-emerald-500/0 to-emerald-500/5',
-		glowColor: 'to-emerald-500/10',
+		subtitle: 'Pagina Web - 2025',
+		description: 'Pagina web para un lubricentro, para mostrar sus productos y servicios.',
+		images: [
+			'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=800&fit=crop',
+			'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=800&fit=crop',
+		],
+		backgroundColor: '#b5c1b5', // Muted Sage / Matcha
+		tags: ['Astro', 'Tailwind CSS', 'JavaScript'],
+		year: '2025',
 	},
 	{
-		id: 'project-4',
-		title: 'Sistema de Gestión',
-		description: 'Herramienta de gestión de proyectos con seguimiento de tareas, colaboración en tiempo real y reportes automatizados.',
-		fullDescription: 'Sistema diseñado para equipos de desarrollo. Seguimiento de issues, milestones, comentarios colaborativos y automatización de workflows. Integración con Git y notificaciones en tiempo real.',
-		image: '/projects/default.webp',
-		link: 'https://github.com/17santo',
-		linkType: 'github',
-		tags: ['React', 'Node.js', 'MongoDB'],
-		featured: false,
+		id: 'api-gateway',
+		title: 'API Gateway',
+		subtitle: 'Microservicios - 2023',
+		description: 'Arquitectura de microservicios con API Gateway centralizado. Gestión de autenticación, rate limiting.',
+		images: [
+			'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=800&fit=crop',
+		],
+		backgroundColor: '#1c1c1c', // Ink Charcoal
+		tags: ['Node.js', 'Docker', 'Redis'],
+		year: '2023',
 	},
 	{
-		id: 'project-5',
-		title: 'Landing Page Premium',
-		description: 'Página de presentación con animaciones smooth, diseño moderno y optimización SEO completa.',
-		fullDescription: 'Landing optimizada con performance scores altos. Animaciones suaves, microinteracciones delightful y CMS headless para contenidos.',
-		image: '/projects/default.webp',
-		link: 'https://github.com/17santo',
-		linkType: 'github',
-		tags: ['Astro', 'Tailwind', 'GSAP'],
-		featured: false,
+		id: 'task-management',
+		title: 'TaskFlow',
+		subtitle: 'Gestión de Proyectos - 2023',
+		description: 'Herramienta de gestión de proyectos con seguimiento de tareas, colaboración en tiempo real.',
+		images: [
+			'https://images.unsplash.com/photo-1611224923853-80b0f2f1cd3e?w=600&h=800&fit=crop',
+		],
+		backgroundColor: '#ffffff',
+		tags: ['React', 'Socket.io', 'MongoDB'],
+		year: '2023',
+	},
+	{
+		id: 'devops-pipeline',
+		title: 'DevOps Pipeline',
+		subtitle: 'CI/CD Automation - 2023',
+		description: 'Pipeline de integración y despliegue continuo completamente automatizado.',
+		images: [
+			'https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=600&h=800&fit=crop',
+		],
+		backgroundColor: '#0d1117',
+		tags: ['GitHub Actions', 'Kubernetes', 'Terraform'],
+		year: '2023',
+	},
+	{
+		id: 'landing-premium',
+		title: 'Landing Premium',
+		subtitle: 'Página de Presentación - 2024',
+		description: 'Landing page con animaciones smooth, diseño moderno y optimización SEO completa.',
+		images: [],
+		backgroundColor: '#ffffff',
+		tags: ['Astro', 'GSAP', 'Tailwind CSS'],
+		year: '2024',
+	},
+	{
+		id: 'restaurante-app',
+		title: 'Sistema Restaurante',
+		subtitle: 'Gestión Integral - 2022',
+		description: 'Sistema completo para gestión de restaurante con pedidos e inventario.',
+		images: [],
+		backgroundColor: '#ffffff',
+		tags: ['Java', 'Spring Boot', 'MySQL'],
+		year: '2022',
+	},
+	{
+		id: 'portfolio-v1',
+		title: 'Portfolio v1',
+		subtitle: 'Primer Portfolio - 2021',
+		description: 'Mi primera página de portfolio personal.',
+		images: [],
+		backgroundColor: '#ffffff',
+		tags: ['HTML', 'CSS', 'JavaScript'],
+		year: '2021',
 	},
 ];
 
-export const getFeaturedProjects = () => projects.filter((p) => p.featured);
+export const getFeaturedProjects = () => projects.slice(0, 4);
 export const getProjectById = (id: string) => projects.find((p) => p.id === id);
+export const getAllProjects = () => projects;

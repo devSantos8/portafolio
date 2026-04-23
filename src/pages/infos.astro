@@ -1,0 +1,306 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Infos - Joain Monroy" showHeader={true}>
+	<main class="infos-container">
+		<div class="infos-content">
+			
+			<div class="header-spacer"></div>
+
+			<section class="info-section intro-section">
+				<h1 class="huge-title">PROFILE.</h1>
+				<div class="intro-grid">
+					<div class="intro-text">
+						<p class="lead">Soy Joain Monroy, un desarrollador full-stack apasionado por crear experiencias digitales excepcionales, combinando un diseño estético con una arquitectura de software robusta.</p>
+						<p>Con sede en Santiago, Chile, me especializo en construir aplicaciones web modernas, optimizadas y escalables. Mi enfoque se centra en la intersección entre la ingeniería técnica y el diseño de interfaces centradas en el usuario.</p>
+					</div>
+					<div class="img-placeholder img-1"></div>
+				</div>
+			</section>
+
+			<section class="info-section skills-section">
+				<div class="section-header">
+					<h2>Conocimientos</h2>
+					<span class="line"></span>
+				</div>
+				<div class="skills-grid">
+					<div class="skill-category">
+						<h3>Frontend</h3>
+						<ul>
+							<li>React / Next.js</li>
+							<li>Astro</li>
+							<li>Tailwind CSS</li>
+							<li>GSAP & Animaciones</li>
+						</ul>
+					</div>
+					<div class="skill-category">
+						<h3>Backend</h3>
+						<ul>
+							<li>Node.js / Express</li>
+							<li>Python / Django</li>
+							<li>API RESTful</li>
+							<li>PostgreSQL / MongoDB</li>
+						</ul>
+					</div>
+					<div class="skill-category">
+						<h3>DevOps & Otros</h3>
+						<ul>
+							<li>Docker & Kubernetes</li>
+							<li>CI/CD (GitHub Actions)</li>
+							<li>Git / Control de Versiones</li>
+							<li>Arquitectura Cloud</li>
+						</ul>
+					</div>
+				</div>
+				<div class="img-placeholder img-2"></div>
+			</section>
+
+			<section class="info-section timeline-section">
+				<div class="section-header">
+					<h2>Trayectoria</h2>
+					<span class="line"></span>
+				</div>
+				<div class="timeline">
+					<div class="timeline-item">
+						<div class="year">2024 - Presente</div>
+						<div class="content">
+							<h3>Desarrollador Full-Stack Independiente</h3>
+							<p>Creación de soluciones web integrales para clientes internacionales, desde landing pages premium hasta sistemas de gestión y dashboards analíticos complejos.</p>
+						</div>
+					</div>
+					<div class="timeline-item">
+						<div class="year">2023 - 2024</div>
+						<div class="content">
+							<h3>Ingeniero de Software Trainee</h3>
+							<p>Desarrollo de microservicios y optimización de pipelines de CI/CD, mejorando la eficiencia de despliegue en un 40%.</p>
+						</div>
+					</div>
+					<div class="timeline-item">
+						<div class="year">2021 - 2023</div>
+						<div class="content">
+							<h3>Estudios Universitarios & Proyectos</h3>
+							<p>Formación en Ingeniería de Software. Desarrollo del proyecto de título "CommitFlow", una plataforma de conexión laboral escalable.</p>
+						</div>
+					</div>
+				</div>
+				
+				<div class="scattered-images">
+					<div class="img-placeholder img-3"></div>
+					<div class="img-placeholder img-4"></div>
+				</div>
+			</section>
+
+			<div class="footer-spacer"></div>
+		</div>
+	</main>
+</Layout>
+
+<style>
+	.infos-container {
+		width: 100%;
+		min-height: 100vh;
+		background-color: #1c1c1c; /* Negro Ink Charcoal */
+		color: var(--white);
+		padding: 0 50px;
+	}
+
+	.infos-content {
+		max-width: 1400px;
+		margin: 0 auto;
+		position: relative;
+	}
+
+	.header-spacer {
+		height: 200px; /* Space for the fixed header */
+	}
+	
+	.footer-spacer {
+		height: 150px;
+	}
+
+	.info-section {
+		margin-bottom: 150px;
+		position: relative;
+	}
+
+	/* Typography */
+	.huge-title {
+		font-family: var(--font-sans);
+		font-size: 12vw;
+		font-weight: 700;
+		line-height: 0.8;
+		letter-spacing: -0.05em;
+		margin-bottom: 60px;
+		text-transform: uppercase;
+	}
+
+	.section-header {
+		display: flex;
+		align-items: center;
+		gap: 30px;
+		margin-bottom: 60px;
+	}
+
+	.section-header h2 {
+		font-family: var(--font-sans);
+		font-size: 32px;
+		font-weight: 500;
+		letter-spacing: -0.02em;
+		text-transform: uppercase;
+		white-space: nowrap;
+	}
+
+	.section-header .line {
+		flex: 1;
+		height: 1px;
+		background-color: var(--white);
+		opacity: 0.2;
+	}
+
+	/* Intro */
+	.intro-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 100px;
+		align-items: start;
+	}
+
+	.intro-text p {
+		font-family: var(--font-sans);
+		font-size: 24px;
+		line-height: 1.5;
+		margin-bottom: 30px;
+		font-weight: 400;
+		color: #a0a0a0; /* Gris más claro para que resalte en negro */
+	}
+
+	.intro-text p.lead {
+		font-size: 32px;
+		font-weight: 500;
+		color: var(--white);
+		letter-spacing: -0.02em;
+	}
+
+	/* Skills */
+	.skills-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 50px;
+		margin-bottom: 80px;
+	}
+
+	.skill-category h3 {
+		font-family: var(--font-sans);
+		font-size: 14px;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		margin-bottom: 30px;
+		padding-bottom: 15px;
+		border-bottom: 1px solid rgba(255,255,255,0.2);
+	}
+
+	.skill-category ul {
+		list-style: none;
+		padding: 0;
+	}
+
+	.skill-category li {
+		font-family: var(--font-sans);
+		font-size: 18px;
+		margin-bottom: 15px;
+		color: #a0a0a0;
+	}
+
+	/* Timeline */
+	.timeline {
+		display: flex;
+		flex-direction: column;
+		gap: 60px;
+		max-width: 800px;
+	}
+
+	.timeline-item {
+		display: grid;
+		grid-template-columns: 200px 1fr;
+		gap: 50px;
+	}
+
+	.timeline-item .year {
+		font-family: var(--font-sans);
+		font-size: 16px;
+		font-weight: 600;
+		color: #a0a0a0;
+		padding-top: 5px;
+	}
+
+	.timeline-item h3 {
+		font-family: var(--font-sans);
+		font-size: 28px;
+		font-weight: 500;
+		margin-bottom: 15px;
+		letter-spacing: -0.02em;
+	}
+
+	.timeline-item p {
+		font-family: var(--font-sans);
+		font-size: 18px;
+		line-height: 1.6;
+		color: #a0a0a0;
+	}
+
+	/* Image Placeholders */
+	.img-placeholder {
+		background-color: #e5e5e5;
+		width: 100%;
+		position: relative;
+		overflow: hidden;
+	}
+	
+	/* Decorative diagonal lines for placeholders */
+	.img-placeholder::after {
+		content: "";
+		position: absolute;
+		top: 0; left: 0; right: 0; bottom: 0;
+		background-image: linear-gradient(45deg, #d5d5d5 25%, transparent 25%, transparent 75%, #d5d5d5 75%, #d5d5d5), linear-gradient(45deg, #d5d5d5 25%, transparent 25%, transparent 75%, #d5d5d5 75%, #d5d5d5);
+		background-size: 20px 20px;
+		background-position: 0 0, 10px 10px;
+		opacity: 0.5;
+	}
+
+	.img-1 {
+		height: 600px;
+		margin-top: -100px;
+	}
+
+	.img-2 {
+		width: 40%;
+		height: 400px;
+		margin-left: auto;
+		margin-top: -100px;
+		transform: translateY(50px);
+	}
+
+	.scattered-images {
+		position: relative;
+		height: 400px;
+		margin-top: 100px;
+	}
+
+	.img-3 {
+		position: absolute;
+		width: 35%;
+		height: 450px;
+		left: 0;
+		top: 0;
+	}
+
+	.img-4 {
+		position: absolute;
+		width: 45%;
+		height: 350px;
+		right: 10%;
+		top: 150px;
+	}
+</style>

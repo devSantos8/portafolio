@@ -1,0 +1,97 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getAllProjects } from '../../data/projects';
+
+const projects = getAllProjects();
+---
+
+<Layout title="Projects - Joain Monroy" showHeader={false}>
+	<main class="projects-page">
+		
+		<div class="projects-grid">
+			{projects.map((project) => (
+				<article class="project-card">
+					<a href={`/projects/${project.id}`}>
+						<div class="image">
+							<img 
+								src={project.images[0] || 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop'} 
+								alt={project.title}
+								loading="lazy"
+							/>
+						</div>
+						<div class="info">
+							<h2>{project.title}</h2>
+							<span>{project.subtitle}</span>
+						</div>
+					</a>
+				</article>
+			))}
+		</div>
+		
+	</main>
+</Layout>
+
+<style>
+	.projects-page {
+		min-height: 100vh;
+		padding: 120px 48px 48px;
+	}
+	
+	.projects-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+		gap: 48px;
+	}
+	
+	.project-card a {
+		text-decoration: none;
+		display: block;
+	}
+	
+	.image {
+		aspect-ratio: 4/3;
+		overflow: hidden;
+		margin-bottom: 16px;
+	}
+	
+	.image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.3s;
+	}
+	
+	.project-card a:hover .image img {
+		transform: scale(1.05);
+		opacity: 0.8;
+	}
+	
+	.info {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+	}
+	
+	.info h2 {
+		font-family: 'Playfair Display', Georgia, serif;
+		font-size: clamp(20px, 3vw, 32px);
+		font-weight: 400;
+	}
+	
+	.info span {
+		font-size: 9px;
+		letter-spacing: 0.15em;
+		text-transform: uppercase;
+		opacity: 0.5;
+	}
+	
+	@media (max-width: 768px) {
+		.projects-page {
+			padding: 100px 24px 48px;
+		}
+		
+		.projects-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

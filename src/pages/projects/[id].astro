@@ -1,165 +1,182 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import { projects, getProjectById } from "../../data/projects";
+import Layout from '../../layouts/Layout.astro';
+import { getProjectById, getAllProjects } from '../../data/projects';
 
-interface Props {
-	id: string;
-}
-
-export async function getStaticPaths() {
+export function getStaticPaths() {
+	const projects = getAllProjects();
 	return projects.map((project) => ({
 		params: { id: project.id },
 	}));
 }
 
-const { id } = Astro.params as Props;
-const project = getProjectById(id!);
+const { id } = Astro.params;
+const project = getProjectById(id);
+const allProjects = getAllProjects();
 
 if (!project) {
-	throw new Error(`Project with id ${id} not found`);
+	return Astro.redirect('/404');
 }
-
-const otherProjects = projects.filter((p) => p.id !== id).slice(0, 3);
 ---
 
-<Layout title={`${project.title} - Joain Monroy`}>
-	<main class="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-500">
-		<!-- Header with Image -->
-		<section class="js-project-hero relative h-96 md:h-[500px] overflow-hidden">
-			<img
-				src={project.image}
-				alt={project.title}
-				class="w-full h-full object-cover"
-			/>
-			<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent"></div>
-		</section>
+<Layout title={`${project.title} - Joain Monroy`} showHeader={true}>
+	<main class="project-detail" style={`background-color: ${project.backgroundColor || 'var(--white)'}`}>
+		
+		<div class="header-spacer"></div>
 
-		<!-- Project Info -->
-		<section class="relative py-16 md:py-24 px-4 md:px-8 lg:px-16 -mt-32 md:-mt-40 relative z-10">
-			<div class="max-w-4xl mx-auto">
-				<!-- Title & Description -->
-				<div class="js-project-intro-card bg-white dark:bg-gray-900 rounded-3xl p-8 md:p-12 border border-gray-200 dark:border-gray-800 mb-12">
-					<p class="text-sm font-mono uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-4">Proyecto</p>
-					<h1 class="text-5xl md:text-6xl font-bold mb-6">{project.title}</h1>
-					<p class="text-xl text-gray-600 dark:text-gray-300 leading-relaxed mb-8">
-						{project.fullDescription || project.description}
-					</p>
-
-					<!-- Tags -->
-					<div class="flex flex-wrap gap-3 mb-8">
-						{project.tags.map((tag) => (
-							<span class="js-project-tag px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-sm font-mono">
-								{tag}
-							</span>
-						))}
+		<div class="project-container">
+			<!-- Sticky Info Sidebar -->
+			<div class="project-info">
+				<div class="info-inner">
+					<header class="project-header">
+						<h1>{project.title}</h1>
+						<p class="subtitle">{project.subtitle}</p>
+					</header>
+					
+					<div class="description">
+						<p>{project.description}</p>
+						{project.fullDescription && <p class="mt-4">{project.fullDescription}</p>}
 					</div>
-
-					<!-- Links -->
-					<div class="flex gap-4">
-						<a
-							href={project.link}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="js-depth-hover inline-flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-black rounded-full font-semibold hover:shadow-lg transition-all duration-300"
-						>
-							{project.linkType === 'github' && '→ Ver en GitHub'}
-							{project.linkType === 'live' && '→ Visitar sitio'}
-							{project.linkType === 'external' && '→ Ver proyecto'}
-						</a>
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<!-- Details -->
-		<section class="relative py-16 md:py-24 px-4 md:px-8 lg:px-16">
-			<div class="max-w-4xl mx-auto">
-				<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-					<div>
-						<h3 class="text-2xl font-bold mb-4">Características</h3>
-						<ul class="space-y-3 text-gray-600 dark:text-gray-400">
-							<li class="flex items-start gap-3">
-								<svg class="w-5 h-5 mt-1 flex-shrink-0 text-gray-900 dark:text-white" fill="currentColor" viewBox="0 0 20 20">
-									<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-								</svg>
-								<span>Arquitectura escalable</span>
-							</li>
-							<li class="flex items-start gap-3">
-								<svg class="w-5 h-5 mt-1 flex-shrink-0 text-gray-900 dark:text-white" fill="currentColor" viewBox="0 0 20 20">
-									<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-								</svg>
-								<span>Código limpio y mantenible</span>
-							</li>
-							<li class="flex items-start gap-3">
-								<svg class="w-5 h-5 mt-1 flex-shrink-0 text-gray-900 dark:text-white" fill="currentColor" viewBox="0 0 20 20">
-									<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-								</svg>
-								<span>Optimizado para rendimiento</span>
-							</li>
-							<li class="flex items-start gap-3">
-								<svg class="w-5 h-5 mt-1 flex-shrink-0 text-gray-900 dark:text-white" fill="currentColor" viewBox="0 0 20 20">
-									<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-								</svg>
-								<span>Experiencia usuario completa</span>
-							</li>
-						</ul>
-					</div>
-
-					<div>
-						<h3 class="text-2xl font-bold mb-4">Stack Técnico</h3>
-						<ul class="space-y-2 text-gray-600 dark:text-gray-400">
-							{project.tags.map((tag) => (
-								<li>• {tag}</li>
-							))}
-						</ul>
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<!-- Other Projects -->
-		{otherProjects.length > 0 && (
-			<section class="relative py-16 md:py-24 px-4 md:px-8 lg:px-16 bg-gray-50 dark:bg-gray-950">
-				<div class="max-w-6xl mx-auto">
-					<h3 class="text-3xl font-bold mb-12">Otros Proyectos</h3>
-					<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-						{otherProjects.map((p) => (
-							<a
-								href={`/projects/${p.id}`}
-								class="js-other-project-card js-depth-hover group relative rounded-xl overflow-hidden h-64 bg-gray-200 dark:bg-gray-800 hover:shadow-xl transition-all duration-300"
-							>
-								<img
-									src={p.image}
-									alt={p.title}
-									class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-								/>
-								<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-									<div>
-										<h4 class="text-xl font-bold text-white">{p.title}</h4>
-										<p class="text-gray-300 text-sm">{p.description}</p>
-									</div>
-								</div>
-							</a>
+					
+					<div class="tags">
+						{project.tags.map(tag => (
+							<span class="tag">{tag}</span>
 						))}
 					</div>
 				</div>
-			</section>
-		)}
-
-		<!-- CTA -->
-		<section class="relative py-24 px-4 md:px-8 lg:px-16">
-			<div class="max-w-4xl mx-auto text-center">
-				<h3 class="text-4xl font-bold mb-6">¿Tienes un proyecto en mente?</h3>
-				<p class="text-gray-600 dark:text-gray-400 text-lg mb-8">
-					Estoy disponible para colaborar en nuevos proyectos y soluciones digitales.
-				</p>
-				<a
-					href="/contact"
-					class="js-depth-hover inline-block px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-black rounded-full font-semibold hover:shadow-lg transition-all duration-300"
-				>
-					Contáctame
-				</a>
 			</div>
-		</section>
+			
+			<!-- Scrolling Gallery -->
+			<div class="project-gallery">
+				{project.images.map((img, idx) => (
+					<div class="gallery-item">
+						<img src={img} alt={`${project.title} - ${idx + 1}`} loading="lazy" />
+					</div>
+				))}
+			</div>
+		</div>
+		
 	</main>
 </Layout>
+
+<style>
+	.project-detail {
+		min-height: 100vh;
+		width: 100%;
+		/* The background color is set dynamically via inline style, ensuring it matches the project's theme */
+		color: var(--black);
+		padding: 0 50px 100px 50px;
+		transition: background-color 0.5s ease;
+	}
+	
+	.header-spacer {
+		height: 150px;
+	}
+
+	.project-container {
+		display: grid;
+		grid-template-columns: 400px 1fr;
+		gap: 100px;
+		max-width: 1600px;
+		margin: 0 auto;
+		align-items: start; /* crucial for sticky to work */
+	}
+	
+	/* Sticky Left Column */
+	.project-info {
+		position: sticky;
+		top: 150px; /* Offset for the header */
+		/* Ensure text color adapts correctly if the background is dark */
+		mix-blend-mode: difference;
+		color: var(--white);
+	}
+	
+	.project-header {
+		margin-bottom: 40px;
+	}
+	
+	.project-header h1 {
+		font-family: var(--font-sans);
+		font-size: clamp(32px, 4vw, 56px);
+		font-weight: 700;
+		line-height: 1.1;
+		letter-spacing: -0.04em;
+		text-transform: uppercase;
+		margin-bottom: 12px;
+	}
+	
+	.project-header .subtitle {
+		font-family: var(--font-sans);
+		font-size: 14px;
+		font-weight: 500;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		opacity: 0.7;
+	}
+	
+	.description {
+		font-family: var(--font-sans);
+		font-size: 16px;
+		line-height: 1.6;
+		margin-bottom: 50px;
+		font-weight: 400;
+		opacity: 0.8;
+	}
+	
+	.tags {
+		display: flex;
+		gap: 10px;
+		flex-wrap: wrap;
+	}
+	
+	.tag {
+		font-family: var(--font-sans);
+		font-size: 12px;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		padding: 8px 16px;
+		border: 1px solid rgba(255,255,255,0.3);
+		border-radius: 30px;
+	}
+	
+	/* Right Column Gallery */
+	.project-gallery {
+		display: flex;
+		flex-direction: column;
+		gap: 80px;
+	}
+	
+	.gallery-item img {
+		width: 100%;
+		height: auto;
+		display: block;
+		border-radius: 4px;
+		box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+	}
+	
+	@media (max-width: 1024px) {
+		.project-container {
+			grid-template-columns: 300px 1fr;
+			gap: 50px;
+		}
+	}
+	
+	@media (max-width: 768px) {
+		.project-detail {
+			padding: 0 24px 50px 24px;
+		}
+		
+		.header-spacer {
+			height: 100px;
+		}
+
+		.project-container {
+			grid-template-columns: 1fr;
+			gap: 60px;
+		}
+		
+		.project-info {
+			position: static;
+			margin-bottom: 20px;
+		}
+	}
+</style>

@@ -1,0 +1,244 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getAllProjects } from '../data/projects';
+
+const projects = getAllProjects();
+---
+
+<Layout title="Archive - Joain Monroy" showHeader={true}>
+	<main class="archive-page">
+		<div class="archive-content">
+			
+			<div class="header-spacer"></div>
+
+			<header class="archive-header">
+				<h1 class="huge-title">ALL PROJECTS.</h1>
+				<div class="header-meta">
+					<span>{projects.length} PROYECTOS EN TOTAL</span>
+					<span>2021 — {new Date().getFullYear()}</span>
+				</div>
+			</header>
+			
+			<section class="projects-table">
+				<div class="table-head">
+					<div class="col-year">AÑO</div>
+					<div class="col-title">PROYECTO</div>
+					<div class="col-role">ROL / TIPO</div>
+					<div class="col-tech">TECNOLOGÍAS</div>
+				</div>
+
+				<ul class="table-body">
+					{projects.map((project) => (
+						<li class="table-row">
+							<a href={`/projects/${project.id}`} class="row-link">
+								<div class="col-year">{project.year || '2024'}</div>
+								<div class="col-title">
+									<h2>{project.title}</h2>
+								</div>
+								<div class="col-role">{project.subtitle}</div>
+								<div class="col-tech">
+									{project.tags.map(tag => <span>{tag}</span>)}
+								</div>
+								<div class="arrow-icon">
+									<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+										<line x1="5" y1="12" x2="19" y2="12"></line>
+										<polyline points="12 5 19 12 12 19"></polyline>
+									</svg>
+								</div>
+							</a>
+						</li>
+					))}
+				</ul>
+			</section>
+			
+			<div class="footer-spacer"></div>
+		</div>
+	</main>
+</Layout>
+
+<style>
+	.archive-page {
+		width: 100%;
+		min-height: 100vh;
+		background-color: var(--white);
+		color: var(--black);
+		padding: 0 50px;
+	}
+	
+	.archive-content {
+		max-width: 1400px;
+		margin: 0 auto;
+	}
+
+	.header-spacer {
+		height: 200px;
+	}
+	
+	.footer-spacer {
+		height: 150px;
+	}
+
+	/* Header */
+	.archive-header {
+		margin-bottom: 100px;
+	}
+
+	.huge-title {
+		font-family: var(--font-sans);
+		font-size: 10vw;
+		font-weight: 700;
+		line-height: 0.8;
+		letter-spacing: -0.05em;
+		text-transform: uppercase;
+		margin-bottom: 30px;
+	}
+
+	.header-meta {
+		display: flex;
+		justify-content: space-between;
+		font-family: var(--font-sans);
+		font-size: 14px;
+		font-weight: 500;
+		letter-spacing: -0.02em;
+		text-transform: uppercase;
+		border-bottom: 1px solid rgba(0,0,0,0.1);
+		padding-bottom: 20px;
+		color: var(--gray);
+	}
+
+	/* Table Layout */
+	.projects-table {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.table-head {
+		display: grid;
+		grid-template-columns: 1fr 4fr 3fr 3fr 50px;
+		padding: 15px 0;
+		border-bottom: 1px solid var(--black);
+		font-family: var(--font-sans);
+		font-size: 12px;
+		font-weight: 600;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		color: var(--gray);
+	}
+
+	.table-body {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	/* Hover group logic for dimming */
+	.table-body:hover .table-row {
+		opacity: 0.3;
+	}
+
+	.table-row {
+		border-bottom: 1px solid rgba(0,0,0,0.1);
+		transition: opacity 0.4s ease;
+	}
+
+	.table-body .table-row:hover {
+		opacity: 1;
+	}
+
+	.row-link {
+		display: grid;
+		grid-template-columns: 1fr 4fr 3fr 3fr 50px;
+		align-items: center;
+		padding: 40px 0;
+		text-decoration: none;
+		color: var(--black);
+		position: relative;
+	}
+
+	/* Columns */
+	.col-year {
+		font-family: var(--font-sans);
+		font-size: 16px;
+		font-weight: 500;
+		color: var(--gray);
+	}
+
+	.col-title h2 {
+		font-family: var(--font-sans);
+		font-size: 42px;
+		font-weight: 500;
+		letter-spacing: -0.02em;
+		text-transform: uppercase;
+		margin: 0;
+		transition: transform 0.4s ease;
+	}
+
+	.col-role {
+		font-family: var(--font-sans);
+		font-size: 16px;
+		color: var(--gray);
+	}
+
+	.col-tech {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+	}
+
+	.col-tech span {
+		font-family: var(--font-sans);
+		font-size: 12px;
+		padding: 6px 12px;
+		border: 1px solid rgba(0,0,0,0.1);
+		border-radius: 20px;
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+	}
+
+	.arrow-icon {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		opacity: 0;
+		transform: translateX(-20px);
+		transition: all 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+	}
+
+	.arrow-icon svg {
+		width: 32px;
+		height: 32px;
+	}
+
+	/* Row Hover States */
+	.row-link:hover .col-title h2 {
+		transform: translateX(20px);
+	}
+
+	.row-link:hover .arrow-icon {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	@media (max-width: 1024px) {
+		.table-head, .row-link {
+			grid-template-columns: 1fr 3fr 3fr 40px;
+		}
+		.col-tech { display: none; }
+		.col-title h2 { font-size: 32px; }
+	}
+
+	@media (max-width: 768px) {
+		.archive-page { padding: 0 24px; }
+		.table-head { display: none; }
+		.row-link {
+			grid-template-columns: 1fr;
+			gap: 15px;
+			padding: 30px 0;
+		}
+		.col-year { font-size: 14px; }
+		.col-title h2 { font-size: 28px; }
+		.arrow-icon { display: none; }
+		.row-link:hover .col-title h2 { transform: none; }
+	}
+</style>
