@@ -1,788 +1,437 @@
-// Exportamos la función para poder llamarla desde Astro en cada cambio de ruta
-export const initAnimations = () => {
-	if (typeof window !== 'undefined') {
-		Promise.all([
-			import('gsap'),
-			import('gsap/ScrollTrigger'),
-			import('lenis')
-		]).then(([gsapModule, scrollTriggerModule, lenisModule]) => {
-			const gsap = gsapModule.default;
-			const { ScrollTrigger } = scrollTriggerModule;
-			const Lenis = lenisModule.default;
+let runtimeCleanup = [];
+let lenisInstance = null;
+let tickerCallback = null;
 
-			gsap.registerPlugin(ScrollTrigger);
+const pushCleanup = (fn) => {
+	runtimeCleanup.push(fn);
+};
 
-			// Matar triggers anteriores si existen (para evitar duplicados en navegaciones SPA)
-			ScrollTrigger.getAll().forEach(t => t.kill());
-
-			const forceMotion = false;
-		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-		const shouldAnimate = forceMotion || !prefersReducedMotion;
-
-		const sectionTargets = Array.from(document.querySelectorAll('section[id]')).filter((section) => section.id !== 'top' && section.id !== 'Proyectos' && section.id !== 'Sobre-mi');
-		const sectionChildrenMap = new Map();
-
-		const uniqueElements = (elements) => Array.from(new Set(elements)).filter(Boolean);
-
-		const sectionProfiles = {
-			Experiencia: {
-				fromTransform: 'translate3d(0,120px,0) scale(0.95) rotateX(7deg)',
-				sectionAnimation: {
-					y: 0,
-					scale: 1,
-					rotateX: 0,
-					filter: 'blur(0px)',
-					duration: 1.05,
-					ease: 'power3.out',
-				},
-				itemFromTransform: 'translateY(36px)',
-				itemAnimation: { y: 0, scale: 1, duration: 0.78, ease: 'power2.out' },
-				itemStagger: 0.095,
-				itemDelay: 0.12,
-			},
-			'Sobre-mi': {
-				fromTransform: 'translate3d(0,90px,0) scale(0.93)',
-				sectionAnimation: {
-					y: 0,
-					scale: 1,
-					filter: 'blur(0px)',
-					duration: 0.98,
-					ease: 'power3.out',
-				},
-				itemFromTransform: 'translateY(30px)',
-				itemAnimation: { y: 0, scale: 1, duration: 0.78, ease: 'power2.out' },
-				itemStagger: 0.09,
-				itemDelay: 0.12,
-			},
-			Contacto: {
-				fromTransform: 'translate3d(0,130px,0) scale(0.92)',
-				sectionAnimation: {
-					y: 0,
-					scale: 1,
-					filter: 'blur(0px)',
-					duration: 0.92,
-					ease: 'power2.out',
-				},
-				itemFromTransform: 'translateY(24px)',
-				itemAnimation: { y: 0, scale: 1, duration: 0.7, ease: 'power1.out' },
-				itemStagger: 0.1,
-				itemDelay: 0.1,
-			},
-		};
-
-		const defaultProfile = {
-			fromTransform: 'translate3d(0,84px,0) scale(0.95)',
-			sectionAnimation: {
-				y: 0,
-				scale: 1,
-				filter: 'blur(0px)',
-				duration: 0.96,
-				ease: 'power3.out',
-			},
-			itemFromTransform: 'translateY(24px)',
-			itemAnimation: { y: 0, scale: 1, duration: 0.72, ease: 'power2.out' },
-			itemStagger: 0.09,
-			itemDelay: 0.1,
-		};
-
-		const getSectionProfile = (id) => sectionProfiles[id] || defaultProfile;
-
-		const getChildTargets = (section) => {
-			switch (section.id) {
-				case 'Experiencia':
-					return uniqueElements(Array.from(section.querySelectorAll('.fade-in-section, .group')));
-				case 'Proyectos':
-					// El reveal de tarjetas de proyectos se controla abajo con una timeline dedicada
-					return uniqueElements(Array.from(section.querySelectorAll('.projects-header, .projects-more')));
-				case 'Sobre-mi':
-					return []; // Vaciado porque lo controlamos con el ScrollTrigger ultra agresivo más abajo
-				case 'Habilidades':
-					return uniqueElements(Array.from(section.querySelectorAll('.fade-in-section, .skills-container .grid > article')));
-				case 'Contacto':
-					return uniqueElements(Array.from(section.querySelectorAll('.fade-in-section, .fade-in-section > *')));
-				default:
-					return uniqueElements(Array.from(section.querySelectorAll('.fade-in-section, article')));
-			}
-		};
-
-		const revealAll = () => {
-			sectionTargets.forEach((section) => {
-				gsap.set(section, { opacity: 1, transform: 'none', filter: 'none', willChange: 'auto' });
-				(sectionChildrenMap.get(section) || []).forEach((target) => {
-					gsap.set(target, { opacity: 1, transform: 'none', willChange: 'auto' });
-				});
-			});
-		};
-
+const clearRuntime = () => {
+	runtimeCleanup.forEach((fn) => {
 		try {
-			if (shouldAnimate && 'IntersectionObserver' in window) {
-				sectionTargets.forEach((section) => {
-					const profile = getSectionProfile(section.id);
-					gsap.set(section, {
-						opacity: 0,
-						transform: profile.fromTransform,
-						filter: 'blur(10px)',
-						willChange: 'transform, opacity, filter',
-					});
+			fn();
+		} catch {
+			// noop
+		}
+	});
+	runtimeCleanup = [];
+};
 
-					const childTargets = getChildTargets(section);
-					sectionChildrenMap.set(section, childTargets);
-					childTargets.forEach((target) => {
-						gsap.set(target, {
-							opacity: 0,
-							transform: profile.itemFromTransform,
-							willChange: 'transform, opacity',
-						});
-					});
-				});
+const getRoutePath = () => {
+	const path = window.location.pathname.replace(/\/+$/, '');
+	return path.length === 0 ? '/' : path;
+};
 
-				const sectionObserver = new IntersectionObserver(
-					(entries, observer) => {
-						entries.forEach((entry) => {
-							if (!entry.isIntersecting) return;
+const setupLenis = (gsap, ScrollTrigger, reducedMotion) => {
+	if (reducedMotion) return;
 
-							const section = entry.target;
-							if (section.getAttribute('data-section-animated') === 'true') return;
+	return import('lenis').then((lenisModule) => {
+		const Lenis = lenisModule.default;
 
-							section.setAttribute('data-section-animated', 'true');
-							const profile = getSectionProfile(section.id);
-
-							gsap.to(section, {
-								opacity: 1,
-								...profile.sectionAnimation,
-								onComplete: () => {
-									gsap.set(section, { filter: 'none', willChange: 'auto' });
-								},
-							});
-
-							const childTargets = sectionChildrenMap.get(section) || [];
-							if (childTargets.length > 0) {
-								gsap.to(childTargets, {
-									opacity: 1,
-									...profile.itemAnimation,
-									stagger: profile.itemStagger,
-									delay: profile.itemDelay,
-									onComplete: () => {
-										childTargets.forEach((target) => {
-											gsap.set(target, { willChange: 'auto' });
-										});
-									},
-								});
-							}
-
-							observer.unobserve(section);
-						});
-					},
-					{ root: null, threshold: 0.15, rootMargin: '0px 0px -12% 0px' }
-				);
-
-				sectionTargets.forEach((section) => sectionObserver.observe(section));
-			} else {
-				revealAll();
-			}
-		} catch (error) {
-			console.error('GSAP section animation failed:', error);
-			revealAll();
+		if (lenisInstance) {
+			lenisInstance.destroy();
+			lenisInstance = null;
 		}
 
-		// ============================================
-		// INITIALIZE LENIS FIRST (before ScrollTrigger)
-		// ============================================
-		const lenis = new Lenis({
-			duration: 1.0,
-			easing: (t) => 1 - Math.pow(1 - t, 4),
+		lenisInstance = new Lenis({
+			duration: 1.15,
+			easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+			direction: 'vertical',
+			gestureDirection: 'vertical',
 			smoothWheel: true,
-			wheelMultiplier: 1,
-			touchMultiplier: 2,
+			smoothTouch: false,
+			wheelMultiplier: 0.92,
 		});
 
-		// Connect Lenis scroll events to ScrollTrigger
-		lenis.on('scroll', ScrollTrigger.update);
+		lenisInstance.on('scroll', ScrollTrigger.update);
 
-		// Use GSAP ticker to drive Lenis
-		gsap.ticker.add((time) => {
-			lenis.raf(time * 1000);
-		});
-		
-		// Expose Lenis globally for custom anchor routing
-		window.lenis = lenis;
+		tickerCallback = (time) => {
+			lenisInstance?.raf(time * 1000);
+		};
 
-		gsap.set('body', { overscrollBehavior: 'none' });
+		gsap.ticker.add(tickerCallback);
+		gsap.ticker.lagSmoothing(0);
 
-		// ============================================
-		// INITIAL PAGE LOAD TRANSITION
-		// ============================================
-		const pageLoadTl = gsap.timeline();
-		
-		// Ocultar elementos iniciales para la entrada
-		gsap.set('.animate-fade-up, .animate-fade-up-delay-1, .animate-fade-up-delay-2, .animate-fade-up-delay-3', {
-			autoAlpha: 0,
-			y: 60,
-			rotationX: 5,
-			filter: 'blur(8px)',
-			scale: 0.98
-		});
-
-		pageLoadTl
-			.to('.animate-fade-up, .animate-fade-up-delay-1, .animate-fade-up-delay-2, .animate-fade-up-delay-3', {
-				y: 0,
-				rotationX: 0,
-				autoAlpha: 1,
-				filter: 'blur(0px)',
-				scale: 1,
-				duration: 1.2,
-				stagger: 0.15,
-				ease: 'power3.out',
-				clearProps: 'all' // Limpiar para que no interfiera CSS o hover effects después
-			});
-
-		// ============================================
-		// HERO PARALLAX SCROLL ANIMATION
-		// ============================================
-		const heroSection = document.getElementById('top');
-		const heroContainer = heroSection?.querySelector('.relative');
-		
-		if (heroSection && heroContainer) {
-			gsap.to(heroContainer, {
-				scrollTrigger: {
-					trigger: heroSection,
-					start: 'top top',
-					end: 'bottom top',
-					scrub: true,
-				},
-				y: window.innerHeight * 0.2, // Baja la imagen suavemente creando paraláx
-				scale: 0.85,                 // Se achica en el fondo
-				opacity: 0,                  // Se desvanece
-				filter: 'blur(10px)',        // Se desenfoca un poco
-				transformOrigin: 'top center',
-				ease: 'none'
-			});
-		}
-
-		// ============================================
-		// PROJECT CARDS (GSAP SCROLL + HOVER)
-		// ============================================
-		const projCards = gsap.utils.toArray('#Proyectos .project-card');
-		const projectsGrid = document.querySelector('#Proyectos .projects-grid');
-		const projectsHeaderTargets = gsap.utils.toArray('#Proyectos .projects-header, #Proyectos .projects-more');
-
-		if (projectsHeaderTargets.length > 0) {
-			gsap.fromTo(projectsHeaderTargets,
-				{ autoAlpha: 0, y: 28 },
-				{
-					autoAlpha: 1,
-					y: 0,
-					duration: 0.72,
-					stagger: 0.12,
-					ease: 'power2.out',
-					scrollTrigger: {
-						trigger: '#Proyectos',
-						start: 'top 82%',
-						once: true,
-					}
-				}
-			);
-		}
-
-		if (projCards.length > 0 && projectsGrid) {
-			// Reveal estable: evitamos clip-path y blur porque suelen causar parpadeo.
-			gsap.set(projCards, {
-				autoAlpha: 0,
-				y: 52,
-				scale: 0.985,
-				force3D: true,
-				transformOrigin: '50% 50%',
-				willChange: 'transform, opacity'
-			});
-
-			gsap.to(projCards, {
-				autoAlpha: 1,
-				y: 0,
-				scale: 1,
-				duration: 0.86,
-				stagger: 0.12,
-				ease: 'power3.out',
-				force3D: true,
-				scrollTrigger: {
-					trigger: projectsGrid,
-					start: 'top 80%',
-					once: true,
-				},
-				onComplete: () => {
-					projCards.forEach((card) => gsap.set(card, { willChange: 'auto' }));
-				}
-			});
-
-			const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-			if (supportsHover) {
-				projCards.forEach((card) => {
-					if (card.getAttribute('data-project-hover-bound') === 'true') return;
-					card.setAttribute('data-project-hover-bound', 'true');
-
-					const image = card.querySelector('.project-card-image');
-					const overlay = card.querySelector('.project-card-overlay');
-					const glow = card.querySelector('.project-card-glow');
-					const shine = card.querySelector('.project-card-shine');
-					const title = card.querySelector('.project-card-title');
-					const divider = card.querySelector('.project-card-divider');
-					const innerContent = card.querySelector('.project-card-inner-content');
-					const arrow = card.querySelector('.project-card-arrow');
-					const indexBadge = card.querySelector('.project-card-index');
-					const chip = card.querySelector('.project-card-chip');
-
-					gsap.set(card, {
-						transformPerspective: 900,
-						transformStyle: 'preserve-3d',
-						force3D: true,
-					});
-
-					if (image) gsap.set(image, { force3D: true, backfaceVisibility: 'hidden' });
-					if (overlay) gsap.set(overlay, { force3D: true, backfaceVisibility: 'hidden' });
-					if (glow) gsap.set(glow, { force3D: true, backfaceVisibility: 'hidden' });
-
-					// Estado base: el titulo queda abajo y la descripcion colapsada.
-					if (innerContent) {
-						gsap.set(innerContent, {
-							height: 0,
-							autoAlpha: 0,
-							marginTop: 0,
-							overflow: 'hidden',
-							pointerEvents: 'none'
-						});
-					}
-					if (arrow) gsap.set(arrow, { y: 10, autoAlpha: 0 });
-					if (shine) gsap.set(shine, { xPercent: -90, autoAlpha: 0 });
-
-					const tiltX = gsap.quickTo(card, 'rotationX', { duration: 0.32, ease: 'power2.out' });
-					const tiltY = gsap.quickTo(card, 'rotationY', { duration: 0.32, ease: 'power2.out' });
-					const glowShiftX = glow ? gsap.quickTo(glow, 'x', { duration: 0.38, ease: 'power2.out' }) : null;
-					const glowShiftY = glow ? gsap.quickTo(glow, 'y', { duration: 0.38, ease: 'power2.out' }) : null;
-					const shineShiftX = shine ? gsap.quickTo(shine, 'xPercent', { duration: 0.42, ease: 'power2.out' }) : null;
-
-					const hoverTl = gsap.timeline({ paused: true, defaults: { ease: 'power2.out' } });
-
-					hoverTl
-						.to(card, {
-							boxShadow: '0 24px 45px rgba(0, 0, 0, 0.28)',
-							y: -3,
-							duration: 0.38,
-						}, 0)
-						.to(image, {
-							scale: 1.06,
-							duration: 0.42,
-							force3D: true,
-						}, 0)
-						.to(overlay, { opacity: 0.95, duration: 0.35 }, 0)
-						.to(glow, { opacity: 0.68, duration: 0.35 }, 0.02)
-						.to(shine, { xPercent: 70, autoAlpha: 0.42, duration: 0.62, ease: 'power2.inOut' }, 0.04)
-						.to(title, { y: -2, color: '#fff', duration: 0.28 }, 0.04)
-						.to(indexBadge, { color: 'rgba(255,255,255,0.95)', duration: 0.3 }, 0.05)
-						.to(divider, { width: 54, backgroundColor: '#DC2626', duration: 0.3 }, 0.08)
-						.to(innerContent, {
-							height: 'auto',
-							autoAlpha: 1,
-							marginTop: 12,
-							duration: 0.34,
-							onStart: () => {
-								if (innerContent) gsap.set(innerContent, { pointerEvents: 'auto' });
-							},
-						}, 0.12)
-						.to(arrow, { y: 0, autoAlpha: 1, duration: 0.28 }, 0.16);
-
-					if (chip) {
-						hoverTl.to(chip, { autoAlpha: 1, scale: 1.02, duration: 0.24 }, 0.08);
-					}
-
-					hoverTl.eventCallback('onReverseComplete', () => {
-						if (innerContent) gsap.set(innerContent, { pointerEvents: 'none' });
-					});
-
-					const onMove = (event) => {
-						const rect = card.getBoundingClientRect();
-						const relX = (event.clientX - rect.left) / rect.width - 0.5;
-						const relY = (event.clientY - rect.top) / rect.height - 0.5;
-
-						tiltY(relX * 5.2);
-						tiltX(relY * -4.4);
-
-						if (glowShiftX) glowShiftX(relX * 14);
-						if (glowShiftY) glowShiftY(relY * 10);
-						if (shineShiftX) shineShiftX(70 + relX * 18);
-					};
-
-					const resetTilt = () => {
-						tiltX(0);
-						tiltY(0);
-						if (glowShiftX) glowShiftX(0);
-						if (glowShiftY) glowShiftY(0);
-						if (shineShiftX) shineShiftX(0);
-					};
-
-					const onEnter = () => hoverTl.play();
-					const onLeave = () => {
-						hoverTl.reverse();
-						resetTilt();
-					};
-
-					card.addEventListener('mouseenter', onEnter);
-					card.addEventListener('mouseleave', onLeave);
-					card.addEventListener('mousemove', onMove);
-
-					card.addEventListener('focusin', onEnter);
-					card.addEventListener('focusout', onLeave);
-				});
-			} else {
-				projCards.forEach((card) => {
-					const innerContent = card.querySelector('.project-card-inner-content');
-					const arrow = card.querySelector('.project-card-arrow');
-					if (innerContent) {
-						gsap.set(innerContent, {
-							height: 'auto',
-							autoAlpha: 1,
-							marginTop: 12,
-							overflow: 'visible',
-							pointerEvents: 'auto'
-						});
-					}
-					if (arrow) {
-						gsap.set(arrow, { y: 0, autoAlpha: 1 });
-					}
-				});
+		pushCleanup(() => {
+			if (tickerCallback) {
+				gsap.ticker.remove(tickerCallback);
+				tickerCallback = null;
 			}
-		}
-
-		// ============================================
-		// ABOUT ME (Sobre mí) STICKY SCROLL NARRATIVE
-		// ============================================
-		const aboutSection = document.getElementById('Sobre-mi');
-		if (aboutSection) {
-			const wrapper = aboutSection.querySelector('.about-panels-wrapper');
-			const stickyHead = aboutSection.querySelector('.about-sticky-head');
-			const panels = gsap.utils.toArray('#Sobre-mi .about-panel');
-			const bgOverlay = document.getElementById('about-bg-overlay');
-			const aboutOrbOne = document.getElementById('about-color-orb');
-			const aboutOrbTwo = document.getElementById('about-color-orb-2');
-
-			if (!shouldAnimate) {
-				if (panels.length > 0) {
-					gsap.set(panels, { autoAlpha: 1, clearProps: 'transform' });
-				}
-				if (stickyHead) {
-					gsap.set(stickyHead, { autoAlpha: 1, clearProps: 'transform' });
-				}
-				if (wrapper) {
-					gsap.set(wrapper, { autoAlpha: 1, clearProps: 'transform' });
-				}
-				if (bgOverlay) {
-					gsap.set(bgOverlay, { autoAlpha: 0.24, clearProps: 'backgroundPosition' });
-				}
-				if (aboutOrbOne) {
-					gsap.set(aboutOrbOne, { autoAlpha: 0.18, clearProps: 'transform' });
-				}
-				if (aboutOrbTwo) {
-					gsap.set(aboutOrbTwo, { autoAlpha: 0.14, clearProps: 'transform' });
-				}
-			} else {
-				if (panels.length > 0) {
-					gsap.fromTo(
-						panels,
-						{ autoAlpha: 0, y: 68, scale: 0.96, rotateX: 4, transformOrigin: '50% 100%' },
-						{
-							autoAlpha: 1,
-							y: 0,
-							scale: 1,
-							rotateX: 0,
-							duration: 1.08,
-							ease: 'power4.out',
-							stagger: 0.2,
-							scrollTrigger: {
-								trigger: aboutSection,
-								start: 'top 74%',
-								once: true,
-							}
-						}
-					);
-				}
-
-				if (stickyHead) {
-					gsap.fromTo(
-						stickyHead,
-						{ autoAlpha: 0, y: 28 },
-						{
-							autoAlpha: 1,
-							y: 0,
-							duration: 0.9,
-							ease: 'power3.out',
-							scrollTrigger: {
-								trigger: aboutSection,
-								start: 'top 82%',
-								once: true,
-							}
-						}
-					);
-				}
-
-				if (wrapper) {
-					gsap.fromTo(
-						wrapper,
-						{ autoAlpha: 0.58, y: 20 },
-						{
-							autoAlpha: 1,
-							y: 0,
-							duration: 0.86,
-							ease: 'power3.out',
-							scrollTrigger: {
-								trigger: aboutSection,
-								start: 'top 78%',
-								once: true,
-							}
-						}
-					);
-				}
-
-				if (bgOverlay) {
-					gsap.fromTo(
-						bgOverlay,
-						{ autoAlpha: 0.08, backgroundPosition: '0% 0%' },
-						{
-							autoAlpha: 0.5,
-							backgroundPosition: '100% 56%',
-							ease: 'none',
-							scrollTrigger: {
-								trigger: aboutSection,
-								start: 'top bottom',
-								end: 'bottom top',
-								scrub: 0.72,
-								invalidateOnRefresh: true,
-							}
-						}
-					);
-				}
-
-				if (aboutOrbOne) {
-					gsap.fromTo(
-						aboutOrbOne,
-						{ autoAlpha: 0.06, xPercent: -16, yPercent: 12, scale: 0.9 },
-						{
-							autoAlpha: 0.34,
-							xPercent: 22,
-							yPercent: -10,
-							scale: 1.14,
-							ease: 'none',
-							scrollTrigger: {
-								trigger: aboutSection,
-								start: 'top bottom',
-								end: 'bottom top',
-								scrub: 0.74,
-								invalidateOnRefresh: true,
-							}
-						}
-					);
-				}
-
-				if (aboutOrbTwo) {
-					gsap.fromTo(
-						aboutOrbTwo,
-						{ autoAlpha: 0.06, xPercent: 16, yPercent: 6, scale: 0.9 },
-						{
-							autoAlpha: 0.3,
-							xPercent: -16,
-							yPercent: 12,
-							scale: 1.1,
-							ease: 'none',
-							scrollTrigger: {
-								trigger: aboutSection,
-								start: 'top bottom',
-								end: 'bottom top',
-								scrub: 0.74,
-								invalidateOnRefresh: true,
-							}
-						}
-					);
-				}
-			}
-		}
-
-		// ============================================
-		// HABILIDADES REVEAL (Complemento a Sobre Mí)
-		// ============================================
-		const habilidadesSection = document.getElementById('Habilidades');
-		if(habilidadesSection && aboutSection) {
-			const header = habilidadesSection.querySelector('.skills-header');
-			const container = habilidadesSection.querySelector('.skills-container');
-			const cards = habilidadesSection.querySelectorAll('.skill-card');
-
-			// 2. Animación de entrada de Habilidades muy limpia
-			let tlHabilidades = gsap.timeline({
-				scrollTrigger: {
-					trigger: habilidadesSection,
-					start: "top 75%", // Inicia un poco después de que Sobre Mí termina
-					end: "top 20%",
-					toggleActions: "play none none reverse",
-				}
-			});
-
-			tlHabilidades.fromTo([header, container], 
-				{ y: 60, opacity: 0 },
-				{ y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power3.out" }
-			).fromTo(cards, 
-				{ y: 40, opacity: 0 },
-				{ y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "back.out(1.2)" },
-				"-=0.4" // Se solapa con la aparición del contenedor principal
-			);
-		}
-
-		// ============================================
-		// CONTACTO FIN / MARQUEE ANIMATION
-		// ============================================
-		const contactSection = document.getElementById('Contacto');
-		const marqueeContainer = contactSection?.querySelector('.marquee-container');
-		const marqueeText = contactSection?.querySelector('.marquee-text');
-
-		if (contactSection && marqueeContainer && marqueeText) {
-			// Calculamos el ancho del texto vs el contenedor para un scroll perfecto
-			let textWidth = marqueeText.offsetWidth;
-			let containerWidth = marqueeContainer.offsetWidth;
-			
-			// Si el texto es mas pequeño que la panatalla se asegura un minimo de desplazamiento
-			let distance = textWidth > containerWidth ? -(textWidth - containerWidth) : -(containerWidth * 0.5);
-
-			gsap.fromTo(marqueeText, 
-				{ x: window.innerWidth * 0.2 }, // Empieza asomandose por derecha
-				{
-					x: distance - (window.innerWidth * 0.3), // Termina perdiéndose por izquierda
-					ease: "none",
-					scrollTrigger: {
-						trigger: contactSection,
-						start: "top bottom", // Inicia al revelar el section de contacto
-						end: "bottom center", // Termina cuando llegas al footer
-						scrub: 0.5, // Suavizado para que se vea premium y sin saltos bruscos
-					}
-				}
-			);
-		}
-
-		// ============================================
-		// PROJECT CARDS HOVER ANIMATIONS
-		// ============================================
-		// Controladas por la timeline GSAP declarada arriba para evitar conflictos entre CSS y JS.
-
-		// ============================================
-		// BUTTON HOVER ANIMATIONS
-		// ============================================
-		const buttons = document.querySelectorAll('main a[class*="rounded-full"]');
-		buttons.forEach((button) => {
-			if (button.getAttribute('data-button-hover-bound') === 'true') return;
-			button.setAttribute('data-button-hover-bound', 'true');
-
-			button.addEventListener('mouseenter', () => {
-				gsap.to(button, {
-					duration: 0.3,
-					scale: 1.03,
-					ease: 'back.out(1.7)',
-				});
-			});
-
-			button.addEventListener('mouseleave', () => {
-				gsap.to(button, {
-					duration: 0.3,
-					scale: 1,
-					ease: 'back.out(1.7)',
-				});
-			});
-		});
-
-		// ============================================
-		// SKILL CARDS HOVER & STAGGER
-		// ============================================
-		const skillCards = document.querySelectorAll('.skills-container article');
-		skillCards.forEach((card) => {
-			if (card.getAttribute('data-skill-hover-bound') === 'true') return;
-			card.setAttribute('data-skill-hover-bound', 'true');
-
-			card.addEventListener('mouseenter', () => {
-				gsap.to(card, {
-					duration: 0.4,
-					y: -8,
-					boxShadow: '0 12px 40px rgba(15, 23, 42, 0.16)',
-					ease: 'power2.out',
-				});
-			});
-
-			card.addEventListener('mouseleave', () => {
-				gsap.to(card, {
-					duration: 0.4,
-					y: 0,
-					boxShadow: '0 8px 24px rgba(15, 23, 42, 0.08)',
-					ease: 'power2.out',
-				});
-			});
-		});
-
-		// ============================================
-		// TIMELINE ITEMS HOVER ANIMATIONS
-		// ============================================
-		const timelineItems = gsap.utils.toArray('#Experiencia .trajectory-card');
-
-		if (timelineItems.length > 0) {
-			gsap.fromTo(
-				timelineItems,
-				{ autoAlpha: 0, y: 34, scale: 0.98 },
-				{
-					autoAlpha: 1,
-					y: 0,
-					scale: 1,
-					duration: 0.74,
-					stagger: 0.12,
-					ease: 'power3.out',
-					scrollTrigger: {
-						trigger: '#Experiencia',
-						start: 'top 74%',
-						once: true,
-					}
-				}
-			);
-		}
-
-		timelineItems.forEach((item) => {
-			if (item.getAttribute('data-timeline-hover-bound') === 'true') return;
-			item.setAttribute('data-timeline-hover-bound', 'true');
-			const surface = item.querySelector('.trajectory-surface') || item;
-			const node = item.querySelector('.trajectory-node');
-
-			item.addEventListener('mouseenter', () => {
-				gsap.to(surface, {
-					duration: 0.35,
-					y: -6,
-					boxShadow: '0 16px 36px rgba(15, 23, 42, 0.16)',
-					ease: 'power2.out',
-				});
-				if (node) {
-					gsap.to(node, {
-						duration: 0.35,
-						boxShadow: '0 0 0 6px rgba(220, 38, 38, 0.16)',
-						ease: 'power2.out',
-					});
-				}
-			});
-
-			item.addEventListener('mouseleave', () => {
-				gsap.to(surface, {
-					duration: 0.35,
-					y: 0,
-					boxShadow: '0 12px 35px rgba(15, 23, 42, 0.08)',
-					ease: 'power2.out',
-				});
-				if (node) {
-					gsap.to(node, {
-						duration: 0.35,
-						boxShadow: '0 0 0 0 rgba(220, 38, 38, 0)',
-						ease: 'power2.out',
-					});
-				}
-			});
+			lenisInstance?.destroy();
+			lenisInstance = null;
 		});
 	});
+};
+
+const animateIndexPage = (gsap, ScrollTrigger, reducedMotion) => {
+	const hero = document.querySelector('.js-hero');
+	const heroTitle = document.querySelector('.js-hero-title');
+	const heroSubtitle = document.querySelector('.js-hero-subtitle');
+	const heroOrb = document.querySelector('.js-hero-orb');
+	const scrollIndicator = document.querySelector('.js-scroll-indicator');
+	const cards = Array.from(document.querySelectorAll('.js-project-card'));
+	const ctaSection = document.querySelector('.js-cta-section');
+
+	if (hero && heroTitle && heroSubtitle && !reducedMotion) {
+		const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+		tl.fromTo(
+			heroTitle,
+			{ autoAlpha: 0, y: 72, rotateX: 8, transformOrigin: '50% 100%' },
+			{ autoAlpha: 1, y: 0, rotateX: 0, duration: 1.15 }
+		)
+			.fromTo(
+				heroSubtitle,
+				{ autoAlpha: 0, y: 42 },
+				{ autoAlpha: 1, y: 0, duration: 0.9 },
+				'-=0.72'
+			)
+			.fromTo(
+				scrollIndicator,
+				{ autoAlpha: 0, y: 12 },
+				{ autoAlpha: 0.75, y: 0, duration: 0.55 },
+				'-=0.48'
+			);
+
+		if (heroOrb) {
+			gsap.to(heroOrb, {
+				yPercent: 18,
+				scale: 1.18,
+				ease: 'none',
+				scrollTrigger: {
+					trigger: hero,
+					start: 'top top',
+					end: 'bottom top',
+					scrub: 0.85,
+				},
+			});
+		}
+
+		gsap.to([heroTitle, heroSubtitle], {
+			yPercent: -16,
+			autoAlpha: 0.24,
+			ease: 'none',
+			scrollTrigger: {
+				trigger: hero,
+				start: 'top top',
+				end: 'bottom top',
+				scrub: 0.7,
+			},
+		});
 	}
+
+	if (cards.length > 0 && !reducedMotion) {
+		gsap.set(cards, { autoAlpha: 0, y: 80, scale: 0.965, transformOrigin: '50% 80%' });
+
+		ScrollTrigger.batch(cards, {
+			start: 'top 82%',
+			onEnter: (batch) => {
+				gsap.to(batch, {
+					autoAlpha: 1,
+					y: 0,
+					scale: 1,
+					duration: 0.9,
+					ease: 'power3.out',
+					stagger: { each: 0.11, from: 'start' },
+					overwrite: 'auto',
+				});
+			},
+			onLeaveBack: (batch) => {
+				gsap.to(batch, {
+					autoAlpha: 0,
+					y: 58,
+					duration: 0.45,
+					ease: 'power1.out',
+				});
+			},
+		});
+
+		cards.forEach((card) => {
+			const image = card.querySelector('img');
+			if (!image) return;
+
+			gsap.fromTo(
+				image,
+				{ scale: 1.16, yPercent: -5 },
+				{
+					scale: 1.03,
+					yPercent: 5,
+					ease: 'none',
+					scrollTrigger: {
+						trigger: card,
+						start: 'top bottom',
+						end: 'bottom top',
+						scrub: 1,
+					},
+				}
+			);
+		});
+	}
+
+	if (ctaSection && !reducedMotion) {
+		const ctaTargets = ctaSection.querySelectorAll('h2, p, a');
+		gsap.fromTo(
+			ctaTargets,
+			{ autoAlpha: 0, y: 42 },
+			{
+				autoAlpha: 1,
+				y: 0,
+				duration: 0.85,
+				stagger: 0.1,
+				ease: 'power3.out',
+				scrollTrigger: {
+					trigger: ctaSection,
+					start: 'top 78%',
+					toggleActions: 'play none none none',
+				},
+			}
+		);
+	}
+};
+
+const animateProfilePage = (gsap, ScrollTrigger, reducedMotion) => {
+	const introSection = document.querySelector('.js-profile-hero');
+	const revealGroups = Array.from(document.querySelectorAll('.js-reveal-group'));
+	const skillCards = Array.from(document.querySelectorAll('.js-skill-card'));
+
+	if (introSection && !reducedMotion) {
+		const introTargets = introSection.querySelectorAll('.js-reveal-intro');
+		gsap.fromTo(
+			introTargets,
+			{ autoAlpha: 0, y: 48 },
+			{ autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out' }
+		);
+	}
+
+	revealGroups.forEach((group) => {
+		const items = group.querySelectorAll('.js-reveal-item');
+		if (items.length === 0 || reducedMotion) return;
+
+		gsap.fromTo(
+			items,
+			{ autoAlpha: 0, y: 54, scale: 0.985 },
+			{
+				autoAlpha: 1,
+				y: 0,
+				scale: 1,
+				duration: 0.82,
+				ease: 'power3.out',
+				stagger: 0.08,
+				scrollTrigger: {
+					trigger: group,
+					start: 'top 76%',
+					toggleActions: 'play none none none',
+				},
+			}
+		);
+	});
+
+	if (skillCards.length > 0 && !reducedMotion) {
+		gsap.fromTo(
+			skillCards,
+			{ autoAlpha: 0, y: 66 },
+			{
+				autoAlpha: 1,
+				y: 0,
+				duration: 0.9,
+				ease: 'power3.out',
+				stagger: 0.12,
+				scrollTrigger: {
+					trigger: skillCards[0].parentElement,
+					start: 'top 78%',
+					toggleActions: 'play none none none',
+				},
+			}
+		);
+	}
+};
+
+const animateContactPage = (gsap, ScrollTrigger, reducedMotion) => {
+	const hero = document.querySelector('.js-contact-hero');
+	const contactLinks = Array.from(document.querySelectorAll('.js-contact-link'));
+	const infoCards = Array.from(document.querySelectorAll('.js-contact-card'));
+
+	if (hero && !reducedMotion) {
+		const heroTargets = hero.querySelectorAll('.js-contact-intro');
+		gsap.fromTo(
+			heroTargets,
+			{ autoAlpha: 0, y: 46 },
+			{ autoAlpha: 1, y: 0, duration: 0.88, stagger: 0.11, ease: 'power3.out' }
+		);
+	}
+
+	if (contactLinks.length > 0 && !reducedMotion) {
+		gsap.fromTo(
+			contactLinks,
+			{ autoAlpha: 0, y: 32, scale: 0.98 },
+			{
+				autoAlpha: 1,
+				y: 0,
+				scale: 1,
+				duration: 0.7,
+				ease: 'power2.out',
+				stagger: 0.09,
+				delay: 0.2,
+			}
+		);
+	}
+
+	if (infoCards.length > 0 && !reducedMotion) {
+		gsap.fromTo(
+			infoCards,
+			{ autoAlpha: 0, y: 60 },
+			{
+				autoAlpha: 1,
+				y: 0,
+				duration: 0.8,
+				ease: 'power3.out',
+				stagger: 0.1,
+				scrollTrigger: {
+					trigger: infoCards[0].parentElement,
+					start: 'top 80%',
+					toggleActions: 'play none none none',
+				},
+			}
+		);
+	}
+};
+
+const animateProjectDetailPage = (gsap, ScrollTrigger, reducedMotion) => {
+	const hero = document.querySelector('.js-project-hero');
+	const heroImage = hero?.querySelector('img');
+	const introCard = document.querySelector('.js-project-intro-card');
+	const tags = Array.from(document.querySelectorAll('.js-project-tag'));
+	const otherCards = Array.from(document.querySelectorAll('.js-other-project-card'));
+
+	if (heroImage && !reducedMotion) {
+		gsap.fromTo(
+			heroImage,
+			{ scale: 1.22, filter: 'blur(8px)' },
+			{ scale: 1, filter: 'blur(0px)', duration: 1.2, ease: 'power3.out' }
+		);
+
+		gsap.to(heroImage, {
+			yPercent: 10,
+			ease: 'none',
+			scrollTrigger: {
+				trigger: hero,
+				start: 'top top',
+				end: 'bottom top',
+				scrub: 0.85,
+			},
+		});
+	}
+
+	if (introCard && !reducedMotion) {
+		const introTargets = introCard.querySelectorAll('p, h1, .flex');
+		gsap.fromTo(
+			introTargets,
+			{ autoAlpha: 0, y: 44 },
+			{ autoAlpha: 1, y: 0, duration: 0.86, stagger: 0.09, ease: 'power3.out', delay: 0.15 }
+		);
+	}
+
+	if (tags.length > 0 && !reducedMotion) {
+		gsap.fromTo(
+			tags,
+			{ autoAlpha: 0, scale: 0.86, y: 12 },
+			{ autoAlpha: 1, scale: 1, y: 0, duration: 0.45, stagger: 0.06, ease: 'back.out(1.8)', delay: 0.25 }
+		);
+	}
+
+	if (otherCards.length > 0 && !reducedMotion) {
+		gsap.fromTo(
+			otherCards,
+			{ autoAlpha: 0, y: 62 },
+			{
+				autoAlpha: 1,
+				y: 0,
+				duration: 0.88,
+				stagger: 0.12,
+				ease: 'power3.out',
+				scrollTrigger: {
+					trigger: otherCards[0].parentElement,
+					start: 'top 82%',
+					toggleActions: 'play none none none',
+				},
+			}
+		);
+	}
+};
+
+const setupHoverDepth = (gsap, reducedMotion) => {
+	if (reducedMotion) return;
+	if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+	const depthTargets = Array.from(document.querySelectorAll('.js-depth-hover'));
+
+	depthTargets.forEach((el) => {
+		const onEnter = () => {
+			gsap.to(el, {
+				y: -4,
+				duration: 0.28,
+				ease: 'power2.out',
+				overwrite: 'auto',
+			});
+		};
+
+		const onLeave = () => {
+			gsap.to(el, {
+				y: 0,
+				duration: 0.3,
+				ease: 'power2.out',
+				overwrite: 'auto',
+			});
+		};
+
+		el.addEventListener('mouseenter', onEnter);
+		el.addEventListener('mouseleave', onLeave);
+
+		pushCleanup(() => {
+			el.removeEventListener('mouseenter', onEnter);
+			el.removeEventListener('mouseleave', onLeave);
+		});
+	});
+};
+
+export const initAnimations = () => {
+	if (typeof window === 'undefined') return;
+
+	Promise.all([import('gsap'), import('gsap/ScrollTrigger')])
+		.then(([gsapModule, scrollTriggerModule]) => {
+			const gsap = gsapModule.default;
+			const { ScrollTrigger } = scrollTriggerModule;
+
+			clearRuntime();
+			gsap.registerPlugin(ScrollTrigger);
+			ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+
+			const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			const routePath = getRoutePath();
+
+			const context = gsap.context(() => {
+				setupHoverDepth(gsap, reducedMotion);
+
+				if (routePath === '/') {
+					animateIndexPage(gsap, ScrollTrigger, reducedMotion);
+				} else if (routePath === '/profile') {
+					animateProfilePage(gsap, ScrollTrigger, reducedMotion);
+				} else if (routePath === '/contact') {
+					animateContactPage(gsap, ScrollTrigger, reducedMotion);
+				} else if (routePath.startsWith('/projects/')) {
+					animateProjectDetailPage(gsap, ScrollTrigger, reducedMotion);
+				}
+
+				ScrollTrigger.refresh();
+			}, document.body);
+
+			pushCleanup(() => {
+				context.revert();
+				ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+			});
+
+			return setupLenis(gsap, ScrollTrigger, reducedMotion);
+		})
+		.catch((error) => {
+			console.error('Error loading premium animations:', error);
+		});
 };
