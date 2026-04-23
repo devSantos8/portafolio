@@ -65,31 +65,63 @@ const setupLenis = (gsap, ScrollTrigger, reducedMotion) => {
 
 const animateIndexPage = (gsap, ScrollTrigger, reducedMotion) => {
 	const hero = document.querySelector('.js-hero');
+	const heroKicker = document.querySelector('.js-hero-kicker');
 	const heroTitle = document.querySelector('.js-hero-title');
 	const heroSubtitle = document.querySelector('.js-hero-subtitle');
+	const heroCta = document.querySelector('.js-hero-cta');
 	const heroOrb = document.querySelector('.js-hero-orb');
 	const scrollIndicator = document.querySelector('.js-scroll-indicator');
 	const cards = Array.from(document.querySelectorAll('.js-project-card'));
+	const manifesto = document.querySelector('.js-manifesto-title');
+	const horizontalPin = document.querySelector('.js-horizontal-pin');
+	const horizontalTrack = document.querySelector('.js-project-rail-track');
+	const railPanels = Array.from(document.querySelectorAll('.js-rail-panel'));
 	const ctaSection = document.querySelector('.js-cta-section');
+
+	const splitWords = (element) => {
+		if (!element || element.getAttribute('data-split') === 'true') return [];
+		const raw = element.textContent || '';
+		const words = raw.trim().split(/\s+/).filter(Boolean);
+		element.innerHTML = words
+			.map((word) => `<span class="js-word" style="display:inline-block; margin-right:0.2em;">${word}</span>`)
+			.join('');
+		element.setAttribute('data-split', 'true');
+		return Array.from(element.querySelectorAll('.js-word'));
+	};
+
+	const heroWords = splitWords(heroTitle);
+	const manifestoWords = splitWords(manifesto);
 
 	if (hero && heroTitle && heroSubtitle && !reducedMotion) {
 		const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 		tl.fromTo(
-			heroTitle,
-			{ autoAlpha: 0, y: 72, rotateX: 8, transformOrigin: '50% 100%' },
-			{ autoAlpha: 1, y: 0, rotateX: 0, duration: 1.15 }
+			heroKicker,
+			{ autoAlpha: 0, y: 24 },
+			{ autoAlpha: 1, y: 0, duration: 0.5 }
 		)
+			.fromTo(
+				heroWords,
+				{ autoAlpha: 0, yPercent: 120, rotateX: 18, transformOrigin: '50% 100%' },
+				{ autoAlpha: 1, yPercent: 0, rotateX: 0, duration: 0.85, stagger: 0.045 },
+				'-=0.1'
+			)
 			.fromTo(
 				heroSubtitle,
 				{ autoAlpha: 0, y: 42 },
 				{ autoAlpha: 1, y: 0, duration: 0.9 },
-				'-=0.72'
+				'-=0.5'
+			)
+			.fromTo(
+				heroCta,
+				{ autoAlpha: 0, y: 24 },
+				{ autoAlpha: 1, y: 0, duration: 0.6 },
+				'-=0.55'
 			)
 			.fromTo(
 				scrollIndicator,
 				{ autoAlpha: 0, y: 12 },
 				{ autoAlpha: 0.75, y: 0, duration: 0.55 },
-				'-=0.48'
+				'-=0.32'
 			);
 
 		if (heroOrb) {
@@ -106,7 +138,7 @@ const animateIndexPage = (gsap, ScrollTrigger, reducedMotion) => {
 			});
 		}
 
-		gsap.to([heroTitle, heroSubtitle], {
+		gsap.to([heroTitle, heroSubtitle, heroKicker], {
 			yPercent: -16,
 			autoAlpha: 0.24,
 			ease: 'none',
@@ -116,6 +148,83 @@ const animateIndexPage = (gsap, ScrollTrigger, reducedMotion) => {
 				end: 'bottom top',
 				scrub: 0.7,
 			},
+		});
+	}
+
+	if (manifestoWords.length > 0 && !reducedMotion) {
+		gsap.fromTo(
+			manifestoWords,
+			{ autoAlpha: 0, yPercent: 90 },
+			{
+				autoAlpha: 1,
+				yPercent: 0,
+				duration: 0.72,
+				stagger: 0.035,
+				ease: 'power3.out',
+				scrollTrigger: {
+					trigger: manifesto,
+					start: 'top 82%',
+					toggleActions: 'play none none none',
+				},
+			}
+		);
+	}
+
+	if (horizontalPin && horizontalTrack && railPanels.length > 0 && !reducedMotion && window.matchMedia('(min-width: 1024px)').matches) {
+		const getDistance = () => Math.max(0, horizontalTrack.scrollWidth - window.innerWidth + window.innerWidth * 0.16);
+
+		const horizontalTween = gsap.to(horizontalTrack, {
+			x: () => -getDistance(),
+			ease: 'none',
+			scrollTrigger: {
+				trigger: horizontalPin,
+				start: 'top top',
+				end: () => `+=${getDistance()}`,
+				scrub: 1,
+				pin: true,
+				anticipatePin: 1,
+				invalidateOnRefresh: true,
+			},
+		});
+
+		railPanels.forEach((panel, idx) => {
+			const img = panel.querySelector('img');
+			if (img) {
+				gsap.fromTo(
+					img,
+					{ scale: 1.16, xPercent: -3 },
+					{
+						scale: 1.03,
+						xPercent: 3,
+						ease: 'none',
+						scrollTrigger: {
+							trigger: panel,
+							containerAnimation: horizontalTween,
+							start: 'left right',
+							end: 'right left',
+							scrub: 1,
+						},
+					}
+				);
+			}
+
+			gsap.fromTo(
+				panel,
+				{ autoAlpha: 0.72, y: 24 },
+				{
+					autoAlpha: 1,
+					y: 0,
+					duration: 0.6,
+					ease: 'power2.out',
+					scrollTrigger: {
+						trigger: panel,
+						containerAnimation: horizontalTween,
+						start: 'left 70%',
+						end: 'left 35%',
+						toggleActions: idx === 0 ? 'play none none reverse' : 'play none none reverse',
+					},
+				}
+			);
 		});
 	}
 
@@ -393,6 +502,64 @@ const setupHoverDepth = (gsap, reducedMotion) => {
 	});
 };
 
+const setupPagePreloader = (gsap, reducedMotion) => {
+	const preloader = document.querySelector('.js-page-preloader');
+	if (!preloader || reducedMotion) {
+		preloader?.remove();
+		return;
+	}
+
+	const label = preloader.querySelector('.js-page-preloader-label');
+
+	gsap.fromTo(
+		label,
+		{ autoAlpha: 0, y: 20 },
+		{ autoAlpha: 1, y: 0, duration: 0.35, ease: 'power2.out' }
+	);
+
+	gsap.to(preloader, {
+		autoAlpha: 0,
+		duration: 0.55,
+		delay: 0.45,
+		ease: 'power2.inOut',
+		onComplete: () => preloader.remove(),
+	});
+};
+
+const setupHeaderMotion = (gsap, reducedMotion) => {
+	if (reducedMotion) return;
+	const header = document.getElementById('header');
+	if (!header) return;
+
+	let lastY = window.scrollY;
+	let isHidden = false;
+
+	const onScroll = () => {
+		const y = window.scrollY;
+		const goingDown = y > lastY;
+
+		if (y < 48) {
+			isHidden = false;
+			gsap.to(header, { y: 0, autoAlpha: 1, duration: 0.28, ease: 'power2.out' });
+			lastY = y;
+			return;
+		}
+
+		if (goingDown && !isHidden) {
+			isHidden = true;
+			gsap.to(header, { y: -120, autoAlpha: 0.2, duration: 0.34, ease: 'power2.out' });
+		} else if (!goingDown && isHidden) {
+			isHidden = false;
+			gsap.to(header, { y: 0, autoAlpha: 1, duration: 0.34, ease: 'power2.out' });
+		}
+
+		lastY = y;
+	};
+
+	window.addEventListener('scroll', onScroll, { passive: true });
+	pushCleanup(() => window.removeEventListener('scroll', onScroll));
+};
+
 export const initAnimations = () => {
 	if (typeof window === 'undefined') return;
 
@@ -409,6 +576,8 @@ export const initAnimations = () => {
 			const routePath = getRoutePath();
 
 			const context = gsap.context(() => {
+				setupPagePreloader(gsap, reducedMotion);
+				setupHeaderMotion(gsap, reducedMotion);
 				setupHoverDepth(gsap, reducedMotion);
 
 				if (routePath === '/') {
