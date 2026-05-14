@@ -20,7 +20,7 @@ const { title, showHeader = true } = Astro.props;
 		
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
 		
 		<ViewTransitions />
 	</head>
@@ -29,7 +29,7 @@ const { title, showHeader = true } = Astro.props;
 		{showHeader && (
 		<header class="laura-header" transition:persist transition:name="header">
 			<div class="logo-wrap">
-				<a href="/" class="logo">JOAIN MONROY</a>
+				<a href="/" class="logo">J. Santos</a>
 			</div>
 			
 			<div class="center-info">
@@ -76,8 +76,8 @@ const { title, showHeader = true } = Astro.props;
 
 <style is:global>
 	:root {
-		--font-sans: 'Inter', system-ui, sans-serif;
-		--font-serif: 'Playfair Display', Georgia, serif;
+		--font-sans: 'Roobert', 'Raleway', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+		--font-serif: var(--font-sans);
 		--black: #000;
 		--white: #fff;
 		--gray: #666;
@@ -390,7 +390,25 @@ const { title, showHeader = true } = Astro.props;
 	document.addEventListener('astro:page-load', () => {
 		initCursor();
 		initMobileMenu();
+		preventSamePageNavigation();
 	});
+	
+	function preventSamePageNavigation() {
+		document.querySelectorAll('a').forEach(link => {
+			link.addEventListener('click', (e) => {
+				const href = link.getAttribute('href');
+				if (!href) return;
+				
+				// Get pathname without trailing slash for robust comparison
+				const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+				const linkPath = new URL(link.href).pathname.replace(/\/$/, '') || '/';
+				
+				if (currentPath === linkPath) {
+					e.preventDefault();
+				}
+			});
+		});
+	}
 	
 	function initCursor() {
 		const cursor = document.getElementById('cursor');
