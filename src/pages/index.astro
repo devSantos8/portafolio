@@ -699,6 +699,9 @@ const projects = getFeaturedProjects();
 			wheelMultiplier: 0.9,
 		});
 
+		// Lock scroll until intro finishes to prevent GSAP recording mid-animation states
+		lenis.stop();
+
 		lenis.on('scroll', ScrollTrigger.update);
 
 		lenisTicker = (time: number) => {
@@ -786,8 +789,8 @@ const projects = getFeaturedProjects();
 				if (progress <= end) {
 					const segmentSize = end - start || 1;
 					const segmentProgress = (progress - start) / segmentSize;
-					// Lower threshold = easier to snap to next project
-					return segmentProgress >= 0.35 ? end : start;
+					// Snap when scrolled past 20% of the segment
+					return segmentProgress >= 0.20 ? end : start;
 				}
 			}
 
@@ -828,15 +831,15 @@ const projects = getFeaturedProjects();
 			scrollTrigger: {
 				trigger: "#pinned-container",
 				start: "top top",
-				end: `+=${sections.length * 80}%`,
+				end: `+=${sections.length * 55}%`,
 				pin: true,
-				scrub: 0.6,
+				scrub: 1.2,
 				anticipatePin: 1,
 				snap: {
 					snapTo: snapToSlide,
-					duration: { min: 0.25, max: 0.5 },
-					delay: 0,
-					ease: "power3.inOut",
+					duration: { min: 0.6, max: 1.2 },
+					delay: 0.05,
+					ease: "power2.inOut",
 				},
 				invalidateOnRefresh: true,
 				onUpdate: (self) => {
@@ -886,7 +889,7 @@ const projects = getFeaturedProjects();
 						scrollTrigger: {
 							trigger: "#pinned-container",
 							start: "top top",
-							end: `+=${sections.length * 80}%`,
+							end: `+=${sections.length * 55}%`,
 							scrub: true
 						}
 					}
@@ -917,45 +920,56 @@ const projects = getFeaturedProjects();
 			tl.addLabel(exitLabel);
 
 			// Characters exit: fly up with 3D rotation
-			tl.fromTo(prevChars, 
-				{ y: "0%", rotateX: 0, scale: 1, autoAlpha: 1 },
-				{ y: "-120%", rotateX: -45, scale: 0.9, autoAlpha: 0, stagger: 0.012, duration: 0.28, ease: "power3.in", immediateRender: false }, 
-				exitLabel
-			);
+			tl.to(prevChars, {
+				y: "-120%",
+				rotateX: -45,
+				scale: 0.9,
+				autoAlpha: 0,
+				stagger: 0.012,
+				duration: 0.28,
+				ease: "power3.in"
+			}, exitLabel);
 
 			// Subtitle chars exit
-			tl.fromTo(prevSubChars, 
-				{ y: "0%", autoAlpha: 1 },
-				{ y: "-80%", autoAlpha: 0, stagger: 0.006, duration: 0.18, ease: "power2.in", immediateRender: false }, 
-				exitLabel
-			);
+			tl.to(prevSubChars, {
+				y: "-80%",
+				autoAlpha: 0,
+				stagger: 0.006,
+				duration: 0.18,
+				ease: "power2.in"
+			}, exitLabel);
 
 			// Tags fade out
-			tl.fromTo(prevTags, 
-				{ y: 0, autoAlpha: 1 },
-				{ y: -15, autoAlpha: 0, stagger: 0.025, duration: 0.15, ease: "power2.in", immediateRender: false }, 
-				exitLabel
-			);
+			tl.to(prevTags, {
+				y: -15,
+				autoAlpha: 0,
+				stagger: 0.025,
+				duration: 0.15,
+				ease: "power2.in"
+			}, exitLabel);
 
-			// Images exit: slice up and scale/blur inner image
+			// Images exit: slice up and scale inner image
 			const prevImgElements = prevSection.querySelectorAll('.img-wrap img');
-			tl.fromTo(prevImages, 
-				{ clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)", autoAlpha: 1 },
-				{ clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)", autoAlpha: 0, stagger: 0.05, duration: 0.45, ease: "power3.in", immediateRender: false }, 
-				exitLabel
-			);
-			tl.fromTo(prevImgElements, 
-				{ scale: 1, filter: "blur(0px)" },
-				{ scale: 1.2, filter: "blur(8px)", stagger: 0.05, duration: 0.45, ease: "power3.in", immediateRender: false }, 
-				exitLabel
-			);
+			tl.to(prevImages, {
+				clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
+				autoAlpha: 0,
+				stagger: 0.06,
+				duration: 0.55,
+				ease: "power3.inOut"
+			}, exitLabel);
+			tl.to(prevImgElements, {
+				scale: 1.2,
+				stagger: 0.06,
+				duration: 0.55,
+				ease: "power3.inOut"
+			}, exitLabel);
 
 			// Section fade
-			tl.fromTo(prevSection, 
-				{ autoAlpha: 1 },
-				{ autoAlpha: 0, duration: 0.2, ease: "power2.inOut", immediateRender: false }, 
-				`${exitLabel}+=0.2`
-			);
+			tl.to(prevSection, {
+				autoAlpha: 0,
+				duration: 0.2,
+				ease: "power2.inOut"
+			}, `${exitLabel}+=0.2`);
 
 			// ══ ENTER: Current slide (full-duration, spring-based) ══
 			const enterLabel = `enter${index}`;
@@ -963,7 +977,7 @@ const projects = getFeaturedProjects();
 
 			tl.set(section, { autoAlpha: 1 }, enterLabel);
 
-			// Images enter: dramatic clip-path reveal with inner scale & blur
+			// Images enter: dramatic clip-path reveal with inner scale
 			const currImgElements = section.querySelectorAll('.img-wrap img');
 			tl.fromTo(currImages, 
 				{ 
@@ -973,20 +987,19 @@ const projects = getFeaturedProjects();
 				{ 
 					clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
 					autoAlpha: 1, 
-					stagger: 0.08, 
-					duration: 0.7, 
-					ease: "power4.out" 
+					stagger: 0.06, 
+					duration: 0.8, 
+					ease: "power3.out" 
 				},
 				enterLabel
 			);
 			tl.fromTo(currImgElements,
-				{ scale: 1.4, filter: "blur(10px)" },
+				{ scale: 1.3 },
 				{ 
 					scale: 1, 
-					filter: "blur(0px)",
-					stagger: 0.08, 
-					duration: 0.7, 
-					ease: "power4.out" 
+					stagger: 0.06, 
+					duration: 0.8, 
+					ease: "power3.out" 
 				},
 				enterLabel
 			);
@@ -1050,7 +1063,15 @@ const projects = getFeaturedProjects();
 		const firstImages = firstSection.querySelectorAll('.img-wrap');
 		const firstTags = firstSection.querySelectorAll('.tag');
 
-		const introTl = gsap.timeline({ delay: 0.3 });
+		const introTl = gsap.timeline({ 
+			delay: 0.3,
+			onComplete: () => {
+				// Unlock scroll only when intro is fully finished
+				lenis.start();
+				// Give GSAP a tiny delay to ensure values are perfectly recorded
+				setTimeout(() => ScrollTrigger.refresh(), 50);
+			}
+		});
 		
 		// Images reveal with premium clip-path mask
 		const firstImgElements = firstSection.querySelectorAll('.img-wrap img');
@@ -1059,8 +1080,8 @@ const projects = getFeaturedProjects();
 			{ clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)", autoAlpha: 1, stagger: 0.15, duration: 1.2, ease: "power4.out" }
 		);
 		introTl.fromTo(firstImgElements,
-			{ scale: 1.4, filter: "blur(10px)" },
-			{ scale: 1, filter: "blur(0px)", stagger: 0.15, duration: 1.2, ease: "power4.out" },
+			{ scale: 1.3 },
+			{ scale: 1, stagger: 0.1, duration: 1.2, ease: "power4.out" },
 			"<"
 		);
 
