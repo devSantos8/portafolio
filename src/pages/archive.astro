@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getAllProjects } from '../data/projects';
+import GradualBlur from '../components/react/GradualBlur.jsx';
 
 const projects = getAllProjects();
 ---
@@ -53,6 +54,7 @@ const projects = getAllProjects();
 			
 			<div class="footer-spacer"></div>
 		</div>
+		<GradualBlur client:load target="page" position="bottom" height="120px" strength={2} divCount={5} opacity={1} />
 	</main>
 </Layout>
 

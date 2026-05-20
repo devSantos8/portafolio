@@ -38,8 +38,11 @@ if (!project) {
 					</div>
 					
 					<div class="tags">
-						{project.tags.map(tag => (
-							<span class="tag">{tag}</span>
+						{project.tags.map((tag, idx) => (
+							<>
+								{idx > 0 && <span class="tag-separator">/</span>}
+								<span class="tag">{tag}</span>
+							</>
 						))}
 					</div>
 				</div>
@@ -124,18 +127,32 @@ if (!project) {
 	
 	.tags {
 		display: flex;
-		gap: 10px;
+		gap: 12px;
+		align-items: center;
 		flex-wrap: wrap;
+		margin-top: 20px;
 	}
 	
 	.tag {
 		font-family: var(--font-sans);
 		font-size: 12px;
-		letter-spacing: 0.05em;
+		letter-spacing: 0.15em;
 		text-transform: uppercase;
-		padding: 8px 16px;
-		border: 1px solid rgba(255,255,255,0.3);
-		border-radius: 30px;
+		color: rgba(255, 255, 255, 0.6);
+		transition: color 0.3s ease;
+		display: inline-block;
+	}
+	
+	.tag:hover {
+		color: rgba(255, 255, 255, 1);
+	}
+
+	.tag-separator {
+		font-family: var(--font-sans);
+		font-size: 10px;
+		color: rgba(255, 255, 255, 0.25);
+		user-select: none;
+		font-weight: 300;
 	}
 	
 	/* Right Column Gallery */

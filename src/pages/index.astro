@@ -1,1214 +1,140 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getFeaturedProjects } from '../data/projects';
-
-const projects = getFeaturedProjects();
+import ColorBends from '../components/react/ColorBends.jsx';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Projects from '../components/Projects.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <Layout title="Joain Monroy - Full-Stack Developer" showHeader={true}>
-	<main id="main-container">
+	<main id="main-container" class="relative bg-black text-white w-full overflow-hidden">
 		
-		<div id="pinned-container">
+		<!-- Color Bends fijo en el fondo -->
+		<ColorBends client:load colors={['#1a1a1a', '#333333', '#000000']} intensity={0.8} />
+
+		<div class="relative z-10 w-full flex flex-col">
 			
-			<!-- Project counter -->
-			<div class="project-counter" aria-hidden="true">
-				<span class="counter-current">01</span>
-				<span class="counter-divider"></span>
-				<span class="counter-total">{String(projects.length).padStart(2, '0')}</span>
-			</div>
+			<Hero />
+			<About />
+			<Projects />
+			<Footer />
 
-			<!-- Dot navigation -->
-			<div class="dot-nav" aria-label="Project navigation">
-				{projects.map((_, idx) => (
-					<button 
-						class={`dot ${idx === 0 ? 'active' : ''}`} 
-						data-slide={idx}
-						aria-label={`Go to project ${idx + 1}`}
-					></button>
-				))}
-			</div>
-
-			{projects.map((project, idx) => (
-				<section 
-					class="project-section" 
-					data-index={idx}
-					style={`z-index: ${projects.length - idx}; background-color: ${project.backgroundColor};`}
-				>
-					<div class="project-content">
-						
-						<div class="patchwork">
-							{project.images.map((img, i) => {
-								const speeds = [0.8, 1.25, 0.9, 1.15, 0.75, 1.35];
-								const speed = speeds[i % speeds.length];
-								return (
-									<div class={`img-wrap img-${i + 1}`} data-speed={speed}>
-										<img 
-											src={img} 
-											alt=""
-											loading={idx === 0 && i < 2 ? 'eager' : 'lazy'}
-										/>
-									</div>
-								);
-							})}
-						</div>
-						
-						<div class="title-wrap">
-							<a href={`/projects/${project.id}`} class="title-link">
-								<h2 class="title">{project.title}</h2>
-							</a>
-							<div class="subtitle-wrap">
-								<span class="subtitle">{project.subtitle}</span>
-							</div>
-							<div class="tags-wrap">
-								{project.tags.map(tag => (
-									<span class="tag">{tag}</span>
-								))}
-							</div>
-						</div>
-						
-					</div>
-				</section>
-			))}
-			
 		</div>
-
-		<!-- Scroll indicator on first load -->
-		<div class="scroll-hint" id="scroll-hint" aria-hidden="true">
-			<div class="scroll-hint-line"></div>
-			<span>SCROLL</span>
-		</div>
-
-		<!-- Atmospheric CTA Section -->
-		<section class="cta-atmosphere" id="cta-atmosphere">
-			<!-- Animated gradient background -->
-			<div class="gradient-canvas">
-				<div class="gradient-layer gradient-base"></div>
-				<div class="gradient-layer gradient-shift"></div>
-			</div>
-
-			<!-- Film grain noise overlay -->
-			<div class="noise-overlay" aria-hidden="true"></div>
-
-			<!-- Floating translucent orbs -->
-			<div class="orbs-container" aria-hidden="true">
-				<div class="orb orb-1"></div>
-				<div class="orb orb-2"></div>
-				<div class="orb orb-3"></div>
-				<div class="orb orb-4"></div>
-			</div>
-
-			<!-- Content -->
-			<div class="cta-content">
-				<span class="cta-kicker">DISPONIBLE PARA PROYECTOS</span>
-				<h2 class="cta-headline">
-					<span class="cta-line">Creemos algo</span>
-					<span class="cta-line">extraordinario.</span>
-				</h2>
-				<p class="cta-body">Siempre en búsqueda de nuevos desafíos que combinen diseño excepcional con ingeniería sólida.</p>
-				<a href="/contact" class="cta-button magnetic" id="cta-magnetic">
-					<span>Hablemos</span>
-					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<line x1="5" y1="12" x2="19" y2="12"></line>
-						<polyline points="12 5 19 12 12 19"></polyline>
-					</svg>
-				</a>
-			</div>
-
-			<!-- Bottom info bar -->
-			<div class="cta-footer">
-				<span>SANTIAGO, CHILE</span>
-				<span>© {new Date().getFullYear()}</span>
-			</div>
-		</section>
-		
 	</main>
 </Layout>
 
 <style>
-	#main-container {
-		background: #ffffff;
+	/* Optimizaciones para scroll suave y animaciones */
+	html {
+		scroll-behavior: smooth;
 	}
-	
-	#pinned-container {
-		position: relative;
-		width: 100%;
-		height: 100vh;
-		background: #ffffff;
+	body {
+		background-color: #000;
 	}
-
-	/* Project Counter */
-	.project-counter {
-		position: fixed;
-		bottom: 48px;
-		left: 50px;
-		z-index: 50;
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		font-family: var(--font-sans);
-		font-size: 12px;
-		font-weight: 500;
-		letter-spacing: 0.1em;
-		color: #fff;
-		mix-blend-mode: difference;
-		pointer-events: none;
-	}
-
-	.counter-current {
-		font-size: 28px;
-		font-weight: 300;
-		letter-spacing: -0.02em;
-		transition: none; /* GSAP handles this */
-	}
-
-	.counter-divider {
-		width: 32px;
-		height: 1px;
-		background: currentColor;
-		opacity: 0.4;
-	}
-
-	.counter-total {
-		opacity: 0.4;
-	}
-
-	/* Dot Navigation */
-	.dot-nav {
-		position: fixed;
-		right: 50px;
-		top: 50%;
-		transform: translateY(-50%);
-		z-index: 50;
-		display: flex;
-		flex-direction: column;
-		gap: 12px;
-		mix-blend-mode: difference;
-	}
-
-	.dot {
-		width: 8px;
-		height: 8px;
-		border-radius: 50%;
-		border: 1px solid rgba(255,255,255,0.5);
-		background: transparent;
-		cursor: pointer;
-		padding: 0;
-		transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), 
-					background 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-					border-color 0.3s;
-		pointer-events: auto;
-	}
-
-	.dot.active {
-		background: #fff;
-		border-color: #fff;
-		transform: scale(1.4);
-	}
-
-	.dot:hover:not(.active) {
-		border-color: #fff;
-		transform: scale(1.2);
-	}
-	
-	.project-section {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100vh;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		overflow: hidden;
-		background-color: #ffffff;
-		will-change: transform, opacity, filter;
-	}
-	
-	.project-content {
-		position: relative;
-		width: 100%;
-		height: 100vh;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-	
-	.patchwork {
-		position: absolute;
-		inset: 0;
-		pointer-events: none;
-	}
-	
-	.img-wrap {
-		position: absolute;
-		overflow: hidden;
-		will-change: transform, clip-path;
-	}
-	
-	.img-wrap img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-	
-	/* Scattered Awwwards-style Collage Layout */
-	.img-1 { top: 10%; left: 5%; width: 22vw; height: 32vw; z-index: 1; }
-	.img-2 { bottom: 8%; right: 8%; width: 18vw; height: 26vw; z-index: 2; }
-	.img-3 { top: 5%; right: 22%; width: 18vw; height: 22vw; z-index: 1; }
-	.img-4 { bottom: 15%; left: 28%; width: 14vw; height: 20vw; z-index: 3; }
-	.img-5 { top: 45%; right: -2%; width: 16vw; height: 12vw; z-index: 0; }
-	.img-6 { top: -2%; left: 40%; width: 12vw; height: 12vw; z-index: 0; }
-	
-	/* Alternate layouts for even sections */
-	.project-section:nth-child(even) .img-1 { top: auto; bottom: 10%; left: 8%; width: 25vw; height: 25vw; }
-	.project-section:nth-child(even) .img-2 { bottom: auto; top: 15%; right: 10%; width: 20vw; height: 28vw; }
-	.project-section:nth-child(even) .img-3 { top: auto; bottom: 40%; left: 8%; width: 15vw; height: 20vw; right: auto; }
-	.project-section:nth-child(even) .img-4 { bottom: auto; top: 5%; left: 35%; width: 18vw; height: 14vw; }
-	.project-section:nth-child(even) .img-5 { top: auto; bottom: 5%; right: 35%; width: 16vw; height: 24vw; }
-	.project-section:nth-child(even) .img-6 { top: 45%; left: -2%; width: 14vw; height: 18vw; right: auto; }
-	
-	.title-wrap {
-		position: relative;
-		z-index: 10;
-		text-align: center;
-		pointer-events: auto;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		mix-blend-mode: difference;
-	}
-	
-	.title-link {
-		display: inline-block;
-		text-decoration: none;
-		color: #fff;
-		overflow: hidden;
-	}
-	
-	.title {
-		font-family: var(--font-sans);
-		font-size: clamp(60px, 12vw, 160px);
-		font-weight: 400;
-		line-height: 0.9;
-		letter-spacing: -0.04em;
-		color: #fff;
-		white-space: normal;
-		text-wrap: balance;
-		text-align: center;
-		max-width: 95vw;
-		margin: 0 auto;
-	}
-	
-	.subtitle-wrap {
-		position: relative;
-		z-index: 4;
-		margin-top: 2rem;
-		text-align: center;
-		overflow: hidden;
-	}
-	
-	.subtitle {
-		font-family: var(--font-sans);
-		font-size: 11px;
-		font-weight: 500;
-		letter-spacing: 0.05em;
-		text-transform: uppercase;
-		color: #fff;
-		display: inline-block;
-	}
-
-	.tags-wrap {
-		display: flex;
-		gap: 8px;
-		margin-top: 1.2rem;
-		flex-wrap: wrap;
-		justify-content: center;
-	}
-
-	.tag {
-		font-family: var(--font-sans);
-		font-size: 10px;
-		font-weight: 400;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: rgba(255,255,255,0.7);
-		border: 1px solid rgba(255,255,255,0.2);
-		padding: 4px 12px;
-		border-radius: 20px;
-	}
-	
-	@media (max-width: 1024px) {
-		.img-1 { width: 28vw; height: 38vw; }
-		.img-2 { width: 22vw; height: 30vw; }
-		.img-3 { width: 24vw; height: 30vw; }
-		.img-4, .img-5, .img-6 { display: none; }
-	}
-	
-	@media (max-width: 768px) {
-		.img-1 { top: 10%; left: 5%; width: 45vw; height: 60vw; }
-		.img-2 { bottom: 15%; right: 5%; width: 35vw; height: 45vw; z-index: 1; }
-		.img-3 { display: none; }
-		.title { font-size: clamp(50px, 15vw, 100px); white-space: normal; padding: 0 20px; }
-		
-		.project-counter { left: 24px; bottom: 32px; }
-		.dot-nav { right: 24px; }
-	}
-
-	/* ═══════════════════════════════════════════
-	   SCROLL INDICATOR
-	   ═══════════════════════════════════════════ */
-
-	.scroll-hint {
-		position: fixed;
-		bottom: 48px;
-		left: 50%;
-		transform: translateX(-50%);
-		z-index: 50;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 8px;
-		color: #fff;
-		mix-blend-mode: difference;
-		pointer-events: none;
-	}
-
-	.scroll-hint span {
-		font-family: var(--font-sans);
-		font-size: 9px;
-		font-weight: 600;
-		letter-spacing: 0.2em;
-	}
-
-	.scroll-hint-line {
-		width: 1px;
-		height: 40px;
-		background: currentColor;
-		animation: scrollPulse 2s ease-in-out infinite;
-		transform-origin: top;
-	}
-
-	@keyframes scrollPulse {
-		0%, 100% { scaleY: 1; opacity: 0.4; }
-		50% { scaleY: 0.5; opacity: 1; }
-	}
-
-	/* ═══════════════════════════════════════════
-	   CTA ATMOSPHERE SECTION — Deep Ocean Gradient
-	   ═══════════════════════════════════════════ */
-
-	.cta-atmosphere {
-		position: relative;
-		width: 100%;
-		min-height: 100vh;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		overflow: hidden;
-		background: #000000;
-	}
-
-	/* Film grain noise overlay — removes digital sterility (premium-frontend-ui §4) */
-	.noise-overlay {
-		position: absolute;
-		inset: 0;
-		z-index: 2;
-		pointer-events: none;
-		opacity: 0.035;
-		mix-blend-mode: overlay;
-		background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-		background-repeat: repeat;
-		background-size: 256px 256px;
-	}
-
-	/* Animated gradient layers */
-	.gradient-canvas {
-		position: absolute;
-		inset: 0;
-		z-index: 0;
-	}
-
-	.gradient-layer {
-		position: absolute;
-		inset: -50%;
-		width: 200%;
-		height: 200%;
-	}
-
-	.gradient-base {
-		background: linear-gradient(
-			135deg,
-			rgb(160, 224, 171) 0%,
-			rgb(255, 172, 46) 35%,
-			rgb(165, 45, 37) 70%,
-			rgb(80, 20, 60) 100%
-		);
-		opacity: 0.6;
-		animation: gradientDrift 12s ease-in-out infinite alternate;
-	}
-
-	.gradient-shift {
-		background: radial-gradient(
-			ellipse at 30% 50%,
-			rgba(160, 224, 171, 0.4) 0%,
-			rgba(255, 172, 46, 0.2) 40%,
-			transparent 70%
-		);
-		opacity: 0.5;
-		animation: gradientShift 16s ease-in-out infinite alternate-reverse;
-	}
-
-	@keyframes gradientDrift {
-		0% { transform: translate(0%, 0%) rotate(0deg) scale(1); }
-		50% { transform: translate(-8%, 5%) rotate(3deg) scale(1.05); }
-		100% { transform: translate(5%, -8%) rotate(-2deg) scale(1.02); }
-	}
-
-	@keyframes gradientShift {
-		0% { transform: translate(0%, 0%) rotate(0deg); }
-		50% { transform: translate(10%, -5%) rotate(-4deg); }
-		100% { transform: translate(-5%, 10%) rotate(2deg); }
-	}
-
-	/* Floating translucent orbs */
-	.orbs-container {
-		position: absolute;
-		inset: 0;
-		z-index: 1;
-		pointer-events: none;
-	}
-
-	.orb {
-		position: absolute;
-		border-radius: 50%;
-		filter: blur(60px);
+	.project-card {
 		will-change: transform;
-	}
-
-	.orb-1 {
-		width: 400px;
-		height: 400px;
-		top: 10%;
-		left: -5%;
-		background: radial-gradient(circle, rgba(160, 224, 171, 0.35) 0%, transparent 70%);
-		animation: orbFloat1 18s ease-in-out infinite;
-	}
-
-	.orb-2 {
-		width: 300px;
-		height: 300px;
-		bottom: 20%;
-		right: -3%;
-		background: radial-gradient(circle, rgba(255, 172, 46, 0.3) 0%, transparent 70%);
-		animation: orbFloat2 22s ease-in-out infinite;
-	}
-
-	.orb-3 {
-		width: 250px;
-		height: 250px;
-		top: 50%;
-		left: 40%;
-		background: radial-gradient(circle, rgba(165, 45, 37, 0.25) 0%, transparent 70%);
-		animation: orbFloat3 20s ease-in-out infinite;
-	}
-
-	.orb-4 {
-		width: 180px;
-		height: 180px;
-		top: 25%;
-		right: 25%;
-		background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
-		animation: orbFloat4 14s ease-in-out infinite;
-	}
-
-	@keyframes orbFloat1 {
-		0%, 100% { transform: translate(0, 0) scale(1); }
-		33% { transform: translate(60px, -40px) scale(1.1); }
-		66% { transform: translate(-30px, 50px) scale(0.95); }
-	}
-
-	@keyframes orbFloat2 {
-		0%, 100% { transform: translate(0, 0) scale(1); }
-		33% { transform: translate(-50px, 30px) scale(1.15); }
-		66% { transform: translate(40px, -60px) scale(0.9); }
-	}
-
-	@keyframes orbFloat3 {
-		0%, 100% { transform: translate(0, 0) scale(1); }
-		50% { transform: translate(70px, -30px) scale(1.08); }
-	}
-
-	@keyframes orbFloat4 {
-		0%, 100% { transform: translate(0, 0) scale(1); }
-		50% { transform: translate(-40px, 40px) scale(1.2); }
-	}
-
-	/* CTA Content */
-	.cta-content {
-		position: relative;
-		z-index: 10;
-		text-align: center;
-		max-width: 800px;
-		padding: 0 40px;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 28px;
-	}
-
-	.cta-kicker {
-		font-family: var(--font-sans);
-		font-size: 11px;
-		font-weight: 600;
-		letter-spacing: 0.2em;
-		text-transform: uppercase;
-		color: rgba(255, 255, 255, 0.6);
-		padding: 6px 18px;
-		border: 1px solid rgba(255, 255, 255, 0.15);
-		border-radius: 75px;
-	}
-
-	.cta-headline {
-		font-family: var(--font-sans);
-		font-size: clamp(42px, 7vw, 94px);
-		font-weight: 300;
-		line-height: 1.05;
-		letter-spacing: -0.03em;
-		color: #ffffff;
-	}
-
-	.cta-line {
-		display: block;
-	}
-
-	.cta-body {
-		font-family: var(--font-sans);
-		font-size: 18px;
-		line-height: 1.6;
-		font-weight: 400;
-		color: rgba(255, 255, 255, 0.55);
-		max-width: 480px;
-	}
-
-	.cta-button {
-		display: inline-flex;
-		align-items: center;
-		gap: 10px;
-		padding: 14px 36px;
-		border: 1px solid rgba(255, 255, 255, 0.3);
-		border-radius: 75px;
-		background: transparent;
-		color: #ffffff;
-		font-family: var(--font-sans);
-		font-size: 14px;
-		font-weight: 400;
-		letter-spacing: 0.05em;
-		text-transform: uppercase;
-		text-decoration: none;
-		transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-		backdrop-filter: blur(8px);
-	}
-
-	.cta-button:hover {
-		background: rgba(255, 255, 255, 0.1);
-		border-color: rgba(255, 255, 255, 0.5);
-		transform: translateY(-2px);
-	}
-
-	.cta-button svg {
-		transition: transform 0.3s ease;
-	}
-
-	.cta-button:hover svg {
-		transform: translateX(4px);
-	}
-
-	/* Footer info */
-	.cta-footer {
-		position: absolute;
-		bottom: 40px;
-		left: 50px;
-		right: 50px;
-		z-index: 10;
-		display: flex;
-		justify-content: space-between;
-		font-family: var(--font-sans);
-		font-size: 11px;
-		font-weight: 400;
-		letter-spacing: 0.1em;
-		text-transform: uppercase;
-		color: rgba(255, 255, 255, 0.3);
-	}
-
-	@media (max-width: 768px) {
-		.cta-headline { font-size: clamp(36px, 10vw, 54px); }
-		.cta-body { font-size: 16px; }
-		.cta-footer { left: 24px; right: 24px; bottom: 24px; }
-		.orb-1 { width: 200px; height: 200px; }
-		.orb-2 { width: 150px; height: 150px; }
-		.orb-3 { width: 120px; height: 120px; }
-		.orb-4 { display: none; }
-	}
-
-	/* Accessibility: respect prefers-reduced-motion (§5 + §7) */
-	@media (prefers-reduced-motion: reduce) {
-		.gradient-base,
-		.gradient-shift,
-		.orb,
-		.scroll-hint-line {
-			animation: none !important;
-		}
-		.cta-button { transition: none; }
-	}
-
-	/* Desktop-only magnetic hover area */
-	@media (hover: hover) and (pointer: fine) {
-		.magnetic { will-change: transform; }
 	}
 </style>
 
 <script>
-	import { gsap } from "gsap";
-	import { ScrollTrigger } from "gsap/ScrollTrigger";
-	import Lenis from "lenis";
-	import SplitType from "split-type";
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    import SplitType from 'split-type';
+    import Lenis from 'lenis';
 
-	gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger);
 
-	let lenis: any;
-	let lenisTicker: ((time: number) => void) | null = null;
+    // 1. Lenis Smooth Scroll
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 2,
+    });
 
-	document.addEventListener('astro:page-load', () => {
-		// Clean up previous instances
-		if (lenisTicker) {
-			gsap.ticker.remove(lenisTicker);
-			lenisTicker = null;
-		}
-		if (lenis) {
-			lenis.destroy();
-			lenis = null;
-			ScrollTrigger.killAll();
-		}
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
 
-		lenis = new Lenis({
-			duration: 0.95,
-			easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-			smoothWheel: true,
-			wheelMultiplier: 0.9,
-		});
+    // 2. Hero Animations
+    const heroTl = gsap.timeline();
+    heroTl.from(".hero-element", {
+        y: 80,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.15,
+        ease: "power4.out",
+        delay: 0.2
+    });
 
-		// Lock scroll until intro finishes to prevent GSAP recording mid-animation states
-		lenis.stop();
+    // 3. About Text Reveal (Awwwards Style)
+    // Dividimos el texto en palabras y caracteres
+    const aboutText = new SplitType('.about-text', { types: 'words,chars' });
+    
+    // Animamos la opacidad de cada caracter mientras se hace scroll
+    gsap.fromTo(aboutText.chars, 
+        { opacity: 0.1 },
+        {
+            opacity: 1,
+            stagger: 0.05,
+            scrollTrigger: {
+                trigger: "#about",
+                start: "top 75%",
+                end: "center center",
+                scrub: 1,
+            }
+        }
+    );
 
-		lenis.on('scroll', ScrollTrigger.update);
+    // 4. Project Cards Animations & Color Bends Sync
+    const cards = document.querySelectorAll('.project-card');
+    
+    cards.forEach((card, index) => {
+        // Revelación de la tarjeta al hacer scroll
+        gsap.fromTo(card,
+            { y: 100, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 85%",
+                }
+            }
+        );
+        
+        // Sincronización con el Color Bends de fondo
+        const imgContainer = card.querySelector('.project-image-container') as HTMLElement;
+        if (imgContainer) {
+            ScrollTrigger.create({
+                trigger: card,
+                start: "top 60%",
+                end: "bottom 40%",
+                onEnter: () => updateColorBends(imgContainer),
+                onEnterBack: () => updateColorBends(imgContainer),
+            });
+        }
+    });
 
-		lenisTicker = (time: number) => {
-			lenis.raf(time * 1000);
-		};
-		gsap.ticker.add(lenisTicker);
-		gsap.ticker.lagSmoothing(0);
+    function updateColorBends(element: HTMLElement) {
+        const bgColor = element.style.backgroundColor;
+        if (bgColor && bgColor !== 'rgb(17, 17, 17)' && bgColor !== '#111') {
+            window.dispatchEvent(new CustomEvent('projectColorChange', { detail: { color: bgColor } }));
+        }
+    }
 
-		// Get sections
-		const sections = gsap.utils.toArray('.project-section') as HTMLElement[];
-		const dots = gsap.utils.toArray('.dot') as HTMLElement[];
-		const counterCurrent = document.querySelector('.counter-current');
-		
-		if (sections.length === 0) return;
-
-		// ─── 1. SplitType — accessible, responsive text chunking ───
-		const splitInstances: any[] = [];
-		sections.forEach((section) => {
-			const title = section.querySelector('.title') as HTMLElement;
-			if (title) {
-				const split = new SplitType(title, { types: 'chars', tagName: 'span' });
-				splitInstances.push(split);
-			}
-
-			const subtitle = section.querySelector('.subtitle') as HTMLElement;
-			if (subtitle) {
-				const split = new SplitType(subtitle, { types: 'chars', tagName: 'span' });
-				splitInstances.push(split);
-			}
-		});
-
-		// ─── Scroll hint — fade out on first scroll ───
-		const scrollHint = document.getElementById('scroll-hint');
-		if (scrollHint) {
-			gsap.fromTo(scrollHint,
-				{ autoAlpha: 0, y: 10 },
-				{ autoAlpha: 1, y: 0, duration: 0.6, delay: 1.5, ease: 'power2.out' }
-			);
-			ScrollTrigger.create({
-				trigger: '#pinned-container',
-				start: 'top top',
-				end: '+=5%',
-				onUpdate: (self) => {
-					if (self.progress > 0.01) {
-						gsap.to(scrollHint, { autoAlpha: 0, duration: 0.3, ease: 'power2.in' });
-					}
-				}
-			});
-		}
-
-		// ─── Magnetic button (premium-frontend-ui §3.2) ───
-		const magneticBtn = document.getElementById('cta-magnetic');
-		if (magneticBtn && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-			const strength = 0.3;
-			magneticBtn.addEventListener('mousemove', (e) => {
-				const rect = magneticBtn.getBoundingClientRect();
-				const x = e.clientX - rect.left - rect.width / 2;
-				const y = e.clientY - rect.top - rect.height / 2;
-				gsap.to(magneticBtn, {
-					x: x * strength,
-					y: y * strength,
-					duration: 0.4,
-					ease: 'power3.out'
-				});
-			});
-			magneticBtn.addEventListener('mouseleave', () => {
-				gsap.to(magneticBtn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
-			});
-		}
-
-		const slideLabel = (index: number) => `slide-${index}`;
-		let slideStops: number[] = [];
-
-		// ─── Custom snap: less scroll needed to transition ───
-		const snapToSlide = (progressValue: number) => {
-			if (slideStops.length === 0) return progressValue;
-			if (slideStops.length === 1) return slideStops[0];
-
-			const progress = gsap.utils.clamp(0, 1, progressValue);
-			if (progress <= slideStops[0]) return slideStops[0];
-
-			for (let i = 0; i < slideStops.length - 1; i += 1) {
-				const start = slideStops[i];
-				const end = slideStops[i + 1];
-				if (progress <= end) {
-					const segmentSize = end - start || 1;
-					const segmentProgress = (progress - start) / segmentSize;
-					// Snap when scrolled past 20% of the segment
-					return segmentProgress >= 0.20 ? end : start;
-				}
-			}
-
-			return slideStops[slideStops.length - 1];
-		};
-
-		// ─── Update counter & dots ───
-		let currentSlide = 0;
-		const updateIndicators = (index: number) => {
-			if (index === currentSlide) return;
-			currentSlide = index;
-			
-			// Update counter with clip animation
-			if (counterCurrent) {
-				gsap.to(counterCurrent, {
-					y: -20,
-					opacity: 0,
-					duration: 0.2,
-					ease: "power2.in",
-					onComplete: () => {
-						counterCurrent.textContent = String(index + 1).padStart(2, '0');
-						gsap.fromTo(counterCurrent, 
-							{ y: 20, opacity: 0 },
-							{ y: 0, opacity: 1, duration: 0.3, ease: "power2.out" }
-						);
-					}
-				});
-			}
-
-			// Update dots
-			dots.forEach((dot, i) => {
-				dot.classList.toggle('active', i === index);
-			});
-		};
-
-		// ─── Main Timeline ───
-		const tl = gsap.timeline({
-			scrollTrigger: {
-				trigger: "#pinned-container",
-				start: "top top",
-				end: `+=${sections.length * 55}%`,
-				pin: true,
-				scrub: 1.2,
-				anticipatePin: 1,
-				snap: {
-					snapTo: snapToSlide,
-					duration: { min: 0.6, max: 1.2 },
-					delay: 0.05,
-					ease: "power2.inOut",
-				},
-				invalidateOnRefresh: true,
-				onUpdate: (self) => {
-					// Determine current slide from progress
-					const progress = self.progress;
-					let idx = 0;
-					for (let i = 0; i < slideStops.length; i++) {
-						if (progress >= slideStops[i] - 0.01) idx = i;
-					}
-					updateIndicators(idx);
-				}
-			}
-		});
-		tl.addLabel(slideLabel(0), 0);
-
-		// ─── 2. Initial Setup ───
-		sections.forEach((section: HTMLElement, index: number) => {
-			const chars = section.querySelectorAll('.title .char');
-			const subChars = section.querySelectorAll('.subtitle .char');
-			const tags = section.querySelectorAll('.tag');
-
-			gsap.set(section, { autoAlpha: 1 });
-
-			if (index === 0) {
-				gsap.set(chars, { y: "0%", rotateX: 0, scale: 1, autoAlpha: 1 });
-				gsap.set(subChars, { y: "0%", autoAlpha: 1 });
-				gsap.set(tags, { y: 0, autoAlpha: 1 });
-			} else {
-				gsap.set(chars, { y: "120%", rotateX: 90, scale: 0.8, autoAlpha: 0 }); 
-				gsap.set(subChars, { y: "100%", autoAlpha: 0 });
-				gsap.set(tags, { y: 20, autoAlpha: 0 });
-			}
-		});
-
-		// ─── Image parallax ───
-		sections.forEach((section: HTMLElement) => {
-			const images = section.querySelectorAll('.img-wrap');
-			images.forEach((el: Element) => {
-				const imgWrap = el as HTMLElement;
-				const speed = parseFloat(imgWrap.getAttribute('data-speed') || '1');
-				
-				gsap.fromTo(imgWrap, 
-					{ y: `${(1 - speed) * 15}vh` },
-					{
-						y: `${(speed - 1) * 15}vh`,
-						ease: "none",
-						scrollTrigger: {
-							trigger: "#pinned-container",
-							start: "top top",
-							end: `+=${sections.length * 55}%`,
-							scrub: true
-						}
-					}
-				);
-			});
-		});
-
-		// ─── 3. Transition Animations ───
-		sections.forEach((section: HTMLElement, index: number) => {
-			if (index === 0) return;
-
-			const prevSection = sections[index - 1] as HTMLElement;
-			const prevChars = prevSection.querySelectorAll('.title .char');
-			const prevSubChars = prevSection.querySelectorAll('.subtitle .char');
-			const prevImages = prevSection.querySelectorAll('.img-wrap');
-			const prevTags = prevSection.querySelectorAll('.tag');
-
-			const currChars = section.querySelectorAll('.title .char');
-			const currSubChars = section.querySelectorAll('.subtitle .char');
-			const currImages = section.querySelectorAll('.img-wrap');
-			const currTags = section.querySelectorAll('.tag');
-
-			// Breathing room between transitions
-			tl.to({}, { duration: 0.15 });
-
-			// ══ EXIT: Previous slide (exit-faster-than-enter: ~65% of enter duration) ══
-			const exitLabel = `exit${index}`;
-			tl.addLabel(exitLabel);
-
-			// Characters exit: fly up with 3D rotation
-			tl.to(prevChars, {
-				y: "-120%",
-				rotateX: -45,
-				scale: 0.9,
-				autoAlpha: 0,
-				stagger: 0.012,
-				duration: 0.28,
-				ease: "power3.in"
-			}, exitLabel);
-
-			// Subtitle chars exit
-			tl.to(prevSubChars, {
-				y: "-80%",
-				autoAlpha: 0,
-				stagger: 0.006,
-				duration: 0.18,
-				ease: "power2.in"
-			}, exitLabel);
-
-			// Tags fade out
-			tl.to(prevTags, {
-				y: -15,
-				autoAlpha: 0,
-				stagger: 0.025,
-				duration: 0.15,
-				ease: "power2.in"
-			}, exitLabel);
-
-			// Images exit: slice up and scale inner image
-			const prevImgElements = prevSection.querySelectorAll('.img-wrap img');
-			tl.to(prevImages, {
-				clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
-				autoAlpha: 0,
-				stagger: 0.06,
-				duration: 0.55,
-				ease: "power3.inOut"
-			}, exitLabel);
-			tl.to(prevImgElements, {
-				scale: 1.2,
-				stagger: 0.06,
-				duration: 0.55,
-				ease: "power3.inOut"
-			}, exitLabel);
-
-			// Section fade
-			tl.to(prevSection, {
-				autoAlpha: 0,
-				duration: 0.2,
-				ease: "power2.inOut"
-			}, `${exitLabel}+=0.2`);
-
-			// ══ ENTER: Current slide (full-duration, spring-based) ══
-			const enterLabel = `enter${index}`;
-			tl.addLabel(enterLabel, `${exitLabel}+=0.18`);
-
-			tl.set(section, { autoAlpha: 1 }, enterLabel);
-
-			// Images enter: dramatic clip-path reveal with inner scale
-			const currImgElements = section.querySelectorAll('.img-wrap img');
-			tl.fromTo(currImages, 
-				{ 
-					clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)",
-					autoAlpha: 0 
-				},
-				{ 
-					clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-					autoAlpha: 1, 
-					stagger: 0.06, 
-					duration: 0.8, 
-					ease: "power3.out" 
-				},
-				enterLabel
-			);
-			tl.fromTo(currImgElements,
-				{ scale: 1.3 },
-				{ 
-					scale: 1, 
-					stagger: 0.06, 
-					duration: 0.8, 
-					ease: "power3.out" 
-				},
-				enterLabel
-			);
-
-			// Characters enter: rise up with 3D rotation (stagger 30-50ms per §7)
-			tl.to(currChars, {
-				y: "0%",
-				rotateX: 0,
-				scale: 1,
-				autoAlpha: 1,
-				stagger: 0.035,
-				duration: 0.45,
-				ease: "power3.out"
-			}, `${enterLabel}+=0.1`);
-
-			// Subtitle chars enter
-			tl.to(currSubChars, {
-				y: "0%",
-				autoAlpha: 1,
-				stagger: 0.015,
-				duration: 0.3,
-				ease: "power2.out"
-			}, `${enterLabel}+=0.25`);
-
-			// Tags enter with spring physics (§7 spring-physics)
-			tl.to(currTags, {
-				y: 0,
-				autoAlpha: 1,
-				stagger: 0.04,
-				duration: 0.3,
-				ease: "elastic.out(1, 0.6)"
-			}, `${enterLabel}+=0.3`);
-
-			// Mark slide complete
-			tl.addLabel(slideLabel(index));
-		});
-
-		// ─── Calculate snap stops ───
-		slideStops = sections
-			.map((_, index) => tl.labels[slideLabel(index)] / tl.duration())
-			.filter((value) => Number.isFinite(value))
-			.sort((a, b) => a - b);
-
-		// ─── Dot click navigation ───
-		dots.forEach((dot, i) => {
-			dot.addEventListener('click', () => {
-				if (slideStops[i] !== undefined) {
-					const st = tl.scrollTrigger;
-					if (st) {
-						const scrollTo = st.start + (st.end - st.start) * slideStops[i];
-						lenis.scrollTo(scrollTo, { duration: 1.2 });
-					}
-				}
-			});
-		});
-
-		// ─── Initial entrance animation for first slide ───
-		const firstSection = sections[0] as HTMLElement;
-		const firstChars = firstSection.querySelectorAll('.title .char');
-		const firstSubChars = firstSection.querySelectorAll('.subtitle .char');
-		const firstImages = firstSection.querySelectorAll('.img-wrap');
-		const firstTags = firstSection.querySelectorAll('.tag');
-
-		const introTl = gsap.timeline({ 
-			delay: 0.3,
-			onComplete: () => {
-				// Unlock scroll only when intro is fully finished
-				lenis.start();
-				// Give GSAP a tiny delay to ensure values are perfectly recorded
-				setTimeout(() => ScrollTrigger.refresh(), 50);
-			}
-		});
-		
-		// Images reveal with premium clip-path mask
-		const firstImgElements = firstSection.querySelectorAll('.img-wrap img');
-		introTl.fromTo(firstImages, 
-			{ clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)", autoAlpha: 0 },
-			{ clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)", autoAlpha: 1, stagger: 0.15, duration: 1.2, ease: "power4.out" }
-		);
-		introTl.fromTo(firstImgElements,
-			{ scale: 1.3 },
-			{ scale: 1, stagger: 0.1, duration: 1.2, ease: "power4.out" },
-			"<"
-		);
-
-		// Characters cascade in with 3D effect (stagger 30-50ms)
-		introTl.fromTo(firstChars,
-			{ y: "120%", rotateX: 90, scale: 0.8, autoAlpha: 0 },
-			{ y: "0%", rotateX: 0, scale: 1, autoAlpha: 1, stagger: 0.04, duration: 0.8, ease: "power3.out" },
-			"-=0.7"
-		);
-
-		// Subtitle letters cascade
-		introTl.fromTo(firstSubChars,
-			{ y: "100%", autoAlpha: 0 },
-			{ y: "0%", autoAlpha: 1, stagger: 0.02, duration: 0.5, ease: "power2.out" },
-			"-=0.4"
-		);
-
-		// Tags pop in with spring physics
-		introTl.fromTo(firstTags,
-			{ y: 20, autoAlpha: 0 },
-			{ y: 0, autoAlpha: 1, stagger: 0.05, duration: 0.4, ease: "elastic.out(1, 0.5)" },
-			"-=0.3"
-		);
-
-		// ─── CTA Atmosphere Animations ───
-		const ctaSection = document.getElementById('cta-atmosphere');
-		if (ctaSection) {
-			const ctaKicker = ctaSection.querySelector('.cta-kicker');
-			const ctaHeadline = ctaSection.querySelector('.cta-headline');
-			const ctaBody = ctaSection.querySelector('.cta-body');
-			const ctaButton = ctaSection.querySelector('.cta-button');
-			const ctaFooter = ctaSection.querySelector('.cta-footer');
-			const orbs = ctaSection.querySelectorAll('.orb');
-
-			// Split each headline line into words for stagger
-			const ctaLines = ctaSection.querySelectorAll('.cta-line');
-			ctaLines.forEach(line => {
-				const text = line.textContent || '';
-				const words = text.trim().split(/\s+/).filter(Boolean);
-				line.innerHTML = words
-					.map(word => `<span class="cta-word" style="display:inline-block;margin-right:0.25em;">${word}</span>`)
-					.join('');
-			});
-
-			const ctaWords = ctaSection.querySelectorAll('.cta-word');
-
-			// Initial state — hidden
-			gsap.set([ctaKicker, ctaBody, ctaButton, ctaFooter], { autoAlpha: 0, y: 40 });
-			gsap.set(ctaWords, { autoAlpha: 0, y: 60, rotateX: 25 });
-			gsap.set(orbs, { scale: 0.5, autoAlpha: 0 });
-
-			// ScrollTrigger reveal
-			const ctaTl = gsap.timeline({
-				scrollTrigger: {
-					trigger: ctaSection,
-					start: 'top 70%',
-					end: 'top 20%',
-					toggleActions: 'play none none reverse',
-				}
-			});
-
-			// Orbs bloom in
-			ctaTl.to(orbs, {
-				scale: 1,
-				autoAlpha: 1,
-				stagger: 0.1,
-				duration: 1.2,
-				ease: 'power2.out'
-			});
-
-			// Kicker
-			ctaTl.to(ctaKicker, {
-				autoAlpha: 1,
-				y: 0,
-				duration: 0.6,
-				ease: 'power3.out'
-			}, '-=0.9');
-
-			// Headline words cascade
-			ctaTl.to(ctaWords, {
-				autoAlpha: 1,
-				y: 0,
-				rotateX: 0,
-				stagger: 0.06,
-				duration: 0.7,
-				ease: 'power3.out'
-			}, '-=0.5');
-
-			// Body text
-			ctaTl.to(ctaBody, {
-				autoAlpha: 1,
-				y: 0,
-				duration: 0.7,
-				ease: 'power3.out'
-			}, '-=0.3');
-
-			// Button
-			ctaTl.to(ctaButton, {
-				autoAlpha: 1,
-				y: 0,
-				duration: 0.5,
-				ease: 'back.out(1.4)'
-			}, '-=0.4');
-
-			// Footer
-			ctaTl.to(ctaFooter, {
-				autoAlpha: 1,
-				y: 0,
-				duration: 0.5,
-				ease: 'power2.out'
-			}, '-=0.3');
-
-			// Parallax on orbs while scrolling through CTA
-			orbs.forEach((orb, i) => {
-				gsap.to(orb, {
-					yPercent: -15 - (i * 8),
-					ease: 'none',
-					scrollTrigger: {
-						trigger: ctaSection,
-						start: 'top bottom',
-						end: 'bottom top',
-						scrub: 1,
-					}
-				});
-			});
-		}
-
-		ScrollTrigger.refresh();
-	});
+    // Limpieza de recursos al desmontar si es necesario (Astro Transitions)
+    document.addEventListener('astro:before-swap', () => {
+        ScrollTrigger.getAll().forEach(t => t.kill());
+        lenis.destroy();
+        aboutText.revert();
+    });
 </script>
