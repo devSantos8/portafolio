@@ -12,6 +12,22 @@ export interface Project {
 
 export const projects: Project[] = [
 	{
+		id: 'tuki',
+		title: 'Tuki',
+		subtitle: 'WebApp - 2026',
+		description: 'Software de organizacion de horario/pagos y gastos',
+		images: [
+			'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=800&fit=crop',
+			'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=800&fit=crop',
+			'https://images.unsplash.com/photo-1512428559087-560fa5ceab42?w=600&h=800&fit=crop',
+			'https://images.unsplash.com/photo-1507208658421-2eebafb5305f?w=600&h=800&fit=crop',
+			'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&h=800&fit=crop'
+		],
+		backgroundColor: '#f0ece1', // Warm Washi Paper / Sand
+		tags: ['Next.js', 'Firebase', 'TypeScript', 'HeroUI'],
+		year: '2026',
+	},
+	{
 		id: 'commitflow',
 		title: 'CommitFlow',
 		subtitle: 'Proyecto de Titulo - 2025',
@@ -27,22 +43,6 @@ export const projects: Project[] = [
 		backgroundColor: '#ffffff', // Pure White
 		tags: ['Django', 'Python', 'PostgreSQL'],
 		year: '2025',
-	},
-	{
-		id: 'tuki',
-		title: 'Tuki',
-		subtitle: 'WebApp - 2026',
-		description: 'Software de organizacion de horario/pagos y gastos',
-		images: [
-			'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=800&fit=crop',
-			'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=800&fit=crop',
-			'https://images.unsplash.com/photo-1512428559087-560fa5ceab42?w=600&h=800&fit=crop',
-			'https://images.unsplash.com/photo-1507208658421-2eebafb5305f?w=600&h=800&fit=crop',
-			'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&h=800&fit=crop'
-		],
-		backgroundColor: '#f0ece1', // Warm Washi Paper / Sand
-		tags: ['Next.js', 'Firebase', 'TypeScript', 'HeroUI'],
-		year: '2026',
 	},
 	{
 		id: 'lubricentro',

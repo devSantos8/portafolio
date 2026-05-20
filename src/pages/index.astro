@@ -8,10 +8,12 @@ import Footer from '../components/Footer.astro';
 ---
 
 <Layout title="Joain Monroy - Full-Stack Developer" showHeader={true}>
-	<main id="main-container" class="relative bg-black text-white w-full overflow-hidden">
+	<main id="main-container" class="relative bg-white text-gray-900 dark:bg-black dark:text-white w-full overflow-hidden transition-colors duration-500">
 		
-		<!-- Color Bends fijo en el fondo -->
-		<ColorBends client:load colors={['#1a1a1a', '#333333', '#000000']} intensity={0.8} />
+		<!-- Color Bends fijo en el fondo (Solo en Dark Mode) -->
+		<div class="hidden dark:block">
+			<ColorBends client:load colors={['#1a1a1a', '#333333', '#000000']} intensity={0.8} />
+		</div>
 
 		<div class="relative z-10 w-full flex flex-col">
 			
@@ -82,11 +84,11 @@ import Footer from '../components/Footer.astro';
         { opacity: 0.1 },
         {
             opacity: 1,
-            stagger: 0.05,
+            stagger: 0.1,
             scrollTrigger: {
                 trigger: "#about",
-                start: "top 75%",
-                end: "center center",
+                start: "top 60%",
+                end: "bottom 70%",
                 scrub: 1,
             }
         }

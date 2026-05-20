@@ -3,29 +3,40 @@ import { getFeaturedProjects } from '../data/projects';
 const projects = getFeaturedProjects();
 ---
 <section id="projects" class="w-full relative px-4 sm:px-8 md:px-16 pb-32 pt-20">
-    <div class="text-center mb-32 project-header">
-        <h2 class="text-4xl md:text-6xl font-bold tracking-tighter uppercase flex items-center justify-center gap-4">
-            <span class="w-16 h-[2px] bg-white"></span>
-            Featured Works
-            <span class="w-16 h-[2px] bg-white"></span>
+    <div class="mb-20 project-header flex flex-col items-start gap-4 max-w-7xl mx-auto w-full">
+        <div class="flex items-center gap-3 font-bold tracking-widest text-sm uppercase">
+            <span class="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent">
+                Mi Trabajo
+            </span>
+        </div>
+        <h2 class="text-5xl md:text-7xl font-bold tracking-tighter text-gray-900 dark:text-white transition-colors duration-500">
+            Proyectos Seleccionados
         </h2>
+        <p class="text-gray-500 dark:text-gray-400 text-lg max-w-2xl mt-2">
+            Aquí tienes una selección detallada que muestra mi experiencia y los resultados obtenidos.
+        </p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 relative max-w-7xl mx-auto w-full">
         {/* Columna Izquierda (Pares) */}
         <div class="flex flex-col gap-16 md:gap-32">
             {projects.filter((_, i) => i % 2 === 0).map((project, idx) => (
-                <a href={`/projects/${project.id}`} class="project-card group block w-full no-underline cursor-none">
+                <a href={`/projects/${project.id}`} class="project-card group block w-full no-underline cursor-none relative">
+                    {project.id === projects[0].id && (
+                        <div class="absolute -top-4 -right-4 md:-top-6 md:-right-6 z-20 bg-green-500 text-black text-xs md:text-sm font-bold px-4 py-2 rounded-full uppercase tracking-widest shadow-xl transform rotate-[12deg] border-4 border-white dark:border-black transition-colors duration-500">
+                            Nuevo
+                        </div>
+                    )}
                     <div class="w-full aspect-[4/3] rounded-[2rem] overflow-hidden bg-[#111] relative mb-6 project-image-container" style={`background-color: ${project.backgroundColor || '#111'};`}>
                         <img src={project.images[0]} alt={project.title} class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     </div>
                     
-                    <h3 class="text-2xl md:text-3xl font-medium tracking-tight mb-4 group-hover:text-gray-300 transition-colors">{project.title}</h3>
+                    <h3 class="text-2xl md:text-3xl font-medium tracking-tight mb-4 text-gray-900 dark:text-white group-hover:text-gray-500 dark:group-hover:text-gray-300 transition-colors">{project.title}</h3>
                     
                     <div class="flex justify-between items-center w-full">
                         <div class="flex flex-wrap gap-2">
                             {project.tags.map(tag => (
-                                <span class="px-4 py-1.5 border border-white/10 rounded-full text-xs font-medium text-gray-300 bg-white/5">
+                                <span class="px-4 py-1.5 border border-gray-300 dark:border-white/10 rounded-full text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-white/5 transition-colors duration-500">
                                     {tag}
                                 </span>
                             ))}
@@ -39,17 +50,22 @@ const projects = getFeaturedProjects();
         {/* Columna Derecha (Impares - con offset) */}
         <div class="flex flex-col gap-16 md:gap-32 md:mt-40">
             {projects.filter((_, i) => i % 2 !== 0).map((project, idx) => (
-                <a href={`/projects/${project.id}`} class="project-card group block w-full no-underline cursor-none">
+                <a href={`/projects/${project.id}`} class="project-card group block w-full no-underline cursor-none relative">
+                    {project.id === projects[0].id && (
+                        <div class="absolute -top-4 -right-4 md:-top-6 md:-right-6 z-20 bg-green-500 text-black text-xs md:text-sm font-bold px-4 py-2 rounded-full uppercase tracking-widest shadow-xl transform rotate-[12deg] border-4 border-white dark:border-black transition-colors duration-500">
+                            Nuevo
+                        </div>
+                    )}
                     <div class="w-full aspect-[4/3] rounded-[2rem] overflow-hidden bg-[#111] relative mb-6 project-image-container" style={`background-color: ${project.backgroundColor || '#111'};`}>
                         <img src={project.images[0]} alt={project.title} class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     </div>
                     
-                    <h3 class="text-2xl md:text-3xl font-medium tracking-tight mb-4 group-hover:text-gray-300 transition-colors">{project.title}</h3>
+                    <h3 class="text-2xl md:text-3xl font-medium tracking-tight mb-4 text-gray-900 dark:text-white group-hover:text-gray-500 dark:group-hover:text-gray-300 transition-colors">{project.title}</h3>
                     
                     <div class="flex justify-between items-center w-full">
                         <div class="flex flex-wrap gap-2">
                             {project.tags.map(tag => (
-                                <span class="px-4 py-1.5 border border-white/10 rounded-full text-xs font-medium text-gray-300 bg-white/5">
+                                <span class="px-4 py-1.5 border border-gray-300 dark:border-white/10 rounded-full text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-white/5 transition-colors duration-500">
                                     {tag}
                                 </span>
                             ))}

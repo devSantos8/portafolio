@@ -1,30 +1,94 @@
 ---
 ---
 
-<header class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-5xl">
-	<div class="flex items-center justify-between px-8 py-4 bg-[#111]/80 backdrop-blur-md rounded-full border border-white/10 text-white shadow-2xl">
-		<div class="flex-1">
-			<a href="/" class="text-xl font-bold tracking-tighter uppercase transition-opacity hover:opacity-70">
-				JS.
-			</a>
-		</div>
-		
-		<nav class="hidden md:flex flex-1 items-center justify-center gap-8 text-sm font-medium">
-			<a href="/" class="flex items-center gap-2 group">
-				<span class="w-1.5 h-1.5 rounded-full bg-green-500 group-hover:scale-150 transition-transform"></span>
-				<span class="text-white hover:text-gray-300 transition-colors">Home</span>
-			</a>
-			<a href="/infos" class="text-gray-400 hover:text-white transition-colors">About</a>
-			<a href="#projects" class="text-gray-400 hover:text-white transition-colors">Projects</a>
-			<a href="mailto:joainsantos@gmail.com" class="text-gray-400 hover:text-white transition-colors">Contact</a>
-		</nav>
-
-		<div class="flex-1 flex justify-end">
-			<button class="hover:rotate-12 transition-transform text-gray-400 hover:text-white" aria-label="Toggle Theme">
-				<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-					<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-				</svg>
-			</button>
-		</div>
+<header id="main-header" class="fixed top-16 left-0 w-full px-6 md:px-10 lg:px-16 z-50 pointer-events-none flex justify-between items-start transition-colors duration-500 text-gray-900">
+	<!-- Logo Izquierda -->
+	<div class="pointer-events-auto">
+		<a href="/" class="text-xl md:text-2xl font-bold tracking-tighter uppercase transition-opacity hover:opacity-70 flex items-center gap-2">
+			Joain <span class="font-light italic font-serif">Santos</span>
+		</a>
 	</div>
+	
+	<!-- Navegación Derecha (Vertical) -->
+	<nav class="pointer-events-auto hidden md:flex flex-col items-end gap-3 text-xs md:text-sm font-medium tracking-widest uppercase">
+		<a href="/" class="opacity-70 hover:opacity-100 transition-opacity flex items-center gap-2 group">
+			<span class="w-1.5 h-1.5 rounded-full bg-green-500 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+			Home
+		</a>
+		<a href="/infos" class="opacity-70 hover:opacity-100 transition-opacity">About</a>
+		<a href="/#projects" class="opacity-70 hover:opacity-100 transition-opacity">Projects</a>
+		<a href="mailto:joainsantos@gmail.com" class="opacity-70 hover:opacity-100 transition-opacity">Contact</a>
+		
+		<button id="theme-toggle" class="mt-4 hover:rotate-12 transition-transform opacity-70 hover:opacity-100" aria-label="Toggle Theme">
+			<svg id="theme-toggle-light-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="12" cy="12" r="5"></circle>
+				<line x1="12" y1="1" x2="12" y2="3"></line>
+				<line x1="12" y1="21" x2="12" y2="23"></line>
+				<line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+				<line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+				<line x1="1" y1="12" x2="3" y2="12"></line>
+				<line x1="21" y1="12" x2="23" y2="12"></line>
+				<line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+				<line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+			</svg>
+			<svg id="theme-toggle-dark-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+			</svg>
+		</button>
+	</nav>
 </header>
+
+<script>
+	function initHeaderScroll() {
+		const header = document.getElementById('main-header');
+		if (!header) return;
+
+		const handleScroll = () => {
+			// Cambiar el color si scrolleamos más allá del Hero (ej: 80% de la pantalla)
+			if (window.scrollY > window.innerHeight * 0.8) {
+				header.classList.remove('text-gray-900');
+				header.classList.add('text-white');
+			} else {
+				header.classList.add('text-gray-900');
+				header.classList.remove('text-white');
+			}
+		};
+
+		window.addEventListener('scroll', handleScroll);
+		handleScroll(); // Trigger inicial
+	}
+
+	function initThemeToggle() {
+		const themeToggleBtn = document.getElementById('theme-toggle');
+		const darkIcon = document.getElementById('theme-toggle-dark-icon');
+		const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+		// Set initial icon based on current theme
+		if (document.documentElement.classList.contains('dark')) {
+			lightIcon?.classList.remove('hidden');
+			darkIcon?.classList.add('hidden');
+		} else {
+			darkIcon?.classList.remove('hidden');
+			lightIcon?.classList.add('hidden');
+		}
+
+		themeToggleBtn?.addEventListener('click', () => {
+			darkIcon?.classList.toggle('hidden');
+			lightIcon?.classList.toggle('hidden');
+
+			if (document.documentElement.classList.contains('dark')) {
+				document.documentElement.classList.remove('dark');
+				localStorage.setItem('theme', 'light');
+			} else {
+				document.documentElement.classList.add('dark');
+				localStorage.setItem('theme', 'dark');
+			}
+		});
+	}
+
+	// Ejecutar al cargar la página (con o sin ViewTransitions)
+	document.addEventListener('astro:page-load', () => {
+		initHeaderScroll();
+		initThemeToggle();
+	});
+</script>
