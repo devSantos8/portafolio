@@ -1,97 +1,261 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
 import { getAllProjects } from '../../data/projects';
 
 const projects = getAllProjects();
+
+const getProjectCategory = (id: string) => {
+	switch (id) {
+		case 'tuki': return 'frontend';
+		case 'commitflow': return 'backend';
+		case 'lubricentro': return 'frontend';
+		case 'api-gateway': return 'backend devops';
+		default: return 'all';
+	}
+};
+
+const leftProjects  = projects.filter((_, i) => i % 2 === 0);
+const rightProjects = projects.filter((_, i) => i % 2 !== 0);
 ---
 
-<Layout title="Projects - Joain Monroy" showHeader={false}>
-	<main class="projects-page">
-		
-		<div class="projects-grid">
-			{projects.map((project) => (
-				<article class="project-card">
-					<a href={`/projects/${project.id}`}>
-						<div class="image">
-							<img 
-								src={project.images[0] || 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop'} 
-								alt={project.title}
-								loading="lazy"
-							/>
-						</div>
-						<div class="info">
-							<h2>{project.title}</h2>
-							<span>{project.subtitle}</span>
-						</div>
-					</a>
-				</article>
-			))}
+<Layout title="Joain Monroy - Proyectos" showHeader={true}>
+	<main class="relative bg-white text-gray-900 dark:bg-black dark:text-white min-h-screen overflow-hidden transition-colors duration-500">
+
+		<div class="max-w-7xl mx-auto px-6 sm:px-10 md:px-20 pt-40 md:pt-48 pb-0">
+
+			<!-- HEADER -->
+			<div class="mb-12 projects-title">
+				<span class="text-sm font-bold tracking-widest uppercase bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent block mb-5">
+					Mi Trabajo
+				</span>
+				<h1 class="text-5xl md:text-7xl font-bold tracking-tighter text-gray-900 dark:text-white leading-[1] max-w-2xl">
+					Proyectos Seleccionados
+				</h1>
+			</div>
+
+			<!-- FILTER ROW -->
+			<div class="flex items-center justify-end mb-12">
+				<div class="flex items-center gap-2">
+					<button data-filter="all"      class="filter-btn active px-5 py-2 rounded-full text-sm font-medium transition-all duration-300">Todos</button>
+					<button data-filter="frontend" class="filter-btn        px-5 py-2 rounded-full text-sm font-medium transition-all duration-300">Frontend</button>
+					<button data-filter="backend"  class="filter-btn        px-5 py-2 rounded-full text-sm font-medium transition-all duration-300">Backend</button>
+					<button data-filter="devops"   class="filter-btn        px-5 py-2 rounded-full text-sm font-medium transition-all duration-300">DevOps</button>
+				</div>
+			</div>
+
+			<!-- STAGGERED 2-COLUMN GRID (identical to index.astro) -->
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 relative max-w-7xl mx-auto w-full mb-32">
+
+				<!-- Left column (even indexes) -->
+				<div class="flex flex-col gap-16 md:gap-32">
+					{leftProjects.map((project) => {
+						const isDark = project.backgroundColor === '#1c1c1c';
+						return (
+							<div
+								class="project-card-wrapper"
+								data-categories={getProjectCategory(project.id)}
+								style="opacity:1;"
+							>
+								<a href={`/projects/${project.id}`} class="project-card group block w-full no-underline cursor-none relative">
+
+									{project.id === 'tuki' && (
+										<div class="absolute -top-4 -right-4 md:-top-6 md:-right-6 z-20 bg-green-500 text-black text-xs md:text-sm font-bold px-4 py-2 rounded-full uppercase tracking-widest shadow-xl transform rotate-[12deg] border-4 border-white dark:border-black transition-colors duration-500">
+											Nuevo
+										</div>
+									)}
+
+									<!-- Mockup card -->
+									<div
+										class="w-full aspect-[16/9] rounded-[2rem] overflow-hidden relative mb-6 project-image-container transition-transform duration-500 group-hover:scale-[1.015] shadow-sm"
+										style={`background-color: ${project.backgroundColor || '#111'};`}
+									>
+										<div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none" />
+
+										<div class={`absolute top-5 left-5 right-5 rounded-xl overflow-hidden shadow-xl transition-transform duration-500 group-hover:-translate-y-1 ${isDark ? 'bg-zinc-900/80' : 'bg-white/80'} backdrop-blur-md`}>
+											<div class={`w-full h-8 border-b flex items-center px-3 gap-2 ${isDark ? 'border-white/10 bg-zinc-800/80' : 'border-gray-200/60 bg-gray-100/80'}`}>
+												<span class={`w-2.5 h-2.5 rounded-full ${isDark ? 'bg-white/20' : 'bg-gray-300'}`}></span>
+												<span class={`w-2.5 h-2.5 rounded-full ${isDark ? 'bg-white/20' : 'bg-gray-300'}`}></span>
+												<span class={`w-2.5 h-2.5 rounded-full ${isDark ? 'bg-white/20' : 'bg-gray-300'}`}></span>
+												<div class={`flex-1 mx-3 h-4 rounded-full text-[9px] flex items-center justify-center font-mono ${isDark ? 'bg-white/5 text-white/30' : 'bg-gray-200 text-gray-400'}`}>
+													{project.title.toLowerCase()}.dev
+												</div>
+											</div>
+											<div class={`p-4 min-h-[72px] ${isDark ? 'bg-zinc-900/60' : 'bg-white/60'}`}>
+												<div class="flex gap-3 mb-3">
+													<div class={`h-3 rounded-full flex-1 ${isDark ? 'bg-white/10' : 'bg-gray-200'}`} />
+													<div class={`h-3 rounded-full w-1/3 ${isDark ? 'bg-white/5' : 'bg-gray-100'}`} />
+												</div>
+												<div class="flex gap-2 mb-3" style="opacity:0.6;">
+													<div class={`h-2.5 rounded-full w-2/5 ${isDark ? 'bg-white/8' : 'bg-gray-200'}`} />
+													<div class={`h-2.5 rounded-full flex-1 ${isDark ? 'bg-white/5' : 'bg-gray-100'}`} />
+												</div>
+												<div class="grid grid-cols-3 gap-2">
+													<div class={`h-7 rounded-lg ${isDark ? 'bg-white/5' : 'bg-gray-100'}`} />
+													<div class={`h-7 rounded-lg ${isDark ? 'bg-emerald-400/10' : 'bg-emerald-50'}`} />
+													<div class={`h-7 rounded-lg ${isDark ? 'bg-white/5' : 'bg-gray-100'}`} />
+												</div>
+											</div>
+										</div>
+
+										<div class={`absolute bottom-4 left-0 right-0 flex justify-center ${isDark ? 'text-white/[0.05]' : 'text-gray-900/[0.06]'}`}>
+											<span class="text-[52px] font-black tracking-tighter uppercase leading-none select-none pointer-events-none">{project.title}</span>
+										</div>
+									</div>
+
+									<h3 class="text-2xl md:text-3xl font-medium tracking-tight mb-4 text-gray-900 dark:text-white group-hover:text-gray-500 dark:group-hover:text-gray-300 transition-colors">
+										{project.title}
+									</h3>
+									<div class="flex justify-between items-center w-full">
+										<div class="flex flex-wrap gap-2">
+											{project.tags.map(tag => (
+												<span class="px-4 py-1.5 border border-gray-300 dark:border-white/10 rounded-full text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-white/5 transition-colors duration-500">{tag}</span>
+											))}
+										</div>
+										<span class="text-sm text-gray-500 font-mono">{project.subtitle || project.year}</span>
+									</div>
+								</a>
+							</div>
+						);
+					})}
+				</div>
+
+				<!-- Right column (odd indexes) — offset down like index.astro -->
+				<div class="flex flex-col gap-16 md:gap-32 md:mt-40">
+					{rightProjects.map((project) => {
+						const isDark = project.backgroundColor === '#1c1c1c';
+						return (
+							<div
+								class="project-card-wrapper"
+								data-categories={getProjectCategory(project.id)}
+								style="opacity:1;"
+							>
+								<a href={`/projects/${project.id}`} class="project-card group block w-full no-underline cursor-none relative">
+
+									<div
+										class="w-full aspect-[16/9] rounded-[2rem] overflow-hidden relative mb-6 project-image-container transition-transform duration-500 group-hover:scale-[1.015] shadow-sm"
+										style={`background-color: ${project.backgroundColor || '#111'};`}
+									>
+										<div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none" />
+
+										<div class={`absolute top-5 left-5 right-5 rounded-xl overflow-hidden shadow-xl transition-transform duration-500 group-hover:-translate-y-1 ${isDark ? 'bg-zinc-900/80' : 'bg-white/80'} backdrop-blur-md`}>
+											<div class={`w-full h-8 border-b flex items-center px-3 gap-2 ${isDark ? 'border-white/10 bg-zinc-800/80' : 'border-gray-200/60 bg-gray-100/80'}`}>
+												<span class={`w-2.5 h-2.5 rounded-full ${isDark ? 'bg-white/20' : 'bg-gray-300'}`}></span>
+												<span class={`w-2.5 h-2.5 rounded-full ${isDark ? 'bg-white/20' : 'bg-gray-300'}`}></span>
+												<span class={`w-2.5 h-2.5 rounded-full ${isDark ? 'bg-white/20' : 'bg-gray-300'}`}></span>
+												<div class={`flex-1 mx-3 h-4 rounded-full text-[9px] flex items-center justify-center font-mono ${isDark ? 'bg-white/5 text-white/30' : 'bg-gray-200 text-gray-400'}`}>
+													{project.title.toLowerCase()}.dev
+												</div>
+											</div>
+											<div class={`p-4 min-h-[72px] ${isDark ? 'bg-zinc-900/60' : 'bg-white/60'}`}>
+												<div class="flex gap-3 mb-3">
+													<div class={`h-3 rounded-full flex-1 ${isDark ? 'bg-white/10' : 'bg-gray-200'}`} />
+													<div class={`h-3 rounded-full w-1/3 ${isDark ? 'bg-white/5' : 'bg-gray-100'}`} />
+												</div>
+												<div class="flex gap-2 mb-3" style="opacity:0.6;">
+													<div class={`h-2.5 rounded-full w-2/5 ${isDark ? 'bg-white/8' : 'bg-gray-200'}`} />
+													<div class={`h-2.5 rounded-full flex-1 ${isDark ? 'bg-white/5' : 'bg-gray-100'}`} />
+												</div>
+												<div class="grid grid-cols-3 gap-2">
+													<div class={`h-7 rounded-lg ${isDark ? 'bg-white/5' : 'bg-gray-100'}`} />
+													<div class={`h-7 rounded-lg ${isDark ? 'bg-emerald-400/10' : 'bg-emerald-50'}`} />
+													<div class={`h-7 rounded-lg ${isDark ? 'bg-white/5' : 'bg-gray-100'}`} />
+												</div>
+											</div>
+										</div>
+
+										<div class={`absolute bottom-4 left-0 right-0 flex justify-center ${isDark ? 'text-white/[0.05]' : 'text-gray-900/[0.06]'}`}>
+											<span class="text-[52px] font-black tracking-tighter uppercase leading-none select-none pointer-events-none">{project.title}</span>
+										</div>
+									</div>
+
+									<h3 class="text-2xl md:text-3xl font-medium tracking-tight mb-4 text-gray-900 dark:text-white group-hover:text-gray-500 dark:group-hover:text-gray-300 transition-colors">
+										{project.title}
+									</h3>
+									<div class="flex justify-between items-center w-full">
+										<div class="flex flex-wrap gap-2">
+											{project.tags.map(tag => (
+												<span class="px-4 py-1.5 border border-gray-300 dark:border-white/10 rounded-full text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-white/5 transition-colors duration-500">{tag}</span>
+											))}
+										</div>
+										<span class="text-sm text-gray-500 font-mono">{project.subtitle || project.year}</span>
+									</div>
+								</a>
+							</div>
+						);
+					})}
+				</div>
+
+			</div>
 		</div>
-		
+
+		<Footer />
 	</main>
 </Layout>
 
+<script>
+	import { gsap } from "gsap";
+
+	document.addEventListener('astro:page-load', () => {
+		// Title reveal
+		gsap.from(".projects-title", {
+			y: 50, opacity: 0, duration: 1.2, ease: "power4.out"
+		});
+
+		// Cards scroll-reveal from natural opacity:1 state — no initial-hide
+		gsap.from(".project-card-wrapper", {
+			y: 40, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power3.out", delay: 0.15,
+			clearProps: "all"   // Reset inline styles after animation so filter works correctly
+		});
+
+		// Filter logic
+		const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+		const cards   = document.querySelectorAll<HTMLElement>('.project-card-wrapper');
+
+		buttons.forEach(btn => {
+			btn.addEventListener('click', () => {
+				buttons.forEach(b => b.classList.remove('active'));
+				btn.classList.add('active');
+
+				const filterValue = btn.getAttribute('data-filter');
+
+				cards.forEach(card => {
+					const cats = (card.getAttribute('data-categories') ?? '').split(' ');
+					const show = filterValue === 'all' || cats.includes(filterValue!);
+
+					if (show) {
+						card.style.display = '';
+						gsap.to(card, { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: "power3.out", pointerEvents: 'auto' });
+					} else {
+						gsap.to(card, {
+							opacity: 0, scale: 0.96, y: 8, duration: 0.3, ease: "power3.inOut",
+							onComplete: () => { card.style.display = 'none'; card.style.pointerEvents = 'none'; }
+						});
+					}
+				});
+			});
+		});
+	});
+</script>
+
 <style>
-	.projects-page {
-		min-height: 100vh;
-		padding: 120px 48px 48px;
+	.filter-btn {
+		color: #6b7280;
+		border: 1px solid transparent;
+		background: transparent;
+		cursor: pointer;
 	}
-	
-	.projects-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-		gap: 48px;
+	html.dark .filter-btn { color: rgba(255,255,255,0.45); }
+	.filter-btn:hover { color: #111827; }
+	html.dark .filter-btn:hover { color: #ffffff; }
+
+	.filter-btn.active {
+		background-color: #111827;
+		color: #ffffff;
 	}
-	
-	.project-card a {
-		text-decoration: none;
-		display: block;
-	}
-	
-	.image {
-		aspect-ratio: 4/3;
-		overflow: hidden;
-		margin-bottom: 16px;
-	}
-	
-	.image img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.3s;
-	}
-	
-	.project-card a:hover .image img {
-		transform: scale(1.05);
-		opacity: 0.8;
-	}
-	
-	.info {
-		display: flex;
-		justify-content: space-between;
-		align-items: baseline;
-	}
-	
-	.info h2 {
-		font-family: var(--font-sans);
-		font-size: clamp(20px, 3vw, 32px);
-		font-weight: 400;
-	}
-	
-	.info span {
-		font-size: 9px;
-		letter-spacing: 0.15em;
-		text-transform: uppercase;
-		opacity: 0.5;
-	}
-	
-	@media (max-width: 768px) {
-		.projects-page {
-			padding: 100px 24px 48px;
-		}
-		
-		.projects-grid {
-			grid-template-columns: 1fr;
-		}
+	html.dark .filter-btn.active {
+		background-color: rgba(255,255,255,0.12);
+		color: #ffffff;
+		border-color: rgba(255,255,255,0.08);
 	}
 </style>

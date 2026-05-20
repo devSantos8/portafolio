@@ -8,6 +8,13 @@ export interface Project {
 	backgroundColor: string;
 	tags: string[];
 	year: string;
+	role?: string;
+	client?: string;
+	liveUrl?: string;
+	githubUrl?: string;
+	challenge?: string;
+	solution?: string;
+	features?: string[];
 }
 
 export const projects: Project[] = [
@@ -26,6 +33,18 @@ export const projects: Project[] = [
 		backgroundColor: '#f0ece1', // Warm Washi Paper / Sand
 		tags: ['Next.js', 'Firebase', 'TypeScript', 'HeroUI'],
 		year: '2026',
+		role: 'Disenador y Desarrollador Full-Stack',
+		client: 'Proyecto Independiente',
+		liveUrl: 'https://tuki.lat',
+		githubUrl: 'https://github.com/JoainMonroy/tuki',
+		challenge: 'Organizar turnos, pagos de horas extras y control de gastos en un entorno laboral dinamico suele ser caotico, lento y propenso a errores manuales en hojas de calculo tradicionales.',
+		solution: 'Disene y construi una aplicacion web ultra rapida en Next.js integrada con Firebase. Automatiza el calculo de salarios segun horas registradas y analiza la fluctuacion de gastos mensuales mediante graficos interactivos, permitiendo una gestion financiera impecable en tiempo real.',
+		features: [
+			'Calculo automatico de horas de trabajo y pagos de horas extras',
+			'Sincronizacion de datos en tiempo real mediante base de datos reactiva',
+			'Gestor de gastos mensuales interactivo con categorias personalizadas',
+			'Diseno centrado en dispositivos moviles para uso rapido en el campo'
+		]
 	},
 	{
 		id: 'commitflow',
@@ -43,6 +62,18 @@ export const projects: Project[] = [
 		backgroundColor: '#ffffff', // Pure White
 		tags: ['Django', 'Python', 'PostgreSQL'],
 		year: '2025',
+		role: 'Arquitecto de Software y Backend Developer',
+		client: 'Proyecto de Titulo Universitario',
+		liveUrl: 'https://commitflow.cl',
+		githubUrl: 'https://github.com/JoainMonroy/commitflow',
+		challenge: 'El proceso de contratacion en el area tecnologica suele estar fragmentado, carecer de validaciones tecnicas rapidas y no emparejar eficientemente a ingenieros con ofertas acordes a sus habilidades.',
+		solution: 'Desarrolle una plataforma robusta con Django y PostgreSQL que implementa un sistema inteligente de emparejamiento entre perfiles de candidatos y ofertas de empleo, integrando ademas un panel administrativo completo de control y reporteria de postulaciones.',
+		features: [
+			'Algoritmo de matching optimizado para evaluar perfiles y propuestas de empleo',
+			'Panel de administracion avanzado para control de candidatos y estadisticas de uso',
+			'Integracion de perfiles interactivos detallando habilidades tecnicas verificadas',
+			'Base de datos relacional optimizada con busquedas indexadas para maxima velocidad'
+		]
 	},
 	{
 		id: 'lubricentro',
@@ -60,6 +91,18 @@ export const projects: Project[] = [
 		backgroundColor: '#b5c1b5', // Muted Sage / Matcha
 		tags: ['Astro', 'Tailwind CSS', 'JavaScript'],
 		year: '2025',
+		role: 'Frontend Developer y UX Designer',
+		client: 'Lubricentro La Esquina',
+		liveUrl: 'https://lubricentrolaesquina.cl',
+		githubUrl: 'https://github.com/JoainMonroy/lubricentro-la-esquina',
+		challenge: 'El negocio carecia de presencia digital, limitando su alcance a clientes locales de paso y dificultando la cotizacion rapida de mantenimientos de vehiculos habituales.',
+		solution: 'Disene y construi un sitio web estatico optimizado mediante Astro y Tailwind CSS. Centrado en la experiencia de usuario y SEO local, permitiendo a los conductores cotizar y agendar servicios en segundos.',
+		features: [
+			'Rendimiento impecable de carga rozando el 100% en auditorias LightHouse',
+			'Catalogo visual de servicios principales como filtros y cambios de aceite',
+			'Estructura web semantica optimizada para buscadores y conversion local',
+			'Formulario directo de contacto y consultas enlazado eficientemente'
+		]
 	},
 	{
 		id: 'api-gateway',
@@ -76,6 +119,18 @@ export const projects: Project[] = [
 		backgroundColor: '#1c1c1c', // Ink Charcoal
 		tags: ['Node.js', 'Docker', 'Redis'],
 		year: '2023',
+		role: 'DevOps y Backend Engineer',
+		client: 'Proyecto de Infraestructura de TI',
+		liveUrl: 'https://api.gateway.dev',
+		githubUrl: 'https://github.com/JoainMonroy/api-gateway-microservices',
+		challenge: 'Las arquitecturas distribuidas de microservicios requerian un punto de acceso unificado que validara tokens, controlara ataques por denegacion de servicio y redujera la latencia.',
+		solution: 'Implemente un API Gateway centralizado con Node.js y Express. Integra almacenamiento en cache ultra rapido mediante Redis para tokens habituales y rate limiting inteligente para evitar saturacion de los endpoints internos.',
+		features: [
+			'Punto de entrada unificado y enrutamiento dinamico de peticiones web',
+			'Sistema de Rate Limiting dinamico configurado para mitigar abusos',
+			'Almacenamiento en cache mediante Redis para control veloz de sesiones y tokens',
+			'Infraestructura completamente contenedorizada mediante Docker y Docker Compose'
+		]
 	},
 ];
 

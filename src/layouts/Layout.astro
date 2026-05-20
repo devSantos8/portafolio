@@ -96,6 +96,11 @@ const { title, showHeader = true } = Astro.props;
 		min-height: 100vh;
 	}
 	
+	html.dark body {
+		background: var(--black);
+		color: var(--white);
+	}
+	
 	/* Prevent header and cursor from animating with the page */
 	::view-transition-group(header),
 	::view-transition-old(header),
@@ -332,6 +337,23 @@ const { title, showHeader = true } = Astro.props;
 	.cursor.hover .cursor-ring span {
 		opacity: 1;
 	}
+
+	/* Estilos del Cursor para Modo Claro (Garantiza visibilidad en fondo blanco) */
+	html:not(.dark) .cursor-dot {
+		background: #000000;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+	}
+	html:not(.dark) .cursor-ring {
+		border-color: rgba(0, 0, 0, 0.3);
+		background: rgba(0, 0, 0, 0.03);
+	}
+	html:not(.dark) .cursor-ring span {
+		color: #000000;
+	}
+	html:not(.dark) .cursor.hover .cursor-ring {
+		background: rgba(0, 0, 0, 0.05);
+		border-color: rgba(0, 0, 0, 0.7);
+	}
 	
 	@media (max-width: 768px) {
 		.cursor {
@@ -396,9 +418,12 @@ const { title, showHeader = true } = Astro.props;
 				const href = link.getAttribute('href');
 				if (!href) return;
 				
+				// Bypass for same-page hash links
+				if (href.startsWith('#') || href.includes('#')) return;
+				
 				// Get pathname without trailing slash for robust comparison
 				const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
-				const linkPath = new URL(link.href).pathname.replace(/\/$/, '') || '/';
+				const linkPath = new URL(link.href, window.location.origin).pathname.replace(/\/$/, '') || '/';
 				
 				if (currentPath === linkPath) {
 					e.preventDefault();

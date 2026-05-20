@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
 import { getProjectById, getAllProjects } from '../../data/projects';
 
 export function getStaticPaths() {
@@ -16,184 +17,433 @@ const allProjects = getAllProjects();
 if (!project) {
 	return Astro.redirect('/404');
 }
+
+// Circular search for the next project
+const currentIndex = allProjects.findIndex(p => p.id === id);
+const nextProject = allProjects[(currentIndex + 1) % allProjects.length];
+
+// Contrast calculations based on the brand color
+const isDarkHero = project.backgroundColor === '#1c1c1c';
+const textColorClass = isDarkHero ? 'text-white' : 'text-gray-900';
+const textMutedClass = isDarkHero ? 'text-white/60' : 'text-gray-600';
+const borderClass = isDarkHero ? 'border-white/10' : 'border-gray-900/10';
+const badgeBgClass = isDarkHero ? 'bg-white/5 border-white/10 text-white hover:bg-white/10' : 'bg-gray-900/5 border-gray-900/10 text-gray-900 hover:bg-gray-900/10';
 ---
 
-<Layout title={`${project.title} - Joain Monroy`} showHeader={true}>
-	<main class="project-detail" style={`background-color: ${project.backgroundColor || 'var(--white)'}`}>
+<Layout title={`${project.title} - Caso de Estudio - Joain Monroy`} showHeader={true}>
+	<main class="relative bg-white text-gray-900 dark:bg-black dark:text-white min-h-screen overflow-hidden transition-colors duration-500">
 		
-		<div class="header-spacer"></div>
+		<!-- BRAND HERO BANNER -->
+		<section 
+			class="w-full relative pt-40 pb-32 md:pt-48 md:pb-40 transition-colors duration-500" 
+			style={`background-color: ${project.backgroundColor}`}
+		>
+			<div class="max-w-7xl mx-auto px-6 sm:px-12 md:px-24">
+				
+				<!-- Go back button -->
+				<a 
+					href="/projects" 
+					class={`inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase mb-12 group transition-transform hover:-translate-x-1 duration-300 ${textColorClass}`}
+				>
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+						<line x1="19" y1="12" x2="5" y2="12"></line>
+						<polyline points="12 19 5 12 12 5"></polyline>
+					</svg>
+					Volver a Proyectos
+				</a>
 
-		<div class="project-container">
-			<!-- Sticky Info Sidebar -->
-			<div class="project-info">
-				<div class="info-inner">
-					<header class="project-header">
-						<h1>{project.title}</h1>
-						<p class="subtitle">{project.subtitle}</p>
-					</header>
+				<!-- Large Title Display -->
+				<div class="mb-16">
+					<h1 class={`text-6xl sm:text-8xl md:text-[100px] lg:text-[120px] font-bold tracking-tighter leading-[0.85] uppercase mb-4 project-title ${textColorClass}`}>
+						{project.title}
+					</h1>
+					<p class={`text-xl sm:text-2xl font-light italic font-serif ${isDarkHero ? 'text-emerald-400' : 'text-emerald-600'}`}>
+						{project.subtitle}
+					</p>
+				</div>
+
+				<!-- Meta Specifications Grid -->
+				<div class={`grid grid-cols-2 md:grid-cols-4 gap-8 pt-12 border-t ${borderClass} w-full`}>
+					<div>
+						<span class={`block font-mono text-[10px] tracking-widest uppercase mb-3 ${textMutedClass}`}>
+							ROL
+						</span>
+						<span class={`text-sm sm:text-base font-medium ${textColorClass}`}>
+							{project.role || 'Desarrollador'}
+						</span>
+					</div>
+					<div>
+						<span class={`block font-mono text-[10px] tracking-widest uppercase mb-3 ${textMutedClass}`}>
+							CLIENTE
+						</span>
+						<span class={`text-sm sm:text-base font-medium ${textColorClass}`}>
+							{project.client || 'Independiente'}
+						</span>
+					</div>
+					<div>
+						<span class={`block font-mono text-[10px] tracking-widest uppercase mb-3 ${textMutedClass}`}>
+							AÑO
+						</span>
+						<span class={`text-sm sm:text-base font-medium ${textColorClass}`}>
+							{project.year}
+						</span>
+					</div>
+					<div>
+						<span class={`block font-mono text-[10px] tracking-widest uppercase mb-3 ${textMutedClass}`}>
+							TECNOLOGÍAS
+						</span>
+						<div class="flex flex-wrap gap-1.5">
+							{project.tags.map((tag) => (
+								<span class={`px-2.5 py-0.5 border rounded-full text-[10px] font-mono transition-colors duration-300 ${badgeBgClass}`}>
+									{tag}
+								</span>
+							))}
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</section>
+
+		<!-- HERO COVER SHOWCASE MOCKUP (Distributed Mockup 1 - Sand/White/Charcoal Canvas) -->
+		<div class="max-w-7xl mx-auto px-6 sm:px-12 md:px-24 -mt-20 md:-mt-28 relative z-20 mb-20 md:mb-28">
+			<div 
+				class="w-full aspect-[16/9] sm:aspect-[21/9] rounded-[2.5rem] border border-gray-200/50 dark:border-white/5 flex flex-col overflow-hidden relative group hover:border-emerald-500/20 transition-all duration-500 shadow-2xl" 
+				style={`background-color: ${project.backgroundColor}`}
+			>
+				<!-- Browser top bar -->
+				<div class={`w-full h-11 border-b ${isDarkHero ? 'border-white/10' : 'border-gray-900/10'} px-5 flex items-center gap-2 bg-white/15 dark:bg-black/20 backdrop-blur-md relative z-20`}>
+					<span class={`w-3 h-3 rounded-full ${isDarkHero ? 'bg-white/20' : 'bg-gray-950/20'}`}></span>
+					<span class={`w-3 h-3 rounded-full ${isDarkHero ? 'bg-white/20' : 'bg-gray-950/20'}`}></span>
+					<span class={`w-3 h-3 rounded-full ${isDarkHero ? 'bg-white/20' : 'bg-gray-950/20'}`}></span>
+					<div class={`mx-auto text-[10px] font-mono tracking-widest uppercase ${isDarkHero ? 'text-white/40' : 'text-gray-500'}`}>
+						{project.title.toLowerCase()}.dev
+					</div>
+				</div>
+				<!-- Visual content area -->
+				<div class="flex-1 w-full relative flex flex-col justify-center items-center p-8 overflow-hidden">
+					<!-- Ambient tech grid overlay -->
+					<div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.03)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none z-10"></div>
 					
-					<div class="description">
-						<p>{project.description}</p>
-						{project.fullDescription && <p class="mt-4">{project.fullDescription}</p>}
+					<!-- Giant Outlined watermark -->
+					<div class={`absolute text-[12vw] sm:text-[8vw] font-black tracking-tighter uppercase select-none font-sans z-0 pointer-events-none ${isDarkHero ? 'text-white/[0.02]' : 'text-gray-900/[0.04]'}`}>
+						{project.title}
 					</div>
 					
-					<div class="tags">
-						{project.tags.map((tag, idx) => (
-							<>
-								{idx > 0 && <span class="tag-separator">/</span>}
-								<span class="tag">{tag}</span>
-							</>
-						))}
+					<!-- Centered minimal specifications block -->
+					<div class="relative z-10 text-center flex flex-col items-center max-w-sm">
+						<div class={`w-14 h-14 rounded-2xl ${isDarkHero ? 'bg-emerald-400/10 border-emerald-400/20' : 'bg-emerald-500/10 border-emerald-500/20'} border flex items-center justify-center mb-4 transition-transform duration-500 group-hover:scale-110`}>
+							<span class={`font-mono text-sm font-bold ${isDarkHero ? 'text-emerald-400' : 'text-emerald-600'}`}>
+								{project.title.slice(0,2).toUpperCase()}
+							</span>
+						</div>
+						<span class={`text-sm font-mono tracking-widest uppercase mb-1 font-bold ${isDarkHero ? 'text-white' : 'text-gray-900'}`}>
+							{project.title}
+						</span>
+						<span class={`text-xs font-mono tracking-wider ${isDarkHero ? 'text-white/40' : 'text-gray-500'}`}>
+							{project.subtitle}
+						</span>
 					</div>
 				</div>
 			</div>
-			
-			<!-- Scrolling Gallery -->
-			<div class="project-gallery">
-				{project.images.map((img, idx) => (
-					<div class="gallery-item">
-						<img src={img} alt={`${project.title} - ${idx + 1}`} loading="lazy" />
-					</div>
-				))}
-			</div>
 		</div>
-		
+
+		<!-- CONTENT CANVAS (Light / Dark Mode Adaptive) -->
+		<section class="w-full relative py-12 md:py-20 bg-white text-gray-900 dark:bg-black dark:text-white">
+			
+			<div class="max-w-7xl mx-auto px-6 sm:px-12 md:px-24">
+				
+				<!-- BENTO CHALLENGE & SOLUTION (Distributed Mockup 2 Embedded) -->
+				<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-10 mb-24 md:mb-32 items-stretch">
+					
+					<!-- Challenge Block -->
+					<div class="bg-gray-50 dark:bg-zinc-900/40 border border-gray-100 dark:border-white/5 rounded-[2rem] p-8 md:p-10 flex flex-col justify-between transition-all duration-300 hover:border-emerald-500/10">
+						<div>
+							<span class="font-mono text-xs uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-6 block">
+								EL DESAFÍO
+							</span>
+							<h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-5">
+								¿Qué problema resolvimos?
+							</h2>
+							<p class="text-gray-600 dark:text-gray-400 font-light leading-relaxed text-sm sm:text-base">
+								{project.challenge || project.description}
+							</p>
+						</div>
+						<div class="mt-8 flex items-center gap-2 text-red-500 dark:text-red-400 font-mono text-[10px] uppercase tracking-wider">
+							<span class="w-2 h-2 rounded-full bg-red-500 dark:bg-red-400 animate-pulse"></span>
+							Complejidad Operativa
+						</div>
+					</div>
+
+					<!-- Visual Showcase Mockup (Distributed Mockup 2) -->
+					<div 
+						class="border border-gray-200/50 dark:border-white/5 rounded-[2rem] overflow-hidden min-h-[320px] flex flex-col justify-between relative group hover:border-emerald-500/20 transition-all duration-300 shadow-md"
+						style={`background-color: ${project.backgroundColor}`}
+					>
+						<!-- Browser top bar -->
+						<div class={`w-full h-9 border-b ${isDarkHero ? 'border-white/10' : 'border-gray-900/10'} px-4 flex items-center gap-1.5 bg-white/15 dark:bg-black/20 backdrop-blur-md relative z-20`}>
+							<span class={`w-2 h-2 rounded-full ${isDarkHero ? 'bg-white/20' : 'bg-gray-950/20'}`}></span>
+							<span class={`w-2 h-2 rounded-full ${isDarkHero ? 'bg-white/20' : 'bg-gray-950/20'}`}></span>
+							<span class={`w-2 h-2 rounded-full ${isDarkHero ? 'bg-white/20' : 'bg-gray-950/20'}`}></span>
+						</div>
+						<!-- Content -->
+						<div class="flex-1 w-full relative flex flex-col justify-center items-center p-6 overflow-hidden">
+							<div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.02)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
+							
+							<div class={`absolute text-[8vw] sm:text-[6vw] font-black tracking-tighter uppercase select-none font-sans z-0 pointer-events-none ${isDarkHero ? 'text-white/[0.015]' : 'text-gray-900/[0.03]'}`}>
+								MOCKUP
+							</div>
+
+							<div class="relative z-10 text-center">
+								<span class={`text-[10px] font-mono tracking-widest uppercase mb-1 block font-bold ${isDarkHero ? 'text-white/60' : 'text-gray-800'}`}>
+									CONEXIÓN
+								</span>
+								<span class={`text-[9px] font-mono tracking-wider block ${isDarkHero ? 'text-white/40' : 'text-gray-500'}`}>
+									ESTADO: ACTIVO
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Solution Block -->
+					<div class="bg-gray-50 dark:bg-zinc-900/40 border border-gray-100 dark:border-white/5 rounded-[2rem] p-8 md:p-10 flex flex-col justify-between transition-all duration-300 hover:border-emerald-500/10">
+						<div>
+							<span class="font-mono text-xs uppercase tracking-widest text-emerald-500 dark:text-emerald-400 mb-6 block">
+								LA SOLUCIÓN
+							</span>
+							<h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-5">
+								Arquitectura & Diseño
+							</h2>
+							<p class="text-gray-600 dark:text-gray-400 font-light leading-relaxed text-sm sm:text-base">
+								{project.solution || project.fullDescription || 'Implementación de un sistema a medida, enfocado en rendimiento y estabilidad técnica.'}
+							</p>
+						</div>
+						<div class="mt-8 flex items-center gap-2 text-emerald-500 dark:text-emerald-400 font-mono text-[10px] uppercase tracking-wider">
+							<span class="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400"></span>
+							Estabilidad y Escalabilidad
+						</div>
+					</div>
+
+				</div>
+
+				<!-- ACTIONS BAR -->
+				<div class="flex flex-wrap gap-4 justify-center md:justify-start mb-24 md:mb-32">
+					{project.liveUrl && (
+						<a 
+							href={project.liveUrl} 
+							target="_blank" 
+							rel="noopener noreferrer"
+							class="px-8 py-3.5 bg-gray-900 dark:bg-white text-white dark:text-black rounded-full font-mono text-xs font-semibold uppercase tracking-widest hover:scale-105 transition-transform duration-300 flex items-center gap-2.5 shadow-lg shadow-black/5 dark:shadow-white/5 cursor-pointer"
+						>
+							Visitar Sitio Web
+							<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+								<polyline points="15 3 21 3 21 9"></polyline>
+								<line x1="10" y1="14" x2="21" y2="3"></line>
+							</svg>
+						</a>
+					)}
+					{project.githubUrl && (
+						<a 
+							href={project.githubUrl} 
+							target="_blank" 
+							rel="noopener noreferrer"
+							class="px-8 py-3.5 border border-gray-300 dark:border-white/10 hover:border-emerald-500/20 text-gray-700 dark:text-gray-300 rounded-full font-mono text-xs font-semibold uppercase tracking-widest hover:scale-105 transition-transform duration-300 flex items-center gap-2.5 cursor-pointer"
+						>
+							Código Fuente
+							<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+							</svg>
+						</a>
+					)}
+				</div>
+
+				<!-- KEY FEATURES (With Distributed Mockup 3 alongside) -->
+				{project.features && project.features.length > 0 && (
+					<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-24 md:mb-32 relative">
+						
+						<!-- Left features deck -->
+						<div class="lg:col-span-7 flex flex-col justify-center">
+							<header class="mb-12">
+								<span class="font-mono text-xs uppercase tracking-widest text-emerald-500 dark:text-emerald-400 block mb-3">
+									CONSTRUCCIÓN TÉCNICA
+								</span>
+								<h3 class="text-4xl md:text-5xl font-bold tracking-tight">
+									Características <span class="font-light italic font-serif lowercase text-emerald-500 dark:text-emerald-400">clave</span> del sistema.
+								</h3>
+							</header>
+
+							<div class="flex flex-col gap-5 w-full">
+								{project.features.map((feature, idx) => (
+									<div class="group bg-gray-50/50 dark:bg-[#0c0c0e]/30 border border-gray-100 dark:border-white/5 rounded-2xl p-6 flex gap-6 items-start transition-all duration-300 hover:border-emerald-500/20 hover:bg-white dark:hover:bg-zinc-950">
+										<span class="font-mono text-sm font-bold text-emerald-500 dark:text-emerald-400 bg-emerald-500/5 dark:bg-emerald-400/5 px-3 py-1 rounded-lg">
+											{String(idx + 1).padStart(2, '0')}
+										</span>
+										<p class="text-sm sm:text-base text-gray-700 dark:text-gray-300 font-light leading-relaxed">
+											{feature}
+										</p>
+									</div>
+								))}
+							</div>
+						</div>
+
+						<!-- Sticky Right Image Showcase (Distributed Mockup 3) -->
+						<div class="lg:col-span-5 lg:sticky lg:top-32 w-full">
+							<div 
+								class="w-full aspect-[4/3] sm:aspect-square rounded-[2.5rem] border border-gray-200/50 dark:border-white/5 flex flex-col overflow-hidden relative group hover:border-emerald-500/20 transition-all duration-500 shadow-xl"
+								style={`background-color: ${project.backgroundColor}`}
+							>
+								<!-- Browser top bar -->
+								<div class={`w-full h-11 border-b ${isDarkHero ? 'border-white/10' : 'border-gray-900/10'} px-5 flex items-center gap-2 bg-white/15 dark:bg-black/20 backdrop-blur-md relative z-20`}>
+									<span class={`w-3 h-3 rounded-full ${isDarkHero ? 'bg-white/20' : 'bg-gray-950/20'}`}></span>
+									<span class={`w-3 h-3 rounded-full ${isDarkHero ? 'bg-white/20' : 'bg-gray-950/20'}`}></span>
+									<span class={`w-3 h-3 rounded-full ${isDarkHero ? 'bg-white/20' : 'bg-gray-950/20'}`}></span>
+								</div>
+								<!-- Visual content area -->
+								<div class="flex-1 w-full relative flex flex-col justify-center items-center p-8 overflow-hidden">
+									<div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.03)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none"></div>
+									
+									<div class={`absolute text-[8vw] sm:text-[6vw] font-black tracking-tighter uppercase select-none font-sans z-0 pointer-events-none ${isDarkHero ? 'text-white/[0.02]' : 'text-gray-900/[0.04]'}`}>
+										SISTEMA
+									</div>
+
+									<div class="relative z-10 text-center flex flex-col items-center">
+										<div class={`w-12 h-12 rounded-xl ${isDarkHero ? 'bg-white/5 border-white/10' : 'bg-gray-900/5 border-gray-900/10'} border flex items-center justify-center mb-3`}>
+											<span class={`font-mono text-xs ${isDarkHero ? 'text-emerald-400' : 'text-emerald-600'}`}>03</span>
+										</div>
+										<span class={`text-[10px] font-mono tracking-widest uppercase mb-1 block font-bold ${isDarkHero ? 'text-white' : 'text-gray-900'}`}>
+											ARQUITECTURA
+										</span>
+										<span class={`text-[9px] font-mono tracking-wider block ${isDarkHero ? 'text-white/40' : 'text-gray-500'}`}>
+											VERIFICADO
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				)}
+
+				<!-- ASYMMETRICAL STAGGERED COLLAGE (Remaining mockups distributed as art layout) -->
+				<div class="mb-24 md:mb-36">
+					<header class="mb-16">
+						<span class="font-mono text-xs uppercase tracking-widest text-gray-400 dark:text-gray-500 block mb-3">
+							REGISTRO DETALLADO
+						</span>
+						<h3 class="text-4xl md:text-5xl font-bold tracking-tight">
+							Perspectivas <span class="font-light italic font-serif lowercase text-emerald-500 dark:text-emerald-400">adicionales</span> del diseño.
+						</h3>
+					</header>
+
+					<div class="relative w-full flex flex-col gap-16 lg:gap-24">
+						{/* Staggered Row 1: Left Aligned Mockup */}
+						<div 
+							class="w-full lg:max-w-4xl mr-auto aspect-[16/9] rounded-[2.5rem] border border-gray-200/50 dark:border-white/5 flex flex-col overflow-hidden relative group hover:border-emerald-500/20 transition-all duration-500 shadow-xl"
+							style={`background-color: ${project.backgroundColor}`}
+						>
+							<!-- Browser top bar -->
+							<div class={`w-full h-11 border-b ${isDarkHero ? 'border-white/10' : 'border-gray-900/10'} px-5 flex items-center gap-2 bg-white/15 dark:bg-black/20 backdrop-blur-md relative z-20`}>
+								<span class={`w-3 h-3 rounded-full ${isDarkHero ? 'bg-white/20' : 'bg-gray-950/20'}`}></span>
+								<span class={`w-3 h-3 rounded-full ${isDarkHero ? 'bg-white/20' : 'bg-gray-950/20'}`}></span>
+								<span class={`w-3 h-3 rounded-full ${isDarkHero ? 'bg-white/20' : 'bg-gray-950/20'}`}></span>
+								<div class={`mx-auto text-[10px] font-mono tracking-widest uppercase ${isDarkHero ? 'text-white/40' : 'text-gray-500'}`}>
+									{project.title.toLowerCase()}.dev/vista-a
+								</div>
+							</div>
+							<div class="flex-1 w-full relative flex flex-col justify-center items-center p-8 overflow-hidden">
+								<div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.03)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
+								<div class={`absolute text-[8vw] sm:text-[5vw] font-black tracking-tighter uppercase select-none font-sans z-0 pointer-events-none ${isDarkHero ? 'text-white/[0.02]' : 'text-gray-900/[0.04]'}`}>
+									ESTADÍSTICAS
+								</div>
+								<div class="relative z-10 text-center">
+									<span class={`text-[10px] font-mono tracking-widest uppercase mb-1 block font-bold ${isDarkHero ? 'text-white/60' : 'text-gray-800'}`}>
+										MÓDULO DE CONTROL
+									</span>
+									<span class={`text-[9px] font-mono tracking-wider block ${isDarkHero ? 'text-white/40' : 'text-gray-500'}`}>
+										RENDIMIENTO: 100%
+									</span>
+								</div>
+							</div>
+						</div>
+
+						{/* Staggered Row 2: Right Aligned Mockup with offset */}
+						<div 
+							class="w-full lg:max-w-3xl ml-auto lg:-mt-32 aspect-[16/9] rounded-[2.5rem] border border-gray-200/50 dark:border-white/5 flex flex-col overflow-hidden relative group hover:border-emerald-500/20 transition-all duration-500 shadow-xl"
+							style={`background-color: ${project.backgroundColor}`}
+						>
+							<!-- Browser top bar -->
+							<div class={`w-full h-11 border-b ${isDarkHero ? 'border-white/10' : 'border-gray-900/10'} px-5 flex items-center gap-2 bg-white/15 dark:bg-black/20 backdrop-blur-md relative z-20`}>
+								<span class={`w-3 h-3 rounded-full ${isDarkHero ? 'bg-white/20' : 'bg-gray-950/20'}`}></span>
+								<span class={`w-3 h-3 rounded-full ${isDarkHero ? 'bg-white/20' : 'bg-gray-950/20'}`}></span>
+								<span class={`w-3 h-3 rounded-full ${isDarkHero ? 'bg-white/20' : 'bg-gray-950/20'}`}></span>
+								<div class={`mx-auto text-[10px] font-mono tracking-widest uppercase ${isDarkHero ? 'text-white/40' : 'text-gray-500'}`}>
+									{project.title.toLowerCase()}.dev/vista-b
+								</div>
+							</div>
+							<div class="flex-1 w-full relative flex flex-col justify-center items-center p-8 overflow-hidden">
+								<div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.03)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
+								<div class={`absolute text-[8vw] sm:text-[5vw] font-black tracking-tighter uppercase select-none font-sans z-0 pointer-events-none ${isDarkHero ? 'text-white/[0.02]' : 'text-gray-900/[0.04]'}`}>
+									ESPECIFICACIÓN
+								</div>
+								<div class="relative z-10 text-center">
+									<span class={`text-[10px] font-mono tracking-widest uppercase mb-1 block font-bold ${isDarkHero ? 'text-white/60' : 'text-gray-800'}`}>
+										INFRAESTRUCTURA DE FLUJO
+									</span>
+									<span class={`text-[9px] font-mono tracking-wider block ${isDarkHero ? 'text-white/40' : 'text-gray-500'}`}>
+										SEGURIDAD: ENCRIPTADO
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<!-- NEXT PROJECT QUICK-NAVIGATOR -->
+			<a 
+				href={`/projects/${nextProject.id}`}
+				class="group block w-full relative py-28 md:py-36 overflow-hidden border-t border-gray-200 dark:border-white/10 transition-all duration-500 hover:scale-[0.99] cursor-pointer"
+				style={`background-color: ${nextProject.backgroundColor}`}
+			>
+				<div class="max-w-7xl mx-auto px-6 sm:px-12 md:px-24 relative z-10 flex flex-col items-center text-center">
+					<span class={`font-mono text-xs uppercase tracking-widest mb-6 ${nextProject.backgroundColor === '#1c1c1c' ? 'text-white/60' : 'text-gray-500'}`}>
+						SIGUIENTE CASO DE ESTUDIO
+					</span>
+					
+					<h4 class={`text-5xl sm:text-7xl md:text-8xl font-bold tracking-tighter uppercase mb-4 transition-transform duration-500 group-hover:scale-105 ${nextProject.backgroundColor === '#1c1c1c' ? 'text-white' : 'text-gray-900'}`}>
+						{nextProject.title}
+					</h4>
+					
+					<span class={`inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest ${nextProject.backgroundColor === '#1c1c1c' ? 'text-emerald-400' : 'text-emerald-600'} transition-transform group-hover:translate-x-2 duration-300`}>
+						Explorar proyecto
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+							<line x1="5" y1="12" x2="19" y2="12"></line>
+							<polyline points="12 5 19 12 12 19"></polyline>
+						</svg>
+					</span>
+				</div>
+			</a>
+
+			<!-- Footer Contact Module -->
+			<Footer />
+
+		</section>
+
 	</main>
 </Layout>
 
-<style>
-	.project-detail {
-		min-height: 100vh;
-		width: 100%;
-		/* The background color is set dynamically via inline style, ensuring it matches the project's theme */
-		color: var(--black);
-		padding: 0 50px 100px 50px;
-		transition: background-color 0.5s ease;
-	}
-	
-	.header-spacer {
-		height: 150px;
-	}
+<script>
+	import { gsap } from "gsap";
 
-	.project-container {
-		display: grid;
-		grid-template-columns: 400px 1fr;
-		gap: 100px;
-		max-width: 1600px;
-		margin: 0 auto;
-		align-items: start; /* crucial for sticky to work */
-	}
-	
-	/* Sticky Left Column */
-	.project-info {
-		position: sticky;
-		top: 150px; /* Offset for the header */
-		/* Ensure text color adapts correctly if the background is dark */
-		mix-blend-mode: difference;
-		color: var(--white);
-	}
-	
-	.project-header {
-		margin-bottom: 40px;
-	}
-	
-	.project-header h1 {
-		font-family: var(--font-sans);
-		font-size: clamp(32px, 4vw, 56px);
-		font-weight: 700;
-		line-height: 1.1;
-		letter-spacing: -0.04em;
-		text-transform: uppercase;
-		margin-bottom: 12px;
-	}
-	
-	.project-header .subtitle {
-		font-family: var(--font-sans);
-		font-size: 14px;
-		font-weight: 500;
-		letter-spacing: 0.05em;
-		text-transform: uppercase;
-		opacity: 0.7;
-	}
-	
-	.description {
-		font-family: var(--font-sans);
-		font-size: 16px;
-		line-height: 1.6;
-		margin-bottom: 50px;
-		font-weight: 400;
-		opacity: 0.8;
-	}
-	
-	.tags {
-		display: flex;
-		gap: 12px;
-		align-items: center;
-		flex-wrap: wrap;
-		margin-top: 20px;
-	}
-	
-	.tag {
-		font-family: var(--font-sans);
-		font-size: 12px;
-		letter-spacing: 0.15em;
-		text-transform: uppercase;
-		color: rgba(255, 255, 255, 0.6);
-		transition: color 0.3s ease;
-		display: inline-block;
-	}
-	
-	.tag:hover {
-		color: rgba(255, 255, 255, 1);
-	}
-
-	.tag-separator {
-		font-family: var(--font-sans);
-		font-size: 10px;
-		color: rgba(255, 255, 255, 0.25);
-		user-select: none;
-		font-weight: 300;
-	}
-	
-	/* Right Column Gallery */
-	.project-gallery {
-		display: flex;
-		flex-direction: column;
-		gap: 80px;
-	}
-	
-	.gallery-item img {
-		width: 100%;
-		height: auto;
-		display: block;
-		border-radius: 4px;
-		box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-	}
-	
-	@media (max-width: 1024px) {
-		.project-container {
-			grid-template-columns: 300px 1fr;
-			gap: 50px;
-		}
-	}
-	
-	@media (max-width: 768px) {
-		.project-detail {
-			padding: 0 24px 50px 24px;
-		}
-		
-		.header-spacer {
-			height: 100px;
-		}
-
-		.project-container {
-			grid-template-columns: 1fr;
-			gap: 60px;
-		}
-		
-		.project-info {
-			position: static;
-			margin-bottom: 20px;
-		}
-	}
-</style>
+	document.addEventListener('astro:page-load', () => {
+		// Animate Title and specs entry on page load
+		gsap.from(".project-title", {
+			y: 50,
+			opacity: 0,
+			duration: 1.2,
+			ease: "power4.out"
+		});
+	});
+</script>
