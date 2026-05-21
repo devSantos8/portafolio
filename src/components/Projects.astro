@@ -23,7 +23,7 @@ const projects = getFeaturedProjects();
             {projects.filter((_, i) => i % 2 === 0).map((project) => {
                 const isDark = project.backgroundColor === '#1c1c1c';
                 return (
-                    <a href={`/projects/${project.id}`} class="project-card group block w-full no-underline cursor-none relative">
+                    <a href={`/projects/${project.id}`} data-project-id={project.id} class="project-card group block w-full no-underline cursor-none relative">
                         {project.id === projects[0].id && (
                             <div class="absolute -top-4 -right-4 md:-top-6 md:-right-6 z-20 bg-green-500 text-black text-xs md:text-sm font-bold px-4 py-2 rounded-full uppercase tracking-widest shadow-xl transform rotate-[12deg] border-4 border-white dark:border-black transition-colors duration-500">
                                 Nuevo
@@ -95,7 +95,7 @@ const projects = getFeaturedProjects();
             {projects.filter((_, i) => i % 2 !== 0).map((project) => {
                 const isDark = project.backgroundColor === '#1c1c1c';
                 return (
-                    <a href={`/projects/${project.id}`} class="project-card group block w-full no-underline cursor-none relative">
+                    <a href={`/projects/${project.id}`} data-project-id={project.id} class="project-card group block w-full no-underline cursor-none relative">
                         <!-- Mockup container -->
                         <div
                             class="w-full aspect-[16/9] rounded-[2rem] overflow-hidden relative mb-6 project-image-container transition-transform duration-500 group-hover:scale-[1.015] shadow-sm"
