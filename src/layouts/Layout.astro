@@ -111,24 +111,24 @@ const { title, showHeader = true } = Astro.props;
 		animation: none !important;
 	}
 
-	/* Card Slide View Transition */
+	/* Card Slide View Transition — Rápido y fluido */
 	::view-transition-old(root) {
-		animation: fadeOld 0.8s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+		animation: fadeOld 0.35s cubic-bezier(0.25, 0, 0.35, 1) forwards;
 	}
 
 	::view-transition-new(root) {
-		animation: slideUp 0.8s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+		animation: slideUp 0.35s cubic-bezier(0.25, 0, 0.35, 1) forwards;
 		z-index: 9999;
 	}
 
 	@keyframes slideUp {
 		from {
-			transform: translateY(100vh);
-			box-shadow: 0 -30px 60px rgba(0,0,0,0.3);
+			transform: translateY(30px);
+			opacity: 0;
 		}
 		to {
 			transform: translateY(0);
-			box-shadow: 0 -30px 60px rgba(0,0,0,0.3);
+			opacity: 1;
 		}
 	}
 
@@ -137,7 +137,7 @@ const { title, showHeader = true } = Astro.props;
 			opacity: 1;
 		}
 		to {
-			opacity: 0.4;
+			opacity: 0;
 		}
 	}
 	
@@ -470,6 +470,19 @@ const { title, showHeader = true } = Astro.props;
 		document.querySelectorAll('a, button').forEach(el => {
 			el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
 			el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+		});
+
+		// Hide cursor when modal opens, show when it closes
+		window.addEventListener('modal-toggle', (e: any) => {
+			if (e.detail?.open) {
+				cursor.style.opacity = '0';
+				cursor.style.transition = 'opacity 0.15s';
+			} else {
+				// Sync position instantly so it doesn't "jump" on reappear
+				dx = mx; dy = my;
+				rx = mx; ry = my;
+				cursor.style.opacity = '1';
+			}
 		});
 	}
 	
