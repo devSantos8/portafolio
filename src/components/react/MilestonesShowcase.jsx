@@ -5,68 +5,68 @@ const MILESTONES = [
         id: 'inacap',
         title: 'Ingeniería en Informática',
         institution: 'INACAP',
-        period: '2022 - 2025',
+        period: '2021 - 2025',
         type: 'EDUCACIÓN FORMAL',
         status: 'Completado',
         credentialId: 'INC-2025-INF99',
-        focus: 'Arquitectura de software, procesos DevOps, desarrollo full-stack y gestión de bases de datos.',
+        focus: 'Arquitectura de software, redes, bases de datos relacionales, gestión de proyectos y optimización.',
         color: 'from-emerald-500/20 to-teal-500/20 border-emerald-500/30 text-emerald-400',
         brandGlow: 'rgba(16, 185, 129, 0.15)',
         details: [
-            'Ingeniería de software, análisis de sistemas y patrones de arquitectura moderna.',
-            'Certificados académicos: Desarrollador Full Stack, Arquitectura en la Nube y Sistemas Ágiles.',
-            'Administración, modelado y optimización de bases de datos relacionales y NoSQL.'
+            'Ingeniería de software, análisis y patrones de desarrollo avanzados.',
+            'Tesis técnica en arquitecturas escalables basadas en microservicios.',
+            'Administración y modelado de bases de datos relacionales robustas.'
         ]
     },
     {
-        id: 'google-ai',
-        title: 'Google AI Essentials',
-        institution: 'Google',
-        period: '2026',
-        type: 'CERTIFICACIÓN IA',
-        status: 'Completado',
-        credentialId: 'GOOG-AI-2026-07',
-        focus: 'Innovación, Pensamiento Crítico, Generative AI, Integraciones de IA y Prompt Engineering.',
-        color: 'from-blue-500/20 to-indigo-500/20 border-blue-500/30 text-blue-400',
-        brandGlow: 'rgba(59, 130, 246, 0.15)',
-        details: [
-            'Diseño de prompts avanzados y prototipado de soluciones con modelos de lenguaje (GenAI).',
-            'Integración de herramientas de Inteligencia Artificial para acelerar flujos de desarrollo.',
-            'Estrategias de innovación tecnológica y pensamiento crítico en proyectos TI.'
-        ]
-    },
-    {
-        id: 'devops-essential',
-        title: 'DevOps Essential',
-        institution: 'LinkedIn Learning',
-        period: '2026',
-        type: 'CERTIFICACIÓN DEVOPS',
-        status: 'Completado',
-        credentialId: 'LNK-DEVOPS-2026-04',
-        focus: 'Cultura DevOps, Integración Continua (CI/CD) y Automatización de Despliegues.',
-        color: 'from-teal-500/20 to-cyan-500/20 border-teal-500/30 text-teal-400',
-        brandGlow: 'rgba(20, 184, 166, 0.15)',
-        details: [
-            'Fundamentos de cultura DevOps, colaboración interfuncional y ciclos de entrega ágil.',
-            'Automatización de pipelines CI/CD y despliegue continuo de software.',
-            'Monitoreo, trazabilidad y reducción de fricción operativa en equipos de ingeniería.'
-        ]
-    },
-    {
-        id: 'git-fundamentals',
-        title: 'Git Fundamentals',
-        institution: 'DataCamp',
-        period: '2026',
-        type: 'CERTIFICACIÓN GIT',
-        status: 'Completado',
-        credentialId: 'DTC-GIT-2026-05',
-        focus: 'Control de Versiones Avanzado, GitHub y Flujos de Trabajo Colaborativos.',
-        color: 'from-orange-500/20 to-amber-500/20 border-orange-500/30 text-orange-400',
+        id: 'aws',
+        title: 'AWS Certified Cloud Practitioner',
+        institution: 'Amazon Web Services (AWS)',
+        period: '2024',
+        type: 'CERTIFICACIÓN CLOUD',
+        status: 'Activo',
+        credentialId: 'AWS-CCP-8812903',
+        focus: 'Infraestructura cloud, seguridad, computación serverless, bases de datos y red VPC.',
+        color: 'from-orange-500/20 to-yellow-500/20 border-orange-500/30 text-orange-400',
         brandGlow: 'rgba(249, 115, 22, 0.15)',
         details: [
-            'Control de versiones en equipo, estrategias de branching (GitFlow) y resolución de conflictos.',
-            'Gestión profesional de repositorios y colaboración en plataformas GitHub.',
-            'Automatización de flujos de trabajo y buenas prácticas en gestión de código fuente.'
+            'Dominio de servicios core (EC2, S3, RDS, Lambda, VPC, IAM).',
+            'Diseño de arquitecturas redundantes y de alta disponibilidad.',
+            'Seguridad compartida, encriptación y optimización de costos.'
+        ]
+    },
+    {
+        id: 'alura',
+        title: 'Desarrollador Full Stack',
+        institution: 'Alura Latam & Oracle Next Education',
+        period: '2024',
+        type: 'ESPECIALIZACIÓN WEB',
+        status: 'Completado',
+        credentialId: 'ONE-ALU-77610',
+        focus: 'Desarrollo web moderno, metodologías ágiles, Java backend y React frontend.',
+        color: 'from-blue-500/20 to-cyan-500/20 border-blue-500/30 text-blue-400',
+        brandGlow: 'rgba(59, 130, 246, 0.15)',
+        details: [
+            'Formación en programación orientada a objetos y patrones lógicos.',
+            'Construcción de aplicaciones SPA reactivas y servidores backend.',
+            'Control de versiones avanzado con Git y trabajo ágil.'
+        ]
+    },
+    {
+        id: 'efset',
+        title: 'EF SET English Certificate (C2)',
+        institution: 'EF Standard English Test',
+        period: '2023',
+        type: 'ACREDITACIÓN IDIOMA',
+        status: 'Vigente',
+        credentialId: 'EF-SET-C2-PRO',
+        focus: 'Competencia lingüística completa en idioma inglés bilingüe en contextos profesionales.',
+        color: 'from-purple-500/20 to-pink-500/20 border-purple-500/30 text-purple-400',
+        brandGlow: 'rgba(168, 85, 247, 0.15)',
+        details: [
+            'Nivel C2 Proficiente: Dominio nativo para entornos de ingeniería.',
+            'Comprensión total de documentación técnica y especificaciones.',
+            'Capacidad probada para equipos multiculturales en inglés.'
         ]
     }
 ];
