@@ -23,3 +23,9 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 .qodo
+
+# graphify generated files
+graphify-out/
+.graphify*
+GRAPH_REPORT.md
+

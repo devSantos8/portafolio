@@ -4,23 +4,24 @@ const EXPERIENCE_DATA = [
     {
         id: '01',
         type: 'ACTUAL',
-        role: 'Desarrollador Full-Stack',
-        context: 'Práctica Laboral',
-        company: 'INACAP / Entorno Tecnológico',
-        period: 'Marzo 2025 — Presente',
+        role: 'Practicante I+DevOps',
+        context: 'Banco Bci',
+        company: 'Banco de Crédito e Inversiones (Bci)',
+        period: 'Marzo 2026 — Presente',
         status: 'EN EJECUCIÓN',
         statusColor: 'emerald',
-        desc: 'Liderando análisis y optimización de plataformas web institucionales y sistemas internos de alta velocidad.',
+        desc: 'Investigación e integración de automatizaciones de calidad, portales IDP y herramientas asistidas por Inteligencia Artificial en la industria financiera.',
         bullets: [
-            'Migración de sistemas legados hacia Astro y React 19 logrando tiempos de carga instantáneos.',
-            'Desarrollo de micro-servicios y APIs estructuradas bajo flujos de datos consistentes en TypeScript.',
-            'Coordinación técnica en control de versiones robusto y metodologías ágiles Gitflow.'
+            'Investigación e implementación de automatizaciones para la validación de pruebas continuas a partir de colecciones Postman y cURL.',
+            'Integración de sistemas de gobernanza de pruebas para mejorar la visualización y trazabilidad en portales internos de desarrollo (IDP).',
+            'Desarrollo de un asistente inteligente basado en roles para apoyar la gestión y adopción interna de herramientas asistidas por IA (GitHub Copilot).',
+            'Participación en flujos de evaluación de tecnologías emergentes y redacción de documentación técnica.'
         ],
-        tags: ['React', 'Astro', 'TypeScript', 'Tailwind', 'Git'],
+        tags: ['I+DevOps', 'Postman', 'cURL', 'GenAI', 'GitHub Copilot', 'IDP'],
         stats: [
-            { label: 'ARQUITECTURA FRONTEND', value: 96 },
-            { label: 'RENDIMIENTO DE CARGA', value: 98 },
-            { label: 'INTEGRACIÓN DE APIS', value: 92 }
+            { label: 'AUTOMATIZACIÓN DE PRUEBAS', value: 95 },
+            { label: 'REDUCCIÓN FRICCIÓN COGNITIVA', value: 92 },
+            { label: 'ADOPCIÓN HERRAMIENTAS IA', value: 90 }
         ],
         accentColor: '#10b981',
         glowColor: 'rgba(16, 185, 129, 0.2)',
@@ -33,23 +34,23 @@ const EXPERIENCE_DATA = [
     {
         id: '02',
         type: 'FREELANCE',
-        role: 'Desarrollador Full-Stack Freelance',
+        role: 'Desarrollador Web Freelance',
         context: 'Lubricentro La Esquina',
-        company: 'Cliente Independiente — Punta Arenas',
-        period: '2024 — 2025',
+        company: 'Cliente Independiente — Santiago, Chile',
+        period: 'Ene 2025 — Feb 2025',
         status: 'COMPLETADO',
         statusColor: 'blue',
-        desc: 'Diseño e implementación completa de una plataforma web a medida para gestión operativa de un lubricentro local.',
+        desc: 'Diseño e implementación integral de la plataforma web comercial del negocio para optimizar la visibilidad digital y gestión de servicios.',
         bullets: [
-            'Desarrollo de sistema de agendamiento de servicios con panel de administración en Django.',
-            'Diseño de interfaces accesibles y responsivas con lineamientos de identidad visual del negocio.',
-            'Integración de base de datos PostgreSQL y autenticación segura con JWT.'
+            'Desarrollo frontend en React, Tailwind CSS y JavaScript con arquitectura responsiva y optimización SEO.',
+            'Diseño de interfaz de usuario enfocado en catálogo de productos, trayectoria del equipo y atención al cliente.',
+            'Integración backend en Django con base de datos PostgreSQL para gestión de servicios.'
         ],
-        tags: ['Django', 'PostgreSQL', 'Figma', 'JWT Auth', 'Tailwind'],
+        tags: ['React', 'Django', 'PostgreSQL', 'Tailwind', 'SEO'],
         stats: [
-            { label: 'INGENIERÍA BACKEND', value: 94 },
-            { label: 'DISEÑO DE INTERFACES', value: 90 },
-            { label: 'OPTIMIZACIÓN BASE DATOS', value: 92 }
+            { label: 'INGENIERÍA FRONTEND', value: 94 },
+            { label: 'EXPERIENCIA DE USUARIO (UX)', value: 92 },
+            { label: 'OPTIMIZACIÓN Y RENDIMIENTO', value: 95 }
         ],
         accentColor: '#3b82f6',
         glowColor: 'rgba(59, 130, 246, 0.2)',
