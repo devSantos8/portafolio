@@ -49,9 +49,9 @@ export default function BentoGrid() {
                 <circle cx="12" cy="12" r="1.5" fill="currentColor" />
             </svg>
         )},
-        { name: 'Astro', color: 'hover:border-orange-500/50 hover:shadow-[0_0_20px_rgba(249,115,22,0.12)] text-orange-500', icon: (
+        { name: 'Next.js', color: 'hover:border-white/50 hover:shadow-[0_0_20px_rgba(255,255,255,0.12)] text-gray-900 dark:text-white', icon: (
             <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8.5 19.5h7l-1.5-3.5h-4l-1.5 3.5zm3.5-16.5L3.5 19.5h3l1.8-4.2h7.4l1.8 4.2h3L12 3zm0 4.2l2.6 6.3H9.4l2.6-6.3z"/>
+                <path d="M18.665 21.978C16.758 23.284 14.47 24 12 24 5.373 24 0 18.627 0 12S5.373 0 12 0c6.627 0 12 5.373 12 12 0 3.584-1.572 6.8-4.062 9.004l-7.795-10.428v-.001h-2.115v7.85h1.792V13.88l6.843 9.098zm-3.033-14.428h-1.792v6.611l1.792 2.39V7.55z" />
             </svg>
         )},
         { name: 'Tailwind', color: 'hover:border-sky-400/50 hover:shadow-[0_0_20px_rgba(56,189,248,0.12)] text-sky-400', icon: (
