@@ -43,13 +43,14 @@ const badgeBgClass = isDarkHero ? 'bg-white/5 border-white/10 text-white hover:b
 				<!-- Go back button -->
 				<a 
 					href="/projects" 
+					id="back-button"
 					class={`inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase mb-12 group transition-transform hover:-translate-x-1 duration-300 ${textColorClass}`}
 				>
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
 						<line x1="19" y1="12" x2="5" y2="12"></line>
 						<polyline points="12 19 5 12 12 5"></polyline>
 					</svg>
-					Volver a Proyectos
+					Volver
 				</a>
 
 				<!-- Large Title Display -->
@@ -438,6 +439,19 @@ const badgeBgClass = isDarkHero ? 'bg-white/5 border-white/10 text-white hover:b
 	import { gsap } from "gsap";
 
 	document.addEventListener('astro:page-load', () => {
+		window.scrollTo(0, 0);
+
+		// Dynamic Back Button handler
+		const backBtn = document.getElementById('back-button');
+		if (backBtn) {
+			backBtn.addEventListener('click', (e) => {
+				if (document.referrer && document.referrer.includes(window.location.host)) {
+					e.preventDefault();
+					history.back();
+				}
+			});
+		}
+
 		// Animate Title and specs entry on page load
 		gsap.from(".project-title", {
 			y: 50,
