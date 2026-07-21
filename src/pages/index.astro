@@ -5,7 +5,6 @@ import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
 import Projects from '../components/Projects.astro';
 import BentoGrid from '../components/react/BentoGrid.jsx';
-import ProjectModal from '../components/react/ProjectModal.jsx';
 import Footer from '../components/Footer.astro';
 ---
 
@@ -23,7 +22,6 @@ import Footer from '../components/Footer.astro';
 			<About />
 			<Projects />
 			<BentoGrid client:visible />
-			<ProjectModal client:idle />
 			<Footer />
 
 		</div>
@@ -40,20 +38,6 @@ import Footer from '../components/Footer.astro';
 	}
 	.project-card {
 		will-change: transform;
-	}
-	/* Custom scrollbar for project details modal */
-	.custom-scrollbar::-webkit-scrollbar {
-		width: 8px;
-	}
-	.custom-scrollbar::-webkit-scrollbar-track {
-		background: transparent;
-	}
-	.custom-scrollbar::-webkit-scrollbar-thumb {
-		background: rgba(120, 120, 120, 0.15);
-		border-radius: 99px;
-	}
-	.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-		background: rgba(120, 120, 120, 0.3);
 	}
 </style>
 
@@ -81,16 +65,6 @@ import Footer from '../components/Footer.astro';
         lenis.raf(time * 1000);
     });
     gsap.ticker.lagSmoothing(0);
-
-    // Pause/resume Lenis when ProjectModal opens/closes
-    const handleModalToggle = (e) => {
-        if (e.detail?.open) {
-            lenis.stop();
-        } else {
-            lenis.start();
-        }
-    };
-    window.addEventListener('modal-toggle', handleModalToggle);
 
     // 2. Hero Animations
     const heroTl = gsap.timeline();
@@ -152,15 +126,6 @@ import Footer from '../components/Footer.astro';
                 onEnterBack: () => updateColorBends(imgContainer),
             });
         }
-
-        // Intercept click to open ProjectModal
-        card.addEventListener('click', (e) => {
-            e.preventDefault();
-            const projectId = card.getAttribute('data-project-id');
-            if (projectId) {
-                window.dispatchEvent(new CustomEvent('open-project-modal', { detail: { projectId } }));
-            }
-        });
     });
 
     function updateColorBends(element: HTMLElement) {
@@ -173,7 +138,6 @@ import Footer from '../components/Footer.astro';
     // Limpieza de recursos al desmontar si es necesario (Astro Transitions)
     document.addEventListener('astro:before-swap', () => {
         ScrollTrigger.getAll().forEach(t => t.kill());
-        window.removeEventListener('modal-toggle', handleModalToggle);
         lenis.destroy();
         aboutText.revert();
     });
