@@ -11,23 +11,29 @@ const projects = getAllProjects();
 
 		<div class="max-w-7xl mx-auto px-6 sm:px-10 md:px-20 pt-40 md:pt-48 pb-0">
 
-			<!-- HEADER -->
-			<div class="mb-12 projects-title">
-				<span class="text-sm font-bold tracking-widest uppercase bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent block mb-5">
-					Mi Trabajo
-				</span>
-				<h1 class="text-5xl md:text-7xl font-bold tracking-tighter text-gray-900 dark:text-white leading-[1] max-w-2xl">
-					Proyectos Seleccionados
-				</h1>
-			</div>
+			<!-- HEADER SECTION -->
+			<div class="mb-16 md:mb-20 projects-title flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-gray-200/60 dark:border-white/10 pb-12">
+				<div class="flex flex-col items-start max-w-2xl">
+					<span class="text-xs font-mono font-bold tracking-widest uppercase text-emerald-500 dark:text-emerald-400 block mb-4 flex items-center gap-2">
+						<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+						Portafolio de Ingeniería (2024 - 2026)
+					</span>
+					<h1 class="text-5xl md:text-7xl font-bold tracking-tighter text-gray-900 dark:text-white leading-[0.95]">
+						Casos de Estudio & Proyectos.
+					</h1>
+					<p class="text-gray-500 dark:text-gray-400 text-lg font-light mt-6 leading-relaxed">
+						Una selección de desarrollos web, plataformas SaaS e infraestructura DevOps diseñadas con enfoque en escalabilidad, arquitectura limpia y alto rendimiento.
+					</p>
+				</div>
 
-			<!-- FILTER ROW -->
-			<div class="flex items-center justify-end mb-12">
-				<div class="flex items-center gap-2">
-					<button data-filter="all"      class="filter-btn active px-5 py-2 rounded-full text-sm font-medium transition-all duration-300">Todos</button>
-					<button data-filter="frontend" class="filter-btn        px-5 py-2 rounded-full text-sm font-medium transition-all duration-300">Frontend</button>
-					<button data-filter="backend"  class="filter-btn        px-5 py-2 rounded-full text-sm font-medium transition-all duration-300">Backend</button>
-					<button data-filter="devops"   class="filter-btn        px-5 py-2 rounded-full text-sm font-medium transition-all duration-300">DevOps</button>
+				<!-- Info Badges on the Right -->
+				<div class="flex flex-wrap md:flex-col items-start md:items-end gap-3 shrink-0 font-mono text-xs">
+					<div class="px-4 py-2 rounded-full border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-700 dark:text-gray-300 flex items-center gap-2">
+						<span class="font-bold text-emerald-500">04</span> Proyectos Seleccionados
+					</div>
+					<div class="px-4 py-2 rounded-full border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-500 dark:text-gray-400">
+						Full-Stack • DevOps • GenAI
+					</div>
 				</div>
 			</div>
 
@@ -124,79 +130,5 @@ const projects = getAllProjects();
 			y: 40, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power3.out", delay: 0.15,
 			clearProps: "transform,opacity"
 		});
-
-		// Filter logic
-		const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
-		const cards   = Array.from(document.querySelectorAll<HTMLElement>('.project-card-wrapper'));
-
-		buttons.forEach(btn => {
-			btn.addEventListener('click', () => {
-				buttons.forEach(b => b.classList.remove('active'));
-				btn.classList.add('active');
-
-				const filterValue = btn.getAttribute('data-filter');
-
-				let visibleCount = 0;
-
-				cards.forEach(card => {
-					const cats = (card.getAttribute('data-categories') ?? '').split(' ');
-					const show = filterValue === 'all' || cats.includes(filterValue!);
-
-					if (show) {
-						// Dynamically adjust staggered margin-top offset for 2-column layout
-						if (visibleCount % 2 !== 0) {
-							card.classList.add('md:mt-24');
-						} else {
-							card.classList.remove('md:mt-24');
-						}
-						visibleCount++;
-
-						card.style.display = 'block';
-						gsap.to(card, { 
-							opacity: 1, 
-							scale: 1, 
-							y: 0, 
-							duration: 0.4, 
-							ease: "power3.out", 
-							pointerEvents: 'auto' 
-						});
-					} else {
-						gsap.to(card, {
-							opacity: 0, 
-							scale: 0.95, 
-							y: 10, 
-							duration: 0.25, 
-							ease: "power3.inOut",
-							onComplete: () => { 
-								card.style.display = 'none'; 
-								card.style.pointerEvents = 'none'; 
-							}
-						});
-					}
-				});
-			});
-		});
 	});
 </script>
-
-<style>
-	.filter-btn {
-		color: #6b7280;
-		border: 1px solid transparent;
-		background: transparent;
-		cursor: pointer;
-	}
-	html.dark .filter-btn { color: rgba(255,255,255,0.45); }
-	.filter-btn:hover { color: #111827; }
-	html.dark .filter-btn:hover { color: #ffffff; }
-
-	.filter-btn.active {
-		background-color: #111827;
-		color: #ffffff;
-	}
-	html.dark .filter-btn.active {
-		background-color: rgba(255,255,255,0.12);
-		color: #ffffff;
-		border-color: rgba(255,255,255,0.08);
-	}
-</style>
