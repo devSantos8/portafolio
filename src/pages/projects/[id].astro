@@ -452,17 +452,6 @@ const badgeBgClass = isDarkHero ? 'bg-white/5 border-white/10 text-white hover:b
 	document.addEventListener('astro:page-load', () => {
 		scrollToTop();
 
-		// Dynamic Back Button handler
-		const backBtn = document.getElementById('back-button');
-		if (backBtn) {
-			backBtn.addEventListener('click', (e) => {
-				if (document.referrer && document.referrer.includes(window.location.host)) {
-					e.preventDefault();
-					history.back();
-				}
-			});
-		}
-
 		// Animate Title and specs entry on page load
 		gsap.from(".project-title", {
 			y: 50,
