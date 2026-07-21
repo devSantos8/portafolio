@@ -18,11 +18,6 @@ const EXPERIENCE_DATA = [
             'Participación en flujos de evaluación de tecnologías emergentes y redacción de documentación técnica.'
         ],
         tags: ['I+DevOps', 'Postman', 'cURL', 'GenAI', 'GitHub Copilot', 'IDP'],
-        stats: [
-            { label: 'AUTOMATIZACIÓN DE PRUEBAS', value: 95 },
-            { label: 'REDUCCIÓN FRICCIÓN COGNITIVA', value: 92 },
-            { label: 'ADOPCIÓN HERRAMIENTAS IA', value: 90 }
-        ],
         accentColor: '#10b981',
         glowColor: 'rgba(16, 185, 129, 0.2)',
         icon: (
@@ -47,11 +42,6 @@ const EXPERIENCE_DATA = [
             'Integración backend en Django con base de datos PostgreSQL para gestión de servicios.'
         ],
         tags: ['React', 'Django', 'PostgreSQL', 'Tailwind', 'SEO'],
-        stats: [
-            { label: 'INGENIERÍA FRONTEND', value: 94 },
-            { label: 'EXPERIENCIA DE USUARIO (UX)', value: 92 },
-            { label: 'OPTIMIZACIÓN Y RENDIMIENTO', value: 95 }
-        ],
         accentColor: '#3b82f6',
         glowColor: 'rgba(59, 130, 246, 0.2)',
         icon: (
@@ -76,11 +66,6 @@ const EXPERIENCE_DATA = [
             'Administración, replicación y tuning de bases de datos PostgreSQL y MongoDB.'
         ],
         tags: ['Docker', 'AWS', 'MongoDB', 'PostgreSQL', 'Python'],
-        stats: [
-            { label: 'CONTENERIZACIÓN DOCKER', value: 98 },
-            { label: 'AUTOMATIZACIÓN SCRIPTING', value: 95 },
-            { label: 'NUBE HÍBRIDA & VPC', value: 90 }
-        ],
         accentColor: '#a855f7',
         glowColor: 'rgba(168, 85, 247, 0.2)',
         icon: (
@@ -123,35 +108,6 @@ const colorMap = {
         icon: 'text-purple-400',
     }
 };
-
-function StatBar({ label, value, color, animate }) {
-    const [width, setWidth] = useState(0);
-    const colors = colorMap[color];
-
-    useEffect(() => {
-        if (animate) {
-            const t = setTimeout(() => setWidth(value), 80);
-            return () => clearTimeout(t);
-        } else {
-            setWidth(0);
-        }
-    }, [animate, value]);
-
-    return (
-        <div className="flex flex-col gap-1.5">
-            <div className="flex justify-between items-center text-[10px] font-mono text-gray-400">
-                <span>{label}</span>
-                <span className={`${colors.text} font-bold`}>{value}%</span>
-            </div>
-            <div className="h-[3px] w-full bg-gray-200 dark:bg-white/5 rounded-full overflow-hidden">
-                <div
-                    className={`h-full bg-gradient-to-r ${colors.bar} rounded-full transition-all duration-700 ease-out`}
-                    style={{ width: `${width}%` }}
-                />
-            </div>
-        </div>
-    );
-}
 
 export default function Experience() {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -338,24 +294,6 @@ export default function Experience() {
                                     </li>
                                 ))}
                             </ul>
-                        </div>
-
-                        {/* Stats */}
-                        <div className="p-5 rounded-2xl bg-gray-50/80 dark:bg-white/[0.02] border border-gray-100 dark:border-white/[0.04] flex flex-col gap-4">
-                            <div className="text-[10px] font-mono tracking-widest text-gray-400 uppercase">
-                                Métricas de rendimiento
-                            </div>
-                            <div className="flex flex-col gap-3.5">
-                                {activeItem.stats.map((stat, idx) => (
-                                    <StatBar
-                                        key={`${activeIndex}-${idx}`}
-                                        label={stat.label}
-                                        value={stat.value}
-                                        color={activeItem.statusColor}
-                                        animate={animating}
-                                    />
-                                ))}
-                            </div>
                         </div>
 
                         {/* Tags */}

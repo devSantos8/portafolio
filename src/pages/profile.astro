@@ -3,7 +3,6 @@ import Layout from "../layouts/Layout.astro";
 import PhilosophyShowcase from "../components/react/PhilosophyShowcase.jsx";
 import SkillsShowcase from "../components/react/SkillsShowcase.jsx";
 import Experience from "../components/react/Experience.jsx";
-import MilestonesShowcase from "../components/react/MilestonesShowcase.jsx";
 import Footer from "../components/Footer.astro";
 ---
 
@@ -119,21 +118,6 @@ import Footer from "../components/Footer.astro";
 
 				<!-- Experience / Trayectoria Showcase (React Interactive) -->
 				<Experience client:visible />
-			</section>
-
-			<!-- SECTION 5: EDUCACIÓN Y CERTIFICACIONES -->
-			<section class="mb-32 md:mb-48 w-full">
-				<div class="mb-16 flex flex-col items-start gap-4">
-					<div class="font-mono text-xs uppercase tracking-widest text-gray-400 dark:text-gray-500">
-						05 / Hitos e Historial
-					</div>
-					<h2 class="text-4xl md:text-5xl font-bold tracking-tight">
-						Educación & <span class="font-light italic font-serif lowercase text-emerald-500 dark:text-emerald-400">Certificaciones</span>
-					</h2>
-				</div>
-
-				<!-- Milestones Showcase (React Interactive) -->
-				<MilestonesShowcase client:visible />
 			</section>
 
 			<!-- SECTION 6: CTA / COLABORAR -->
