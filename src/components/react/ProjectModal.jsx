@@ -1,10 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { projects } from '../../data/projects';
 
 export default function ProjectModal() {
     const [isOpen, setIsOpen] = useState(false);
     const [project, setProject] = useState(null);
     const [animateIn, setAnimateIn] = useState(false);
+    const scrollRef = useRef(null);
+
+    useEffect(() => {
+        if (isOpen && scrollRef.current) {
+            scrollRef.current.scrollTop = 0;
+        }
+    }, [isOpen, project]);
 
     useEffect(() => {
         const handleOpen = (e) => {
@@ -16,7 +23,12 @@ export default function ProjectModal() {
                 document.body.style.overflow = 'hidden';
                 window.dispatchEvent(new CustomEvent('modal-toggle', { detail: { open: true } }));
                 // Trigger animation delay
-                setTimeout(() => setAnimateIn(true), 50);
+                setTimeout(() => {
+                    setAnimateIn(true);
+                    if (scrollRef.current) {
+                        scrollRef.current.scrollTop = 0;
+                    }
+                }, 50);
             }
         };
 
@@ -133,7 +145,7 @@ export default function ProjectModal() {
                 </div>
 
                 {/* ─── Body Scroll Container ─── */}
-                <div className="flex-1 overflow-y-auto custom-scrollbar relative z-10 w-full" style={{ overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' }}>
+                <div ref={scrollRef} className="flex-1 overflow-y-auto custom-scrollbar relative z-10 w-full" style={{ overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' }}>
                     <div className="max-w-7xl mx-auto w-full p-6 md:p-10 flex flex-col gap-10">
                     
                     {/* Device Mockup Showcase Frame */}

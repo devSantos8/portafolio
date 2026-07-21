@@ -407,6 +407,7 @@ const { title, showHeader = true } = Astro.props;
 
 <script>
 	document.addEventListener('astro:page-load', () => {
+		window.scrollTo(0, 0);
 		initCursor();
 		initMobileMenu();
 		preventSamePageNavigation();
