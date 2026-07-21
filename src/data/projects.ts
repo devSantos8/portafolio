@@ -7,6 +7,7 @@ export interface Project {
 	images: string[];
 	backgroundColor: string;
 	tags: string[];
+	category: string[];
 	year: string;
 	role?: string;
 	client?: string;
@@ -32,6 +33,7 @@ export const projects: Project[] = [
 		],
 		backgroundColor: '#f0ece1', // Warm Washi Paper / Sand
 		tags: ['Next.js', 'Firebase', 'TypeScript', 'HeroUI'],
+		category: ['frontend'],
 		year: '2026',
 		role: 'Disenador y Desarrollador Full-Stack',
 		client: 'Proyecto Independiente',
@@ -61,6 +63,7 @@ export const projects: Project[] = [
 		],
 		backgroundColor: '#ffffff', // Pure White
 		tags: ['Django', 'Python', 'PostgreSQL'],
+		category: ['backend', 'frontend'],
 		year: '2025',
 		role: 'Arquitecto de Software y Backend Developer',
 		client: 'Proyecto de Titulo Universitario',
@@ -90,6 +93,7 @@ export const projects: Project[] = [
 		],
 		backgroundColor: '#b5c1b5', // Muted Sage / Matcha
 		tags: ['Astro', 'Tailwind CSS', 'JavaScript'],
+		category: ['frontend'],
 		year: '2025',
 		role: 'Frontend Developer y UX Designer',
 		client: 'Lubricentro La Esquina',
@@ -118,6 +122,7 @@ export const projects: Project[] = [
 		],
 		backgroundColor: '#1c1c1c', // Ink Charcoal
 		tags: ['DevOps', 'GitHub Actions', 'CI/CD', 'TypeScript', 'React'],
+		category: ['devops', 'backend', 'frontend'],
 		year: '2026',
 		role: 'DevOps & Frontend Engineer',
 		client: 'Proyecto en Proceso (Personal)',
