@@ -14,7 +14,7 @@ import Footer from '../components/Footer.astro';
 		
 		<!-- Color Bends fijo en el fondo (Solo en Dark Mode) -->
 		<div class="hidden dark:block">
-			<ColorBends client:load colors={['#1a1a1a', '#333333', '#000000']} intensity={0.8} />
+			<ColorBends client:idle colors={['#1a1a1a', '#333333', '#000000']} intensity={0.8} />
 		</div>
 
 		<div class="relative z-10 w-full flex flex-col">
@@ -23,7 +23,7 @@ import Footer from '../components/Footer.astro';
 			<About />
 			<Projects />
 			<BentoGrid client:visible />
-			<ProjectModal client:load />
+			<ProjectModal client:idle />
 			<Footer />
 
 		</div>
@@ -81,6 +81,16 @@ import Footer from '../components/Footer.astro';
         lenis.raf(time * 1000);
     });
     gsap.ticker.lagSmoothing(0);
+
+    // Pause/resume Lenis when ProjectModal opens/closes
+    const handleModalToggle = (e) => {
+        if (e.detail?.open) {
+            lenis.stop();
+        } else {
+            lenis.start();
+        }
+    };
+    window.addEventListener('modal-toggle', handleModalToggle);
 
     // 2. Hero Animations
     const heroTl = gsap.timeline();
@@ -163,6 +173,7 @@ import Footer from '../components/Footer.astro';
     // Limpieza de recursos al desmontar si es necesario (Astro Transitions)
     document.addEventListener('astro:before-swap', () => {
         ScrollTrigger.getAll().forEach(t => t.kill());
+        window.removeEventListener('modal-toggle', handleModalToggle);
         lenis.destroy();
         aboutText.revert();
     });

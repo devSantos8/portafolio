@@ -12,8 +12,9 @@ export default function ProjectModal() {
             if (foundProject) {
                 setProject(foundProject);
                 setIsOpen(true);
-                // Lock body scroll
+                // Lock body scroll & pause Lenis
                 document.body.style.overflow = 'hidden';
+                window.dispatchEvent(new CustomEvent('modal-toggle', { detail: { open: true } }));
                 // Trigger animation delay
                 setTimeout(() => setAnimateIn(true), 50);
             }
@@ -30,8 +31,9 @@ export default function ProjectModal() {
         setTimeout(() => {
             setIsOpen(false);
             setProject(null);
-            // Restore body scroll
+            // Restore body scroll & resume Lenis
             document.body.style.overflow = '';
+            window.dispatchEvent(new CustomEvent('modal-toggle', { detail: { open: false } }));
         }, 300); // match transition duration
     };
 
@@ -131,7 +133,7 @@ export default function ProjectModal() {
                 </div>
 
                 {/* ─── Body Scroll Container ─── */}
-                <div className="flex-1 overflow-y-auto custom-scrollbar relative z-10 w-full" data-lenis-prevent="true">
+                <div className="flex-1 overflow-y-auto custom-scrollbar relative z-10 w-full" style={{ overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' }}>
                     <div className="max-w-7xl mx-auto w-full p-6 md:p-10 flex flex-col gap-10">
                     
                     {/* Device Mockup Showcase Frame */}

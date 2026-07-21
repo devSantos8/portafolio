@@ -198,7 +198,7 @@ export default function ColorBends({
     });
     rendererRef.current = renderer;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
     renderer.setClearColor(0x000000, transparent ? 0 : 1);
     renderer.domElement.style.width = '100%';
     renderer.domElement.style.height = '100%';
@@ -207,9 +207,19 @@ export default function ColorBends({
 
     const clock = new THREE.Clock();
 
-    const handleResize = () => {
-      const w = container.clientWidth || 1;
-      const h = container.clientHeight || 1;
+    // Batch DOM reads to avoid forced reflow
+    const handleResize = (entries) => {
+      let w, h;
+      if (entries && entries[0]) {
+        // Use contentRect from ResizeObserver (no forced reflow)
+        const rect = entries[0].contentRect;
+        w = rect.width || 1;
+        h = rect.height || 1;
+      } else {
+        // Fallback: read once, then write
+        w = container.clientWidth || 1;
+        h = container.clientHeight || 1;
+      }
       renderer.setSize(w, h, false);
       material.uniforms.uCanvas.value.set(w, h);
     };
@@ -221,7 +231,7 @@ export default function ColorBends({
       ro.observe(container);
       resizeObserverRef.current = ro;
     } else {
-      window.addEventListener('resize', handleResize);
+      window.addEventListener('resize', () => handleResize(), { passive: true });
     }
 
     const loop = () => {

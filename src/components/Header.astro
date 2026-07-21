@@ -20,50 +20,36 @@ import Nav from './Nav.astro';
 		if (!header) return;
 
 		let lastScrollY = window.scrollY;
+		let ticking = false;
 
 		const handleScroll = () => {
-			const currentScrollY = window.scrollY;
+			if (ticking) return;
+			ticking = true;
 
-			// Cambiar el estado de scroll al pasar el Hero (o tras 50px en proyectos/perfil para legibilidad rápida)
-			const path = window.location.pathname;
-			const isProjectsOrProfile = path.includes('/projects') || path.includes('/profile');
-			const isLightProjectHero = path.includes('/projects/tuki') || 
-			                           path.includes('/projects/commitflow') || 
-			                           path.includes('/projects/lubricentro');
-			
-			const scrollThreshold = isProjectsOrProfile ? 50 : window.innerHeight * 0.8;
+			requestAnimationFrame(() => {
+				const currentScrollY = window.scrollY;
+				const path = window.location.pathname;
+				const isProjectsOrProfile = path.includes('/projects') || path.includes('/profile');
+				const isLightProjectHero = path.includes('/projects/tuki') || 
+				                           path.includes('/projects/commitflow') || 
+				                           path.includes('/projects/lubricentro');
+				const scrollThreshold = isProjectsOrProfile ? 50 : window.innerHeight * 0.8;
 
-			// Agregar clases dinámicas según la ruta
-			if (isProjectsOrProfile) {
-				header.classList.add('is-on-subpage');
-			} else {
-				header.classList.remove('is-on-subpage');
-			}
+				// Calculate all state first (read phase)
+				const isScrolled = currentScrollY > scrollThreshold;
+				const isHidden = !isProjectsOrProfile && currentScrollY > 100 && currentScrollY > lastScrollY;
 
-			if (isLightProjectHero) {
-				header.classList.add('is-light-hero');
-			} else {
-				header.classList.remove('is-light-hero');
-			}
+				// Apply all DOM writes together (write phase)
+				header.classList.toggle('is-on-subpage', isProjectsOrProfile);
+				header.classList.toggle('is-light-hero', isLightProjectHero);
+				header.classList.toggle('is-scrolled', isScrolled);
+				header.classList.toggle('is-hidden', isHidden);
+				header.classList.toggle('opacity-0', isHidden);
+				header.classList.toggle('opacity-100', !isHidden);
 
-			if (currentScrollY > scrollThreshold) {
-				header.classList.add('is-scrolled');
-			} else {
-				header.classList.remove('is-scrolled');
-			}
-
-			// Ocultar al bajar, mostrar al subir (solo en la página principal, nunca en proyectos o perfil)
-			if (!isProjectsOrProfile && currentScrollY > 100 && currentScrollY > lastScrollY) {
-				// Scrolling down - Hide (fade out smoothly)
-				header.classList.remove('opacity-100');
-				header.classList.add('opacity-0', 'is-hidden');
-			} else {
-				// Scrolling up o en proyectos/perfil - Show (fade in/mantener visible)
-				header.classList.remove('opacity-0', 'is-hidden');
-				header.classList.add('opacity-100');
-			}
-
-			lastScrollY = currentScrollY;
+				lastScrollY = currentScrollY;
+				ticking = false;
+			});
 		};
 
 		window.addEventListener('scroll', handleScroll, { passive: true });
