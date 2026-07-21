@@ -21,20 +21,17 @@ const SKILLS_BY_CAT = {
         { name: 'Python', level: 'Avanzado', desc: 'Programación asíncrona, scripting automatizado y lógica compleja.', color: 'hover:border-yellow-500/30 hover:bg-yellow-500/5 text-yellow-400 font-bold border-yellow-500/10 bg-yellow-950/10' },
         { name: 'Django', level: 'Avanzado', desc: 'Desarrollo backend rápido, ORM robusto y paneles de administración seguros.', color: 'hover:border-emerald-600/30 hover:bg-emerald-600/5 text-emerald-400 font-bold border-emerald-600/10 bg-emerald-950/10' },
         { name: 'Node.js', level: 'Avanzado', desc: 'Entorno de ejecución orientado a eventos y APIs altamente escalables.', color: 'hover:border-green-500/30 hover:bg-green-500/5 text-green-400 font-bold border-green-500/10 bg-green-950/10' },
-        { name: 'Express.js', level: 'Avanzado', desc: 'Rutas eficientes, middlewares personalizados y servidores web ligeros.', color: 'hover:border-gray-400/30 hover:bg-gray-400/5 text-gray-300 font-bold border-gray-400/10 bg-gray-950/10' },
-        { name: 'APIs RESTful', level: 'Avanzado', desc: 'Endpoints estructurados bajo estándares REST, formatos JSON y JWT.', color: 'hover:border-teal-500/30 hover:bg-teal-500/5 text-teal-400 font-bold border-teal-500/10 bg-teal-950/10' },
+        { name: 'APIs RESTful', level: 'Avanzado', desc: 'Endpoints estructurados bajo estándares REST y formatos JSON.', color: 'hover:border-teal-500/30 hover:bg-teal-500/5 text-teal-400 font-bold border-teal-500/10 bg-teal-950/10' },
         { name: 'PostgreSQL', level: 'Avanzado', desc: 'Modelado relacional robusto, integridad de datos y optimización de consultas.', color: 'hover:border-indigo-400/30 hover:bg-indigo-400/5 text-indigo-400 font-bold border-indigo-400/10 bg-indigo-950/10' },
-        { name: 'MongoDB', level: 'Intermedio', desc: 'Bases de datos no relacionales flexibles para almacenamiento dinámico.', color: 'hover:border-green-400/30 hover:bg-green-400/5 text-green-300 font-bold border-green-400/10 bg-green-950/10' },
-        { name: 'JWT Auth', level: 'Avanzado', desc: 'Autenticación stateless segura basada en tokens firmados criptográficamente.', color: 'hover:border-pink-500/30 hover:bg-pink-500/5 text-pink-400 font-bold border-pink-500/10 bg-pink-950/10' }
+        { name: 'Supabase', level: 'Intermedio', desc: 'Backend as a Service, autenticación y bases de datos relacionales PostgreSQL.', color: 'hover:border-emerald-500/30 hover:bg-emerald-500/5 text-emerald-300 font-bold border-emerald-500/10 bg-emerald-950/10' },
+        { name: 'MongoDB', level: 'Intermedio', desc: 'Bases de datos no relacionales flexibles para almacenamiento dinámico.', color: 'hover:border-green-400/30 hover:bg-green-400/5 text-green-300 font-bold border-green-400/10 bg-green-950/10' }
     ],
     devops: [
-        { name: 'Docker', level: 'Avanzado', desc: 'Contenerización de microservicios para garantizar paridad entre entornos.', color: 'hover:border-sky-500/30 hover:bg-sky-500/5 text-sky-400 font-bold border-sky-500/10 bg-sky-950/10' },
+        { name: 'Docker', level: 'Básico', desc: 'Comandos esenciales para levantar contenedores e imágenes de prueba.', color: 'hover:border-sky-500/30 hover:bg-sky-500/5 text-sky-400 font-bold border-sky-500/10 bg-sky-950/10' },
         { name: 'Git / GitHub', level: 'Avanzado', desc: 'Control de versiones en equipos mediante flujos Gitflow y Pull Requests.', color: 'hover:border-orange-600/30 hover:bg-orange-600/5 text-orange-400 font-bold border-orange-600/10 bg-orange-950/10' },
         { name: 'GitHub Actions', level: 'Intermedio', desc: 'Integración continua para validar sintaxis, tests e integración automática.', color: 'hover:border-purple-500/30 hover:bg-purple-500/5 text-purple-400 font-bold border-purple-500/10 bg-purple-950/10' },
         { name: 'AWS Cloud', level: 'Intermedio', desc: 'Arquitecturas redundantes en ECS, EC2, S3 y bases de datos RDS.', color: 'hover:border-yellow-600/30 hover:bg-yellow-600/5 text-yellow-500 font-bold border-yellow-600/10 bg-yellow-950/10' },
-        { name: 'CI/CD Pipelines', level: 'Intermedio', desc: 'Automatización del ciclo de vida del software reduciendo tiempos de despliegue.', color: 'hover:border-emerald-500/30 hover:bg-emerald-500/5 text-emerald-400 font-bold border-emerald-500/10 bg-emerald-950/10' },
-        { name: 'Figma Design', level: 'Intermedio', desc: 'Diseño UX/UI moderno y prototipos de interfaces interactivas de alta fidelidad.', color: 'hover:border-pink-500/30 hover:bg-pink-500/5 text-pink-400 font-bold border-pink-500/10 bg-pink-950/10' },
-        { name: 'Bash / Scripting', level: 'Avanzado', desc: 'Automatización de tareas complejas en Linux y optimización de servidores.', color: 'hover:border-blue-400/30 hover:bg-blue-400/5 text-blue-300 font-bold border-blue-400/10 bg-blue-950/10' }
+        { name: 'CI/CD Pipelines', level: 'Intermedio', desc: 'Automatización del ciclo de vida del software reduciendo tiempos de despliegue.', color: 'hover:border-emerald-500/30 hover:bg-emerald-500/5 text-emerald-400 font-bold border-emerald-500/10 bg-emerald-950/10' }
     ]
 };
 
