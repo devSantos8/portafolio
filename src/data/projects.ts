@@ -105,31 +105,31 @@ export const projects: Project[] = [
 		]
 	},
 	{
-		id: 'api-gateway',
-		title: 'API Gateway',
-		subtitle: 'Microservicios - 2023',
-		description: 'Arquitectura de microservicios con API Gateway centralizado. Gestión de autenticación, rate limiting.',
+		id: 'pipeline-dashboard',
+		title: 'PipelineOps Dashboard',
+		subtitle: 'DevOps & CI/CD - 2026 (En Proceso)',
+		description: 'Dashboard centralizado para el monitoreo, gestión y control de estado de pipelines CI/CD y workflows de GitHub Actions en múltiples proyectos.',
 		images: [
+			'https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=600&h=800&fit=crop',
 			'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=800&fit=crop',
 			'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=800&fit=crop',
 			'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=800&fit=crop',
-			'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=800&fit=crop',
-			'https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=600&h=800&fit=crop'
+			'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=800&fit=crop'
 		],
 		backgroundColor: '#1c1c1c', // Ink Charcoal
-		tags: ['Node.js', 'Docker', 'Redis'],
-		year: '2023',
-		role: 'DevOps y Backend Engineer',
-		client: 'Proyecto de Infraestructura de TI',
-		liveUrl: 'https://api.gateway.dev',
-		githubUrl: 'https://github.com/JoainMonroy/api-gateway-microservices',
-		challenge: 'Las arquitecturas distribuidas de microservicios requerian un punto de acceso unificado que validara tokens, controlara ataques por denegacion de servicio y redujera la latencia.',
-		solution: 'Implemente un API Gateway centralizado con Node.js y Express. Integra almacenamiento en cache ultra rapido mediante Redis para tokens habituales y rate limiting inteligente para evitar saturacion de los endpoints internos.',
+		tags: ['DevOps', 'GitHub Actions', 'CI/CD', 'TypeScript', 'React'],
+		year: '2026',
+		role: 'DevOps & Frontend Engineer',
+		client: 'Proyecto en Proceso (Personal)',
+		liveUrl: 'https://github.com/JoainMonroy',
+		githubUrl: 'https://github.com/JoainMonroy',
+		challenge: 'Supervisar el estado de ejecucion de pipelines CI/CD y workflows de GitHub Actions en multiples repositorios independientes suele requerir revisar cada proyecto individualmente, dificultando la deteccion temprana de fallos.',
+		solution: 'Disenando e implementando un dashboard operacional centralizado que consume las APIs de GitHub Actions para supervisar en tiempo real el estado de ejecucion, logs y metricas de despliegue de todos los proyectos activos.',
 		features: [
-			'Punto de entrada unificado y enrutamiento dinamico de peticiones web',
-			'Sistema de Rate Limiting dinamico configurado para mitigar abusos',
-			'Almacenamiento en cache mediante Redis para control veloz de sesiones y tokens',
-			'Infraestructura completamente contenedorizada mediante Docker y Docker Compose'
+			'Monitoreo centralizado en tiempo real del estado de GitHub Actions',
+			'Panel interactivo para consultar historial de ejecuciones y logs de despliegue',
+			'Sistema de alertas y notificaciones ante fallos en flujos de integracion continua',
+			'Interfaz intuitiva para la gestion rapida de repositorios y entornos'
 		]
 	},
 ];
