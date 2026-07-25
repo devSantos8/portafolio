@@ -127,7 +127,7 @@ export const projects: Project[] = [
 		year: '2026',
 		role: 'Full-Stack & DevOps',
 		client: 'Proyecto Independiente',
-		liveUrl: 'https://github.com/17santo',
+		liveUrl: undefined,
 		githubUrl: 'https://github.com/17santo',
 		challenge: 'Supervisar el estado de salud de repositorios de software, contenedores Docker y despliegues en produccion en multiples servicios de forma fragmentada.',
 		solution: 'Desarrolle Pulsar, un Dashboard de Control Plane de alto rendimiento que realiza inspeccion en vivo de contenedores Docker, despliegues en Vercel y telemetria de repositorios de GitHub con persistencia ultrarrapida en SQLite via Prisma ORM 7 y LibSQL.',
