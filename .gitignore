@@ -29,3 +29,7 @@ graphify-out/
 .graphify*
 GRAPH_REPORT.md
 
+# agent configuration & skills
+.agents/
+
+
