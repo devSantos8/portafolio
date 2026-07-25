@@ -109,10 +109,11 @@ export const projects: Project[] = [
 		]
 	},
 	{
-		id: 'pipeline-dashboard',
-		title: 'PipelineOps Dashboard',
-		subtitle: 'DevOps & CI/CD - 2026 (En Proceso)',
-		description: 'Dashboard centralizado para el monitoreo, gestión y control de estado de pipelines CI/CD y workflows de GitHub Actions en múltiples proyectos.',
+		id: 'pulsar',
+		title: 'Pulsar',
+		subtitle: 'Control Dashboard - 2026 (En Desarrollo)',
+		description: 'Dashboard de Control Plane de alto rendimiento diseñado para centralizar, supervisar y analizar el estado de salud de repositorios de software, contenedores Docker y despliegues en producción.',
+		fullDescription: 'Pulsar es un Dashboard de Control Plane de alto rendimiento diseñado para centralizar, supervisar y analizar el estado de salud de repositorios de software, contenedores Docker y despliegues en producción.',
 		images: [
 			'https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=600&h=800&fit=crop',
 			'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=800&fit=crop',
@@ -121,20 +122,22 @@ export const projects: Project[] = [
 			'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=800&fit=crop'
 		],
 		backgroundColor: '#1c1c1c', // Ink Charcoal
-		tags: ['DevOps', 'GitHub Actions', 'CI/CD', 'TypeScript', 'React'],
+		tags: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS', 'Prisma ORM', 'Docker'],
 		category: ['devops', 'backend', 'frontend'],
 		year: '2026',
-		role: 'DevOps & Frontend Engineer',
-		client: 'Proyecto en Proceso (Personal)',
-		liveUrl: 'https://github.com/JoainMonroy',
-		githubUrl: 'https://github.com/JoainMonroy',
-		challenge: 'Supervisar el estado de ejecucion de pipelines CI/CD y workflows de GitHub Actions en multiples repositorios independientes suele requerir revisar cada proyecto individualmente, dificultando la deteccion temprana de fallos.',
-		solution: 'Disenando e implementando un dashboard operacional centralizado que consume las APIs de GitHub Actions para supervisar en tiempo real el estado de ejecucion, logs y metricas de despliegue de todos los proyectos activos.',
+		role: 'Full-Stack & DevOps',
+		client: 'Proyecto Independiente',
+		liveUrl: 'https://github.com/17santo',
+		githubUrl: 'https://github.com/17santo',
+		challenge: 'Supervisar el estado de salud de repositorios de software, contenedores Docker y despliegues en produccion en multiples servicios de forma fragmentada.',
+		solution: 'Desarrolle Pulsar, un Dashboard de Control Plane de alto rendimiento que realiza inspeccion en vivo de contenedores Docker, despliegues en Vercel y telemetria de repositorios de GitHub con persistencia ultrarrapida en SQLite via Prisma ORM 7 y LibSQL.',
 		features: [
-			'Monitoreo centralizado en tiempo real del estado de GitHub Actions',
-			'Panel interactivo para consultar historial de ejecuciones y logs de despliegue',
-			'Sistema de alertas y notificaciones ante fallos en flujos de integracion continua',
-			'Interfaz intuitiva para la gestion rapida de repositorios y entornos'
+			'Control Plane & Telemetria: Sistema de monitoreo centralizado para repositorios de GitHub con filtrado avanzado y proyectos persistidos.',
+			'Deteccion Automatica de Entornos: Algoritmos de inspeccion en vivo para contenedores Dockerfile y despliegues en Vercel.',
+			'Autenticacion & Seguridad: Integracion de OAuth 2.0 con GitHub usando NextAuth.js v4 y tokens JWT.',
+			'Base de Datos & ORM de Nueva Generacion: Implementacion de Prisma ORM v7 utilizando el adaptador LibSQL para SQLite.',
+			'Interfaz UI/UX de Alto Nivel: Desarrollado con Next.js 16 (App Router), React 19 y Tailwind CSS v4.',
+			'CI/CD & Contenerizacion: Empaquetado multi-etapa con Docker y pipeline de validacion automatizada mediante GitHub Actions.'
 		]
 	},
 ];
