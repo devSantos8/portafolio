@@ -1,48 +1,53 @@
-# Astro Starter Kit: Basics
+# Portafolio Profesional
 
-```sh
-npm create astro@latest -- --template basics
-```
+Sitio web personal y portafolio interactivo de alto rendimiento enfocado en arquitectura de software, desarrollo full-stack e integración de experiencias web avanzadas. Diseñado con estética moderna estilo Awwwards, animaciones fluidas a 60 FPS y rendimiento optimizado.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Características Principales
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+- **Arquitectura de Alto Rendimiento:** Generación de sitio estático (SSG) con Astro 5.3 para tiempos de carga mínimos y métricas sobresalientes en Core Web Vitals.
+- **Experiencia Visual e Interactiva:** Animaciones de texto e imágenes con GSAP y SplitType, desplazamiento suave con Lenis, y componentes dinámicos en React.
+- **Bento Grid:** Sección modular para mostrar el kit tecnológico, hábitos de desarrollo y certificaciones destacadas.
+- **Modo Oscuro y Claro:** Sistema de temas responsivo integrado mediante Tailwind CSS.
+- **Proyectos Destacados:** Muestra detallada de aplicaciones desarrolladas (Tuki, CommitFlow, Lubricentro La Esquina, Pulsar).
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+## Stack Tecnológico
 
-## 🚀 Project Structure
+### Core & Frameworks
+- **Framework Principal:** Astro 5.3
+- **Biblioteca de Interfaz:** React 19
+- **Lenguaje:** TypeScript
 
-Inside of your Astro project, you'll see the following folders and files:
+### Estilos & Tipografía
+- **CSS Framework:** Tailwind CSS 3.4
+- **Procesadores:** PostCSS + Autoprefixer
+- **Fuentes:** @fontsource (Instrument Serif, Inter, Onest, Barlow)
+
+### Animaciones & WebGL
+- **Animaciones:** GSAP 3.15 + @gsap/react
+- **Scroll:** Lenis 1.3
+- **Manipulación de Texto:** SplitType
+- **Gráficos & Shaders:** Three.js, Simplex Noise, Shaders React
+
+## Estructura del Proyecto
 
 ```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+src/
+├── components/          Componentes Astro y React (Hero, About, Projects, BentoGrid, Footer)
+│   └── react/           Componentes interactivos (BentoGrid, ColorBends, MeshBackground)
+├── data/                Estructuras de datos y proyectos (projects.ts)
+├── layouts/             Plantilla principal de la aplicación (Layout.astro)
+├── pages/               Rutas estáticas (index.astro, proyectos individuales)
+├── scripts/             Lógica de animaciones e integraciones de scroll (animations.js)
+└── styles/              Estilos globales y variables CSS (global.css)
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Comandos de Desarrollo
 
-## 🧞 Commands
+| Comando | Descripción |
+| :--- | :--- |
+| `npm install` | Instala las dependencias del proyecto |
+| `npm run dev` | Inicia el servidor de desarrollo local en `http://localhost:4321` |
+| `npm run build` | Compila el sitio para producción en la carpeta `./dist/` |
+| `npm run preview` | Previsualiza la build de producción localmente |
+| `npm run astro -- --help` | Muestra la ayuda del CLI de Astro |
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
