@@ -20,16 +20,48 @@ export interface Project {
 
 export const projects: Project[] = [
 	{
+		id: 'pulsar',
+		title: 'Pulsar',
+		subtitle: 'Control Dashboard - 2026 (En Desarrollo)',
+		description: 'Dashboard de Control Plane de alto rendimiento diseñado para centralizar, supervisar y analizar el estado de salud de repositorios de software, contenedores Docker y despliegues en producción.',
+		fullDescription: 'Pulsar es un Dashboard de Control Plane de alto rendimiento diseñado para centralizar, supervisar y analizar el estado de salud de repositorios de software, contenedores Docker y despliegues en producción.',
+		images: [
+			'https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=600&h=800&fit=crop',
+			'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=800&fit=crop',
+			'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=800&fit=crop',
+			'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=800&fit=crop',
+			'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=800&fit=crop'
+		],
+		backgroundColor: '#1c1c1c', // Ink Charcoal
+		tags: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS', 'Prisma ORM', 'Docker'],
+		category: ['devops', 'backend', 'frontend'],
+		year: '2026',
+		role: 'Full-Stack & DevOps',
+		client: 'Proyecto Independiente',
+		liveUrl: undefined,
+		githubUrl: 'https://github.com/17santo',
+		challenge: 'Supervisar el estado de salud de repositorios de software, contenedores Docker y despliegues en produccion en multiples servicios de forma fragmentada.',
+		solution: 'Desarrolle Pulsar, un Dashboard de Control Plane de alto rendimiento que realiza inspeccion en vivo de contenedores Docker, despliegues en Vercel y telemetria de repositorios de GitHub con persistencia ultrarrapida en SQLite via Prisma ORM 7 y LibSQL.',
+		features: [
+			'Control Plane & Telemetria: Sistema de monitoreo centralizado para repositorios de GitHub con filtrado avanzado y proyectos persistidos.',
+			'Deteccion Automatica de Entornos: Algoritmos de inspeccion en vivo para contenedores Dockerfile y despliegues en Vercel.',
+			'Autenticacion & Seguridad: Integracion de OAuth 2.0 con GitHub usando NextAuth.js v4 y tokens JWT.',
+			'Base de Datos & ORM de Nueva Generacion: Implementacion de Prisma ORM v7 utilizando el adaptador LibSQL para SQLite.',
+			'Interfaz UI/UX de Alto Nivel: Desarrollado con Next.js 16 (App Router), React 19 y Tailwind CSS v4.',
+			'CI/CD & Contenerizacion: Empaquetado multi-etapa con Docker y pipeline de validacion automatizada mediante GitHub Actions.'
+		]
+	},
+	{
 		id: 'tuki',
 		title: 'Tuki',
 		subtitle: 'WebApp - 2026',
 		description: 'Software de organizacion de horario/pagos y gastos',
 		images: [
-			'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=800&fit=crop',
-			'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=800&fit=crop',
-			'https://images.unsplash.com/photo-1512428559087-560fa5ceab42?w=600&h=800&fit=crop',
-			'https://images.unsplash.com/photo-1507208658421-2eebafb5305f?w=600&h=800&fit=crop',
-			'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&h=800&fit=crop'
+			'/projects/tuki/tuki-login-mockup.png',
+			'/projects/tuki/tuki-home.png',
+			'/projects/tuki/tuki-calendar.png',
+			'/projects/tuki/tuki-expenses.png',
+			'/projects/tuki/tuki-login.png'
 		],
 		backgroundColor: '#f0ece1', // Warm Washi Paper / Sand
 		tags: ['Next.js', 'Firebase', 'TypeScript', 'HeroUI'],
@@ -107,39 +139,7 @@ export const projects: Project[] = [
 			'Estructura web semantica optimizada para buscadores y conversion local',
 			'Formulario directo de contacto y consultas enlazado eficientemente'
 		]
-	},
-	{
-		id: 'pulsar',
-		title: 'Pulsar',
-		subtitle: 'Control Dashboard - 2026 (En Desarrollo)',
-		description: 'Dashboard de Control Plane de alto rendimiento diseñado para centralizar, supervisar y analizar el estado de salud de repositorios de software, contenedores Docker y despliegues en producción.',
-		fullDescription: 'Pulsar es un Dashboard de Control Plane de alto rendimiento diseñado para centralizar, supervisar y analizar el estado de salud de repositorios de software, contenedores Docker y despliegues en producción.',
-		images: [
-			'https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=600&h=800&fit=crop',
-			'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=800&fit=crop',
-			'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=800&fit=crop',
-			'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=800&fit=crop',
-			'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=800&fit=crop'
-		],
-		backgroundColor: '#1c1c1c', // Ink Charcoal
-		tags: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS', 'Prisma ORM', 'Docker'],
-		category: ['devops', 'backend', 'frontend'],
-		year: '2026',
-		role: 'Full-Stack & DevOps',
-		client: 'Proyecto Independiente',
-		liveUrl: undefined,
-		githubUrl: 'https://github.com/17santo',
-		challenge: 'Supervisar el estado de salud de repositorios de software, contenedores Docker y despliegues en produccion en multiples servicios de forma fragmentada.',
-		solution: 'Desarrolle Pulsar, un Dashboard de Control Plane de alto rendimiento que realiza inspeccion en vivo de contenedores Docker, despliegues en Vercel y telemetria de repositorios de GitHub con persistencia ultrarrapida en SQLite via Prisma ORM 7 y LibSQL.',
-		features: [
-			'Control Plane & Telemetria: Sistema de monitoreo centralizado para repositorios de GitHub con filtrado avanzado y proyectos persistidos.',
-			'Deteccion Automatica de Entornos: Algoritmos de inspeccion en vivo para contenedores Dockerfile y despliegues en Vercel.',
-			'Autenticacion & Seguridad: Integracion de OAuth 2.0 con GitHub usando NextAuth.js v4 y tokens JWT.',
-			'Base de Datos & ORM de Nueva Generacion: Implementacion de Prisma ORM v7 utilizando el adaptador LibSQL para SQLite.',
-			'Interfaz UI/UX de Alto Nivel: Desarrollado con Next.js 16 (App Router), React 19 y Tailwind CSS v4.',
-			'CI/CD & Contenerizacion: Empaquetado multi-etapa con Docker y pipeline de validacion automatizada mediante GitHub Actions.'
-		]
-	},
+	}
 ];
 
 export const getFeaturedProjects = () => projects.slice(0, 4);
