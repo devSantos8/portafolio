@@ -89,7 +89,9 @@ export const projects: Project[] = [
 		images: [
 			'/projects/commitflow/commitflow-hero.png',
 			'/projects/commitflow/commitflow-dashboards.png',
-			'/projects/commitflow/commitflow-login.png'
+			'/projects/commitflow/commitflow-login.png',
+			'/projects/commitflow/commitflow-detail.png',
+			'/projects/commitflow/commitflow-payout.png'
 		],
 		backgroundColor: '#ffffff', // Pure White
 		tags: ['Django', 'Python', 'PostgreSQL'],
