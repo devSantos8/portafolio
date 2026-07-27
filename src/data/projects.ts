@@ -87,11 +87,9 @@ export const projects: Project[] = [
 		description: 'Plataforma integral de conexión laboral que une talento TI con oportunidades. Incluye sistemas avanzados de matching, panel administrativo robusto y experiencia de usuario fluida.',
 		fullDescription: 'Desarrollada con arquitectura escalable y buenas prácticas. Algoritmos de matching inteligente para conectar profesionales con empresas.',
 		images: [
-			'https://images.unsplash.com/photo-1522071820081-009f0ab9ba74?w=600&h=800&fit=crop',
-			'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&h=800&fit=crop',
-			'https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&h=800&fit=crop',
-			'https://images.unsplash.com/photo-1542744094-24638eff58bb?w=600&h=800&fit=crop',
-			'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=600&h=800&fit=crop'
+			'/projects/commitflow/commitflow-hero.png',
+			'/projects/commitflow/commitflow-dashboards.png',
+			'/projects/commitflow/commitflow-login.png'
 		],
 		backgroundColor: '#ffffff', // Pure White
 		tags: ['Django', 'Python', 'PostgreSQL'],
