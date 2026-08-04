@@ -1,23 +1,37 @@
 ---
-import Nav from './Nav.astro';
+import Nav from "./Nav.astro";
 ---
 
-<header id="main-header" class="fixed top-12 md:top-16 left-0 w-full px-6 md:px-10 lg:px-16 z-50 pointer-events-none flex justify-between items-start transition-all duration-500 text-white opacity-100">
+<header
+	id="main-header"
+	class="fixed top-12 md:top-16 left-0 w-full px-6 md:px-10 lg:px-16 z-50 pointer-events-none flex justify-between items-start transition-all duration-500 text-white opacity-100"
+>
 	<!-- Logo Izquierda -->
 	<div class="pointer-events-auto">
-		<a href="/" class="text-xl md:text-2xl font-bold tracking-tighter uppercase transition-opacity hover:opacity-70 flex items-baseline gap-2 leading-none">
-			<span>Joain</span>
-			<span class="font-light italic font-serif relative -top-[3px] md:-top-[4px]">Santos</span>
+		<a
+			href="/"
+			class="text-xl md:text-2xl font-bold tracking-tighter uppercase transition-opacity hover:opacity-70"
+			style="display: inline-flex; align-items: center; line-height: 1; gap: 0.5rem;"
+		>
+			<span
+				style="display: inline-block; vertical-align: middle; line-height: 1;"
+				>Joain</span
+			>
+			<span
+				class="font-light italic font-serif"
+				style="display: inline-block; vertical-align: middle; line-height: 1;"
+				>Santos</span
+			>
 		</a>
 	</div>
-	
+
 	<!-- Navegación Derecha (Componente Modular) -->
 	<Nav />
 </header>
 
 <script>
 	function initHeaderScroll() {
-		const header = document.getElementById('main-header');
+		const header = document.getElementById("main-header");
 		if (!header) return;
 
 		let lastScrollY = window.scrollY;
@@ -26,30 +40,36 @@ import Nav from './Nav.astro';
 		const updateHeaderState = () => {
 			const currentScrollY = window.scrollY;
 			const path = window.location.pathname;
-			const isSubpage = path.includes('/projects') || path.includes('/profile');
-			const isDarkTheme = document.documentElement.classList.contains('dark');
-			const heroSection = document.getElementById('project-hero');
+			const isSubpage =
+				path.includes("/projects") || path.includes("/profile");
+			const isDarkTheme =
+				document.documentElement.classList.contains("dark");
+			const heroSection = document.getElementById("project-hero");
 
 			// Determine dynamic color based on actual hero background vs scroll
-			let headerColor = isDarkTheme ? '#ffffff' : '#111827';
+			let headerColor = isDarkTheme ? "#ffffff" : "#111827";
 
 			if (heroSection) {
 				const heroHeight = heroSection.offsetHeight || 500;
-				const isOverHero = currentScrollY < (heroHeight - 80);
-				
+				const isOverHero = currentScrollY < heroHeight - 80;
+
 				if (isOverHero) {
-					const isDarkHero = heroSection.getAttribute('data-is-dark') === 'true';
-					headerColor = isDarkHero ? '#ffffff' : '#111827';
+					const isDarkHero =
+						heroSection.getAttribute("data-is-dark") === "true";
+					headerColor = isDarkHero ? "#ffffff" : "#111827";
 				}
 			}
 
 			// Apply color directly for instantaneous contrast guarantees
 			header.style.color = headerColor;
 
-			const isHidden = !isSubpage && currentScrollY > 100 && currentScrollY > lastScrollY;
-			header.classList.toggle('opacity-0', isHidden);
-			header.classList.toggle('opacity-100', !isHidden);
-			header.classList.toggle('pointer-events-none', isHidden);
+			const isHidden =
+				!isSubpage &&
+				currentScrollY > 100 &&
+				currentScrollY > lastScrollY;
+			header.classList.toggle("opacity-0", isHidden);
+			header.classList.toggle("opacity-100", !isHidden);
+			header.classList.toggle("pointer-events-none", isHidden);
 
 			lastScrollY = currentScrollY;
 		};
@@ -63,9 +83,9 @@ import Nav from './Nav.astro';
 			});
 		};
 
-		window.removeEventListener('scroll', handleScroll);
-		window.addEventListener('scroll', handleScroll, { passive: true });
-		
+		window.removeEventListener("scroll", handleScroll);
+		window.addEventListener("scroll", handleScroll, { passive: true });
+
 		// Initial sync
 		updateHeaderState();
 
@@ -73,16 +93,22 @@ import Nav from './Nav.astro';
 		const observer = new MutationObserver(() => {
 			updateHeaderState();
 		});
-		observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+		observer.observe(document.documentElement, {
+			attributes: true,
+			attributeFilter: ["class"],
+		});
 	}
 
 	// Execute on page loads and transitions
-	document.addEventListener('astro:page-load', initHeaderScroll);
-	document.addEventListener('astro:after-swap', initHeaderScroll);
+	document.addEventListener("astro:page-load", initHeaderScroll);
+	document.addEventListener("astro:after-swap", initHeaderScroll);
 </script>
 
 <style>
-	#main-header, #main-header * {
-		transition: color 0.3s ease, opacity 0.3s ease;
+	#main-header,
+	#main-header * {
+		transition:
+			color 0.3s ease,
+			opacity 0.3s ease;
 	}
 </style>
