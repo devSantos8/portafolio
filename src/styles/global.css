@@ -61,6 +61,28 @@
 }
 
 @layer components {
+	.js-depth-hover {
+		position: relative;
+		isolation: isolate;
+		transform-style: preserve-3d;
+		will-change: transform;
+	}
+
+	.js-depth-hover::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		opacity: 0;
+		border-radius: inherit;
+		background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.14), transparent 52%);
+		transition: opacity 280ms ease;
+	}
+
+	.js-depth-hover:hover::after {
+		opacity: 1;
+	}
+
 	.ui-surface-shell {
 		border-radius: var(--radius-shell);
 		border: 1px solid var(--border-soft);
@@ -192,6 +214,14 @@
 
 	/* Reduced Motion Support */
 	@media (prefers-reduced-motion: reduce) {
+		.js-depth-hover {
+			will-change: auto;
+		}
+
+		.js-depth-hover::after {
+			transition: none;
+		}
+
 		* {
 			animation-duration: 0.01ms !important;
 			animation-iteration-count: 1 !important;

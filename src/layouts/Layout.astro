@@ -1,9 +1,11 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
-// @ts-ignore
-import '@fontsource-variable/inter';
-import '../styles/global.css';
 import Header from '../components/Header.astro';
+import '@fontsource-variable/onest';
+import '@fontsource-variable/inter';
+import '@fontsource/instrument-serif';
+import '@fontsource/barlow';
+import '../styles/global.css';
 
 interface Props {
 	title: string;
@@ -14,330 +16,501 @@ const { title, showHeader = true } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="es" class="scroll-smooth">
+<html lang="es-CL">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Portfolio of Joain Monroy - Ingeniero en Informática y DevOps" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Joain Monroy - Full-Stack Developer & DevOps Engineer basado en Santiago, Chile" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+		
+		<script is:inline>
+			const theme = (() => {
+				if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+					return localStorage.getItem('theme');
+				}
+				if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+					return 'dark';
+				}
+				return 'dark'; // Default to dark for this portfolio
+			})();
+		
+			if (theme === 'light') {
+				document.documentElement.classList.remove('dark');
+			} else {
+				document.documentElement.classList.add('dark');
+			}
+			window.localStorage.setItem('theme', theme);
+		</script>
+		
 		<ViewTransitions />
 	</head>
-	<body class="bg-[#FAFAFA] dark:bg-[#0A0A0A] selection:bg-red-500/20 selection:text-red-900 dark:selection:text-red-100 font-['Inter_Variable',sans-serif] antialiased text-gray-900 dark:text-gray-100 transition-colors duration-500">
-		{showHeader && <Header />}
+	<body>
+		
+		{showHeader && <Header transition:persist transition:name="header" />}
+		
 		<slot />
-
-		<!-- Custom Cursor -->
-		<div id="glow-cursor" class="pointer-events-none fixed left-0 top-0 z-[9999] hidden h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-gray-400/50 bg-white/10 opacity-0 mix-blend-difference backdrop-blur-[2px] transition-opacity duration-300 md:flex dark:border-white/30 dark:bg-white/5"></div>
-		<div id="glow-cursor-dot" class="pointer-events-none fixed left-0 top-0 z-[10000] hidden h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gray-900 opacity-0 mix-blend-difference transition-opacity duration-300 md:block dark:bg-white"></div>
+		
+		<div class="cursor" id="cursor" transition:persist transition:name="cursor">
+			<div class="cursor-dot"></div>
+			<div class="cursor-ring">
+				<span>Explore</span>
+			</div>
+		</div>
+		
 	</body>
 </html>
 
-<script>
-	// Función para cargar y ejecutar las animaciones
-	const setupAnimations = async () => {
-		try {
-			const module = await import('../scripts/animations.js');
-			if (module.initAnimations) {
-				module.initAnimations();
-			}
-		} catch (error) {
-			console.error('Error loading animations:', error);
-		}
-	};
-
-	// Custom Cursor Logic
-	const initCursor = () => {
-		const cursor = document.getElementById('glow-cursor');
-		const dot = document.getElementById('glow-cursor-dot');
-		
-		if (!cursor || !dot || window.matchMedia('(max-width: 768px)').matches) return;
-
-		let mouseX = window.innerWidth / 2;
-		let mouseY = window.innerHeight / 2;
-		let cursorX = mouseX;
-		let cursorY = mouseY;
-		
-		// Animación suave del borde exterior (lerp)
-		const loop = () => {
-			cursorX += (mouseX - cursorX) * 0.15;
-			cursorY += (mouseY - cursorY) * 0.15;
-			
-			cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
-			dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
-			
-			requestAnimationFrame(loop);
-		};
-		requestAnimationFrame(loop);
-
-		window.addEventListener('mousemove', (e) => {
-			mouseX = e.clientX;
-			mouseY = e.clientY;
-			
-			if (cursor.style.opacity === '0') {
-				cursor.style.opacity = '1';
-				dot.style.opacity = '1';
-			}
-		});
-
-		window.addEventListener('mouseout', () => {
-			cursor.style.opacity = '0';
-			dot.style.opacity = '0';
-		});
-
-		// Efecto Hover en elementos clickeables
-		const interactables = document.querySelectorAll('a, button, input, textarea, select, .skill-card, .about-panel, .project-card');
-		interactables.forEach(el => {
-			el.addEventListener('mouseenter', () => {
-				cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%) scale(1.8)`;
-				cursor.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
-			});
-			el.addEventListener('mouseleave', () => {
-				cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%) scale(1)`;
-				cursor.style.backgroundColor = 'var(--tw-bg-opacity)'; // restaura la clase de tailwind
-			});
-		});
-	};
-
-	// Ejecutar en la carga inicial y en cada navegación de astro:transitions
-	document.addEventListener('astro:page-load', () => {
-		setupAnimations();
-		initCursor();
-	});
-</script>
-
 <style is:global>
 	:root {
-		color-scheme: light dark;
-		--color-primary: #1a1a1a;
-		--color-secondary: #666666;
-		--color-muted: #999999;
-		--color-accent: #2563eb;
+		--font-sans: 'Onest Variable', 'Inter Variable', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+		--font-serif: 'Instrument Serif', Georgia, serif;
+		--black: #000;
+		--white: #fff;
+		--gray: #666;
 	}
-
-	:root.dark {
-		--bg-color: #0a0a0a;
-		--text-color: #fafafa;
+	
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
 	}
-
-	:root:not(.dark) {
-		--bg-color: #fafafa;
-		--text-color: #171717;
-	}
-
+	
 	html {
-		font-family: "Inter Variable", system-ui, -apple-system, sans-serif;
-		scroll-behavior: smooth;
-		overflow-x: clip;
-		letter-spacing: -0.01em;
+		font-family: var(--font-sans);
+		font-size: 14px;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		text-rendering: optimizeLegibility;
+		background-color: var(--black); /* Background for when page scales down */
 	}
-
+	
 	body {
-		background: var(--bg-color);
-		color: var(--text-color);
-		display: flex;
-		flex-direction: column;
+		background: var(--white);
+		color: var(--black);
+		overflow-x: hidden;
 		min-height: 100vh;
-		overflow-x: clip;
-		line-height: 1.6;
+	}
+	
+	html.dark body {
+		background: var(--black);
+		color: var(--white);
+	}
+	
+	/* Prevent header and cursor from animating with the page */
+	::view-transition-group(header),
+	::view-transition-old(header),
+	::view-transition-new(header),
+	::view-transition-group(cursor),
+	::view-transition-old(cursor),
+	::view-transition-new(cursor) {
+		animation: none !important;
 	}
 
-	/* Animaciones de scroll */
-	.fade-in-section {
-		opacity: 1;
-		transform: none;
-		transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+	/* Card Slide View Transition — Rápido y fluido */
+	::view-transition-old(root) {
+		animation: fadeOld 0.35s cubic-bezier(0.25, 0, 0.35, 1) forwards;
 	}
 
-	.fade-in-section.is-visible {
-		opacity: 1;
-		transform: translateY(0);
+	::view-transition-new(root) {
+		animation: slideUp 0.35s cubic-bezier(0.25, 0, 0.35, 1) forwards;
+		z-index: 9999;
 	}
 
-	/* Animación de slide desde izquierda */
-	.slide-in-left {
-		opacity: 1;
-		transform: none;
-		transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-	}
-
-	.slide-in-left.is-visible {
-		opacity: 1;
-		transform: translateX(0);
-	}
-
-	/* Animación de slide desde derecha */
-	.slide-in-right {
-		opacity: 1;
-		transform: none;
-		transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-	}
-
-	.slide-in-right.is-visible {
-		opacity: 1;
-		transform: translateX(0);
-	}
-
-	/* Animación de scale */
-	.scale-in {
-		opacity: 1;
-		transform: none;
-		transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-	}
-
-	.scale-in.is-visible {
-		opacity: 1;
-		transform: scale(1);
-	}
-
-	/* Animación de entrada inicial - Deshabilitada para GSAP */
-	/*
-	@keyframes fadeUp {
-		from { opacity: 0; transform: translateY(40px); }
-		to { opacity: 1; transform: translateY(0); }
-	}
-	*/
-
-	@keyframes fadeIn {
-		from { opacity: 0; }
-		to { opacity: 1; }
-	}
-
-	@keyframes slideInLeft {
+	@keyframes slideUp {
 		from {
+			transform: translateY(30px);
 			opacity: 0;
-			transform: translateX(-40px);
 		}
 		to {
+			transform: translateY(0);
 			opacity: 1;
-			transform: translateX(0);
 		}
 	}
 
-	@keyframes float {
-		0%, 100% { transform: translateY(0); }
-		50% { transform: translateY(-10px); }
+	@keyframes fadeOld {
+		from {
+			opacity: 1;
+		}
+		to {
+			opacity: 0;
+		}
 	}
-
-	@keyframes pulse-soft {
-		0%, 100% { opacity: 0.15; transform: scale(1); }
-		50% { opacity: 0.25; transform: scale(1.02); }
+	
+	.laura-header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 100;
+		padding: 35px 50px;
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		color: var(--white);
+		mix-blend-mode: difference;
+		pointer-events: none; /* Let clicks pass through except on links */
 	}
-
-	/* CSS classes ahora manejadas por GSAP al cargar: 
-	.animate-fade-up, .animate-fade-up-delay-X etc... */
-
-	.animate-float {
-		animation: float 6s ease-in-out infinite;
+	
+	.laura-header a {
+		color: var(--white);
+		text-decoration: none;
+		pointer-events: auto;
 	}
-
-	.animate-pulse-soft {
-		animation: pulse-soft 4s ease-in-out infinite;
+	
+	.logo-wrap {
+		flex: 1;
 	}
-
-	/* Stagger children animation */
-	.stagger-children > * {
-		opacity: 1;
-		transform: none;
-		transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+	
+	.logo {
+		font-family: var(--font-sans);
+		font-size: 22px;
+		font-weight: 500; /* Reducido de 700 a 500 para un look más limpio */
+		letter-spacing: -0.05em;
+		text-transform: uppercase;
 	}
-
-	.stagger-children.is-visible > *:nth-child(1) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
-	.stagger-children.is-visible > *:nth-child(2) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
-	.stagger-children.is-visible > *:nth-child(3) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
-	.stagger-children.is-visible > *:nth-child(4) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
-	.stagger-children.is-visible > *:nth-child(5) { transition-delay: 0.5s; opacity: 1; transform: translateY(0); }
-	.stagger-children.is-visible > *:nth-child(6) { transition-delay: 0.6s; opacity: 1; transform: translateY(0); }
-
-	/* Skills container animation */
-	.skills-container .skill-category {
-		opacity: 1;
-		transform: none;
-		transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-	}
-
-	.skills-container.is-visible .skill-category:nth-child(1) {
-		transition-delay: 0.1s;
-		opacity: 1;
-		transform: translateY(0);
-	}
-	.skills-container.is-visible .skill-category:nth-child(2) {
-		transition-delay: 0.25s;
-		opacity: 1;
-		transform: translateY(0);
-	}
-	.skills-container.is-visible .skill-category:nth-child(3) {
-		transition-delay: 0.4s;
-		opacity: 1;
-		transform: translateY(0);
-	}
-
-	/* Horizontal Scrolling Gallery */
-	.horizontal-scroll-gallery {
+	
+	.center-info {
+		flex: 1;
 		display: flex;
 		flex-direction: column;
-		width: 100%;
-		gap: 2rem;
+		align-items: center;
+		text-align: center;
+		font-family: var(--font-sans);
+		font-size: 13px;
+		font-weight: 400; /* Reducido de 600 a 400 (Regular) */
+		letter-spacing: -0.02em;
+		line-height: 1.4;
+		text-transform: uppercase;
+		pointer-events: auto;
 	}
-
-	.carousel-item {
-		flex-shrink: 0;
-		width: 100%;
+	
+	.contact-line a {
+		transition: opacity 0.3s;
 	}
-
-	/* Selection */
-	::selection {
-		background: rgba(37, 99, 235, 0.2);
+	
+	.contact-line a:hover {
+		opacity: 0.6;
 	}
-
-	/* Scrollbar minimalista */
-	::-webkit-scrollbar {
+	
+	.nav-links {
+		flex: 1;
+		display: flex;
+		justify-content: flex-end;
+		gap: 32px;
+		font-family: var(--font-sans);
+		font-size: 14px;
+		font-weight: 400; /* Reducido de 600 a 400 (Regular) */
+		letter-spacing: -0.02em;
+		text-transform: uppercase;
+		pointer-events: auto;
+	}
+	
+	.nav-links a {
+		transition: opacity 0.3s;
+	}
+	
+	.nav-links a:hover {
+		opacity: 0.6;
+	}
+	
+	.burger {
+		display: none;
+		flex-direction: column;
+		gap: 5px;
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 8px;
+		position: absolute;
+		right: 48px;
+	}
+	
+	.burger span {
+		display: block;
+		width: 20px;
+		height: 1px;
+		background: currentColor;
+	}
+	
+	.burger span:nth-child(2) {
+		width: 14px;
+	}
+	
+	.burger span:nth-child(3) {
+		width: 10px;
+	}
+	
+	.mobile-menu {
+		position: fixed;
+		inset: 0;
+		z-index: 99;
+		background: var(--white);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.4s;
+	}
+	
+	.mobile-menu.active {
+		opacity: 1;
+		pointer-events: auto;
+	}
+	
+	.mobile-menu nav {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 24px;
+	}
+	
+	.mobile-menu a {
+		font-family: var(--font-serif);
+		font-size: 42px;
+		font-weight: 400;
+		text-decoration: none;
+		color: var(--black);
+		font-style: italic;
+	}
+	
+	.cursor {
+		position: fixed;
+		top: 0;
+		left: 0;
+		pointer-events: none;
+		z-index: 99999;
+		color: var(--white);
+	}
+	
+	.cursor-dot {
+		position: absolute;
 		width: 8px;
+		height: 8px;
+		background: var(--white);
+		border-radius: 50%;
+		transform: translate(-50%, -50%);
+		box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+	}
+	
+	.cursor-ring {
+		position: absolute;
+		width: 40px;
+		height: 40px;
+		border: 1px solid rgba(255, 255, 255, 0.4);
+		background: rgba(255, 255, 255, 0.05);
+		backdrop-filter: blur(2px);
+		border-radius: 50%;
+		transform: translate(-50%, -50%);
+		opacity: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: opacity 0.3s, width 0.3s, height 0.3s, background 0.3s;
+	}
+	
+	.cursor-ring span {
+		font-size: 8px;
+		letter-spacing: 0.15em;
+		text-transform: uppercase;
+		opacity: 0;
+		transition: opacity 0.3s;
+	}
+	
+	.cursor.hover .cursor-dot {
+		opacity: 0;
+	}
+	
+	.cursor.hover .cursor-ring {
+		opacity: 1;
+		width: 70px;
+		height: 70px;
+		background: rgba(255, 255, 255, 0.1);
+		border-color: rgba(255, 255, 255, 0.8);
+	}
+	
+	.cursor.hover .cursor-ring span {
+		opacity: 1;
 	}
 
-	::-webkit-scrollbar-track {
-		background: transparent;
+	/* Estilos del Cursor para Modo Claro (Garantiza visibilidad en fondo blanco) */
+	html:not(.dark) .cursor-dot {
+		background: #000000;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 	}
-
-	::-webkit-scrollbar-thumb {
-		background: rgba(150, 150, 150, 0.3);
-		border-radius: 4px;
+	html:not(.dark) .cursor-ring {
+		border-color: rgba(0, 0, 0, 0.3);
+		background: rgba(0, 0, 0, 0.03);
 	}
-
-	::-webkit-scrollbar-thumb:hover {
-		background: rgba(150, 150, 150, 0.5);
+	html:not(.dark) .cursor-ring span {
+		color: #000000;
 	}
-
-	@media (prefers-reduced-motion: reduce) {
-		html {
-			scroll-behavior: auto;
-		}
-		.fade-in-section,
-		.slide-in-left,
-		.slide-in-right,
-		.scale-in,
-		.animate-fade-up,
-		.animate-fade-up-delay-1,
-		.animate-fade-up-delay-2,
-		.animate-fade-up-delay-3,
-		.animate-float,
-		.stagger-children > * {
-			animation: none;
-			opacity: 1;
-			transform: none;
-		}
+	html:not(.dark) .cursor.hover .cursor-ring {
+		background: rgba(0, 0, 0, 0.05);
+		border-color: rgba(0, 0, 0, 0.7);
 	}
-
-	/* Responsive: Mobile horizontal gallery becomes vertical */
+	
 	@media (max-width: 768px) {
-		.horizontal-scroll-gallery {
-			flex-direction: column;
-			gap: 2rem;
+		.cursor {
+			display: none;
 		}
-
-		.carousel-item {
-			width: 100%;
+		
+		.site-header {
+			padding: 24px;
+		}
+		
+		.header-inner {
+			grid-template-columns: 1fr auto;
+		}
+		
+		.header-left,
+		.header-right {
+			display: none;
+		}
+		
+		.header-center {
+			text-align: left;
+		}
+		
+		.burger {
+			display: flex;
+			right: 24px;
+		}
+	}
+	
+	::-webkit-scrollbar {
+		display: none;
+	}
+	
+	html {
+		-ms-overflow-style: none;  /* IE and Edge */
+		scrollbar-width: none;  /* Firefox */
+	}
+	
+	::selection {
+		background: var(--black);
+		color: var(--white);
+	}
+	
+	@media (prefers-reduced-motion: reduce) {
+		* {
+			animation: none !important;
+			transition: none !important;
 		}
 	}
 </style>
+
+<script>
+	if (typeof window !== 'undefined' && 'scrollRestoration' in history) {
+		history.scrollRestoration = 'manual';
+	}
+
+	document.addEventListener('astro:after-swap', () => {
+		window.scrollTo(0, 0);
+		document.documentElement.scrollTop = 0;
+		document.body.scrollTop = 0;
+	});
+
+	document.addEventListener('astro:page-load', () => {
+		window.scrollTo(0, 0);
+		document.documentElement.scrollTop = 0;
+		document.body.scrollTop = 0;
+		initCursor();
+		initMobileMenu();
+		preventSamePageNavigation();
+	});
+	
+	function preventSamePageNavigation() {
+		document.querySelectorAll('a').forEach(link => {
+			link.addEventListener('click', (e) => {
+				const href = link.getAttribute('href');
+				if (!href) return;
+				
+				// Bypass for same-page hash links
+				if (href.startsWith('#') || href.includes('#')) return;
+				
+				// Get pathname without trailing slash for robust comparison
+				const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+				const linkPath = new URL(link.href, window.location.origin).pathname.replace(/\/$/, '') || '/';
+				
+				if (currentPath === linkPath) {
+					e.preventDefault();
+				}
+			});
+		});
+	}
+	
+	function initCursor() {
+		const cursor = document.getElementById('cursor');
+		if (!cursor || window.innerWidth < 768) return;
+		
+		const dot = cursor.querySelector('.cursor-dot') as HTMLElement | null;
+		const ring = cursor.querySelector('.cursor-ring') as HTMLElement | null;
+		
+		let mx = 0, my = 0;
+		let dx = 0, dy = 0;
+		let rx = 0, ry = 0;
+		
+		function loop() {
+			dx += (mx - dx) * 0.15;
+			dy += (my - dy) * 0.15;
+			rx += (mx - rx) * 0.08;
+			ry += (my - ry) * 0.08;
+			
+			if (dot) {
+				dot.style.left = dx + 'px';
+				dot.style.top = dy + 'px';
+			}
+			if (ring) {
+				ring.style.left = rx + 'px';
+				ring.style.top = ry + 'px';
+			}
+			
+			requestAnimationFrame(loop);
+		}
+		loop();
+		
+		document.addEventListener('mousemove', (e) => {
+			mx = e.clientX;
+			my = e.clientY;
+		});
+		
+		document.querySelectorAll('a, button').forEach(el => {
+			el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+			el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+		});
+
+		// Hide cursor when modal opens, show when it closes
+		window.addEventListener('modal-toggle', (e: any) => {
+			if (e.detail?.open) {
+				cursor.style.opacity = '0';
+				cursor.style.transition = 'opacity 0.15s';
+			} else {
+				// Sync position instantly so it doesn't "jump" on reappear
+				dx = mx; dy = my;
+				rx = mx; ry = my;
+				cursor.style.opacity = '1';
+			}
+		});
+	}
+	
+	function initMobileMenu() {
+		const burger = document.getElementById('burger');
+		const menu = document.getElementById('mobile-menu');
+		
+		burger?.addEventListener('click', () => {
+			menu?.classList.toggle('active');
+		});
+		
+		menu?.querySelectorAll('a').forEach(link => {
+			link.addEventListener('click', () => {
+				menu?.classList.remove('active');
+			});
+		});
+	}
+</script>

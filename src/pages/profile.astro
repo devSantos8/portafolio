@@ -1,0 +1,207 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PhilosophyShowcase from "../components/react/PhilosophyShowcase.jsx";
+import SkillsShowcase from "../components/react/SkillsShowcase.jsx";
+import Experience from "../components/react/Experience.jsx";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout title="Joain Monroy - Perfil & Trayectoria">
+	<main class="relative bg-white text-gray-900 dark:bg-black dark:text-white min-h-screen overflow-hidden transition-colors duration-500 pb-0">
+		
+		<!-- Fondo decorativo abstracto con gradiente suave interactivo (Solo visible en Dark Mode) -->
+		<div class="absolute top-0 left-0 w-full h-[80vh] bg-gradient-to-b from-emerald-500/5 via-teal-500/0 to-transparent pointer-events-none -z-10" />
+
+		<!-- Contenedor Principal -->
+		<div class="max-w-7xl mx-auto px-6 sm:px-12 md:px-24 pt-40 md:pt-48 relative z-10 w-full">
+			
+			<!-- SECTION 1: HERO / PRESENTACIÓN -->
+			<section class="mb-32 md:mb-48 w-full flex flex-col items-start relative">
+				<div class="flex items-center gap-3 font-bold tracking-widest text-sm uppercase mb-6">
+					<span class="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">
+						Sobre Mí
+					</span>
+				</div>
+
+				<h1 class="text-6xl sm:text-8xl md:text-[100px] lg:text-[120px] font-bold tracking-tighter leading-[0.9] uppercase profile-title mb-10">
+					Joain <br />
+					<span class="font-light italic font-serif lowercase text-emerald-500 dark:text-emerald-400">Santos</span> Monroy.
+				</h1>
+
+				<!-- Grid Informativo del Perfil -->
+				<div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 w-full items-start border-t border-gray-200 dark:border-white/10 pt-12 mt-4">
+					<div class="md:col-span-4 flex flex-col gap-6">
+						<div class="font-mono text-xs uppercase tracking-widest text-gray-400 dark:text-gray-500">
+							01 / Ficha Técnica
+						</div>
+						<div class="flex flex-col gap-4 text-sm">
+							<div class="border-b border-gray-100 dark:border-white/5 pb-3">
+								<span class="text-gray-400 block mb-1">Ubicación</span>
+								<span class="font-medium">Santiago, Chile</span>
+							</div>
+							<div class="border-b border-gray-100 dark:border-white/5 pb-3">
+								<span class="text-gray-400 block mb-1">Especialidad</span>
+								<span class="font-medium">Ingeniería Full-Stack & DevOps</span>
+							</div>
+							<div class="border-b border-gray-100 dark:border-white/5 pb-3">
+								<span class="text-gray-400 block mb-1">Educación</span>
+								<span class="font-medium">Ingeniería en Informática (INACAP)</span>
+							</div>
+							<div class="pb-3">
+								<span class="text-gray-400 block mb-1">Disponibilidad</span>
+								<span class="font-medium flex items-center gap-2">
+									<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+									Abierto a Colaboraciones
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="md:col-span-8 flex flex-col gap-8 text-lg sm:text-xl text-gray-600 dark:text-gray-300 leading-relaxed font-light">
+						<p class="text-2xl sm:text-3xl text-gray-900 dark:text-white font-medium tracking-tight leading-snug">
+							Soy un Ingeniero en Informática enfocado en el desarrollo Full-Stack, la investigación de procesos DevOps e integración de herramientas de Inteligencia Artificial (GenAI/LLMs).
+						</p>
+						<p>
+							Con base en Santiago, Chile, me especializo en construir aplicaciones web modernas y escalables, optimizando la automatización de la calidad y reduciendo la fricción cognitiva en los equipos de desarrollo (DevEx / Portales IDP).
+						</p>
+						<p>
+							Aplico rigurosidad técnica en cada proyecto: desde la arquitectura backend escalable (Python, Node.js, PostgreSQL) e interfaces reactivas (React, Next.js), hasta el despliegue optimizado y la adopción de nuevas tendencias tecnológicas.
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- SECTION 2: FILOSOFÍA / MANIFIESTO INTERACTIVO -->
+			<section class="mb-32 md:mb-48 w-full">
+				<div class="flex flex-col gap-6 mb-16 max-w-2xl">
+					<div class="font-mono text-xs uppercase tracking-widest text-gray-400 dark:text-gray-500">
+						02 / Filosofía de Trabajo
+					</div>
+					<h2 class="text-4xl md:text-5xl font-bold tracking-tight leading-tight">
+						Ingeniería con <br />
+						<span class="font-light italic font-serif lowercase text-emerald-500 dark:text-emerald-400">Propósito</span> Técnico
+					</h2>
+					<p class="text-gray-500 dark:text-gray-400 leading-relaxed font-light">
+						No creo en soluciones temporales. Apuesto por arquitecturas pensadas para escalar y optimizaciones que mejoren la experiencia del usuario y la eficiencia de la infraestructura.
+					</p>
+				</div>
+
+				<!-- Philosophy Showcase (React Interactive) -->
+				<PhilosophyShowcase client:visible />
+			</section>
+
+			<!-- SECTION 3: HABILIDADES DETALLADAS CON CONSOLA -->
+			<section class="mb-32 md:mb-48 w-full">
+				<div class="mb-16 flex flex-col items-start gap-4">
+					<div class="font-mono text-xs uppercase tracking-widest text-gray-400 dark:text-gray-500">
+						03 / Toolkit & Skills
+					</div>
+					<h2 class="text-4xl md:text-5xl font-bold tracking-tight">
+						Habilidades & <span class="font-light italic font-serif lowercase text-emerald-500 dark:text-emerald-400">Stack Técnico</span>
+					</h2>
+				</div>
+
+				<!-- Skills Showcase (React Interactive) -->
+				<SkillsShowcase client:visible />
+			</section>
+
+			<!-- SECTION 4: TRAYECTORIA PROFESIONAL -->
+			<section class="mb-32 md:mb-48 w-full">
+				<div class="mb-16 flex flex-col items-start gap-4">
+					<div class="font-mono text-xs uppercase tracking-widest text-gray-400 dark:text-gray-500">
+						04 / Experiencia Laboral
+					</div>
+					<h2 class="text-4xl md:text-5xl font-bold tracking-tight">
+						Trayectoria & <span class="font-light italic font-serif lowercase text-emerald-500 dark:text-emerald-400">Operaciones</span>
+					</h2>
+				</div>
+
+				<!-- Experience / Trayectoria Showcase (React Interactive) -->
+				<Experience client:visible />
+			</section>
+
+			<!-- SECTION 6: CTA / COLABORAR -->
+			<section class="w-full text-center py-20 px-8 rounded-[3rem] bg-gray-50 dark:bg-[#0c0c0e]/30 border border-gray-200/50 dark:border-white/5 backdrop-blur-md relative overflow-hidden group mb-0">
+				<!-- Brillo dinámico de fondo -->
+				<div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-teal-500/0 to-emerald-500/5 opacity-50 pointer-events-none" />
+
+				<h2 class="text-5xl md:text-7xl font-bold tracking-tight mb-6">
+					¿Tienes un <br />
+					<span class="font-light italic font-serif text-emerald-500 dark:text-emerald-400 lowercase">proyecto</span> en mente?
+				</h2>
+				<p class="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mb-10 font-light">
+					Estoy disponible para sumarme a equipos dinámicos o colaborar en proyectos complejos que requieran alto rendimiento y calidad de software.
+				</p>
+				<div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+					<a
+						href="mailto:joainsantos@gmail.com"
+						class="px-8 py-4 rounded-full bg-gray-900 text-white dark:bg-white dark:text-black font-semibold hover:shadow-2xl hover:scale-[1.02] active:scale-95 transition-all duration-300 flex items-center gap-2 group-hover:border-emerald-500/20"
+					>
+						Hablemos hoy
+					</a>
+					<a
+						href="/projects"
+						class="px-8 py-4 rounded-full border border-gray-300 dark:border-white/10 text-gray-900 dark:text-white font-semibold hover:bg-gray-100 dark:hover:bg-white/5 transition-all duration-300"
+					>
+						Ver Proyectos
+					</a>
+				</div>
+			</section>
+
+		</div>
+		
+		<!-- Footer General -->
+		<Footer />
+	</main>
+</Layout>
+
+<script>
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+	import Lenis from "lenis";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	document.addEventListener('astro:page-load', () => {
+		// Lenis Smooth Scroll
+		const lenis = new Lenis({
+			duration: 1.2,
+			easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+		});
+
+		lenis.on('scroll', ScrollTrigger.update);
+		gsap.ticker.add((time) => {
+			lenis.raf(time * 1000);
+		});
+		gsap.ticker.lagSmoothing(0);
+
+		// Animate Profile Title Intro
+		gsap.from(".profile-title", {
+			y: 60,
+			opacity: 0,
+			duration: 1.4,
+			ease: "power4.out"
+		});
+
+		// Animate sections on scroll
+		gsap.utils.toArray("section").forEach((section: any) => {
+			gsap.from(section, {
+				y: 50,
+				opacity: 0,
+				duration: 1,
+				ease: "power3.out",
+				scrollTrigger: {
+					trigger: section,
+					start: "top 85%",
+					toggleActions: "play none none none"
+				}
+			});
+		});
+
+		// Cleanup on swap
+		document.addEventListener('astro:before-swap', () => {
+			ScrollTrigger.getAll().forEach(t => t.kill());
+			lenis.destroy();
+		}, { once: true });
+	});
+</script>

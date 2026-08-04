@@ -1,0 +1,255 @@
+---
+---
+<!-- Contenedor de Navegación de Escritorio -->
+<nav class="pointer-events-auto hidden md:flex flex-col items-end gap-3 text-xs md:text-sm font-medium tracking-widest uppercase">
+    <a href="/" class="opacity-70 hover:opacity-100 transition-opacity flex items-center gap-2 group">
+        <span class="w-1.5 h-1.5 rounded-full bg-green-500 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+        Home
+    </a>
+    <a href="/profile" class="opacity-70 hover:opacity-100 transition-opacity">About</a>
+    <a href="/projects" class="opacity-70 hover:opacity-100 transition-opacity">Projects</a>
+    <a href="mailto:joainsantos@gmail.com" class="opacity-70 hover:opacity-100 transition-opacity">Contact</a>
+    
+    <button id="theme-toggle" class="mt-4 hover:rotate-12 transition-transform opacity-70 hover:opacity-100" aria-label="Toggle Theme">
+        <svg id="theme-toggle-light-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg id="theme-toggle-dark-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+        </svg>
+    </button>
+</nav>
+
+<!-- Contenedor de Navegación de Móvil (Hamburguesa + Toggle) -->
+<div class="pointer-events-auto flex md:hidden items-center gap-5">
+    <!-- Theme Toggle para Móvil -->
+    <button id="theme-toggle-mobile" class="hover:scale-110 transition-transform opacity-70 hover:opacity-100 text-current" aria-label="Toggle Theme">
+        <svg id="theme-toggle-light-icon-mobile" class="hidden" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg id="theme-toggle-dark-icon-mobile" class="hidden" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+        </svg>
+    </button>
+
+    <!-- Botón Hamburguesa Animado -->
+    <button id="mobile-menu-toggle" class="flex flex-col justify-center items-end gap-1.5 w-8 h-8 focus:outline-none text-current" aria-label="Toggle Menu">
+        <span id="hamburger-top" class="w-6 h-0.5 bg-current transition-all duration-300 origin-right"></span>
+        <span id="hamburger-mid" class="w-5 h-0.5 bg-current transition-all duration-300"></span>
+        <span id="hamburger-bottom" class="w-4 h-0.5 bg-current transition-all duration-300 origin-right"></span>
+    </button>
+</div>
+
+<!-- Overlay de Menú de Móvil a Pantalla Completa -->
+<div id="mobile-menu-overlay" class="fixed inset-0 z-40 bg-white/95 dark:bg-black/95 backdrop-blur-2xl flex flex-col justify-center items-center gap-10 opacity-0 pointer-events-none transition-all duration-500 ease-in-out">
+    <a href="/" class="mobile-nav-link text-5xl font-serif italic text-gray-900 dark:text-white opacity-0 translate-y-6 transition-all duration-500 hover:text-emerald-500 dark:hover:text-emerald-400 no-underline">Home</a>
+    <a href="/profile" class="mobile-nav-link text-5xl font-serif italic text-gray-900 dark:text-white opacity-0 translate-y-6 transition-all duration-500 hover:text-emerald-500 dark:hover:text-emerald-400 no-underline">About</a>
+    <a href="/projects" class="mobile-nav-link text-5xl font-serif italic text-gray-900 dark:text-white opacity-0 translate-y-6 transition-all duration-500 hover:text-emerald-500 dark:hover:text-emerald-400 no-underline">Projects</a>
+    <a href="mailto:joainsantos@gmail.com" class="mobile-nav-link text-5xl font-serif italic text-gray-900 dark:text-white opacity-0 translate-y-6 transition-all duration-500 hover:text-emerald-500 dark:hover:text-emerald-400 no-underline">Contact</a>
+</div>
+
+<script>
+    function initThemeAndNavigation() {
+        // --- 1. TEMA CLARO/OSCURO ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
+        
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+        const darkIconMobile = document.getElementById('theme-toggle-dark-icon-mobile');
+        const lightIconMobile = document.getElementById('theme-toggle-light-icon-mobile');
+
+        // Función para actualizar iconos
+        const updateThemeIcons = (isDark: boolean) => {
+            if (isDark) {
+                lightIcon?.classList.remove('hidden');
+                darkIcon?.classList.add('hidden');
+                lightIconMobile?.classList.remove('hidden');
+                darkIconMobile?.classList.add('hidden');
+            } else {
+                darkIcon?.classList.remove('hidden');
+                lightIcon?.classList.add('hidden');
+                darkIconMobile?.classList.remove('hidden');
+                lightIconMobile?.classList.add('hidden');
+            }
+        };
+
+        // Estado inicial de los iconos
+        const isCurrentlyDark = document.documentElement.classList.contains('dark');
+        updateThemeIcons(isCurrentlyDark);
+
+        const handleThemeToggle = () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            const toggleTheme = () => {
+                if (isDark) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                    updateThemeIcons(false);
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                    updateThemeIcons(true);
+                }
+            };
+
+            // @ts-ignore
+            if (!document.startViewTransition || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                toggleTheme();
+                return;
+            }
+
+            const activeBtn = window.innerWidth >= 768 ? themeToggleBtn : themeToggleMobileBtn;
+            if (!activeBtn) {
+                toggleTheme();
+                return;
+            }
+
+            const rect = activeBtn.getBoundingClientRect();
+            const x = rect.left + rect.width / 2;
+            const y = rect.top + rect.height / 2;
+            const endRadius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+
+            // @ts-ignore
+            const transition = document.startViewTransition(() => {
+                toggleTheme();
+            });
+
+            transition.ready.then(() => {
+                const clipPath = [
+                    `circle(0px at ${x}px ${y}px)`,
+                    `circle(${endRadius}px at ${x}px ${y}px)`
+                ];
+                
+                const nowDark = document.documentElement.classList.contains('dark');
+                
+                document.documentElement.animate(
+                    {
+                        clipPath: nowDark ? [...clipPath].reverse() : clipPath
+                    },
+                    {
+                        duration: 450,
+                        easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+                        pseudoElement: nowDark
+                            ? '::view-transition-old(root)'
+                            : '::view-transition-new(root)'
+                    }
+                );
+            });
+        };
+
+        themeToggleBtn?.replaceWith(themeToggleBtn.cloneNode(true));
+        themeToggleMobileBtn?.replaceWith(themeToggleMobileBtn.cloneNode(true));
+
+        document.getElementById('theme-toggle')?.addEventListener('click', handleThemeToggle);
+        document.getElementById('theme-toggle-mobile')?.addEventListener('click', handleThemeToggle);
+
+
+        // --- 2. MENÚ RESPONSIVO MÓVIL ---
+        const menuToggle = document.getElementById('mobile-menu-toggle');
+        const menuOverlay = document.getElementById('mobile-menu-overlay');
+        const navLinks = document.querySelectorAll('.mobile-nav-link');
+        
+        const topBar = document.getElementById('hamburger-top');
+        const midBar = document.getElementById('hamburger-mid');
+        const bottomBar = document.getElementById('hamburger-bottom');
+
+        if (!menuToggle || !menuOverlay) return;
+
+        let isMenuOpen = false;
+
+        const toggleMobileMenu = () => {
+            isMenuOpen = !isMenuOpen;
+            
+            if (isMenuOpen) {
+                // Abrir menú
+                menuOverlay.classList.remove('opacity-0', 'pointer-events-none');
+                menuOverlay.classList.add('opacity-100');
+                
+                // Animar hamburguesa a "X"
+                topBar?.classList.add('rotate-[-45deg]', 'translate-y-[7px]', 'w-6');
+                midBar?.classList.add('opacity-0', 'translate-x-4');
+                bottomBar?.classList.add('rotate-[45deg]', 'translate-y-[-7px]', 'w-6');
+                bottomBar?.classList.remove('w-4');
+
+                // Animar links (Stagger fade in)
+                navLinks.forEach((link, index) => {
+                    setTimeout(() => {
+                        link.classList.remove('opacity-0', 'translate-y-6');
+                        link.classList.add('opacity-100', 'translate-y-0');
+                    }, 100 + index * 70);
+                });
+            } else {
+                // Cerrar menú
+                menuOverlay.classList.remove('opacity-100');
+                menuOverlay.classList.add('opacity-0', 'pointer-events-none');
+
+                // Animar hamburguesa a estado inicial
+                topBar?.classList.remove('rotate-[-45deg]', 'translate-y-[7px]');
+                midBar?.classList.remove('opacity-0', 'translate-x-4');
+                bottomBar?.classList.remove('rotate-[45deg]', 'translate-y-[-7px]', 'w-6');
+                bottomBar?.classList.add('w-4');
+
+                // Ocultar links inmediatamente
+                navLinks.forEach(link => {
+                    link.classList.remove('opacity-100', 'translate-y-0');
+                    link.classList.add('opacity-0', 'translate-y-6');
+                });
+            }
+        };
+
+        menuToggle.replaceWith(menuToggle.cloneNode(true));
+        const newMenuToggle = document.getElementById('mobile-menu-toggle');
+        newMenuToggle?.addEventListener('click', toggleMobileMenu);
+
+        // Cerrar menú al hacer click en cualquier link
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (isMenuOpen) toggleMobileMenu();
+            });
+        });
+    }
+
+    // Ejecutar en cada carga de página
+    document.addEventListener('astro:page-load', () => {
+        initThemeAndNavigation();
+    });
+</script>
+
+<style is:global>
+    /* Desactivar animaciones por defecto de View Transition de la raíz */
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation: none !important;
+        mix-blend-mode: normal !important;
+    }
+
+    /* Asegurar que las capas estén apiladas correctamente durante la transición */
+    ::view-transition-old(root) {
+        z-index: 1;
+    }
+    ::view-transition-new(root) {
+        z-index: 99999;
+    }
+    .dark::view-transition-old(root) {
+        z-index: 99999;
+    }
+    .dark::view-transition-new(root) {
+        z-index: 1;
+    }
+</style>
