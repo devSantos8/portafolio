@@ -3,100 +3,268 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="Contacto - Joain Monroy">
-	<main class="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-500">
-		<!-- Hero -->
-		<section class="js-contact-hero relative min-h-screen flex items-center justify-center px-4 md:px-8">
-			<div class="max-w-4xl mx-auto w-full text-center">
-				<p class="js-contact-intro text-sm uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-4">Contáctame</p>
-				<h1 class="js-contact-intro text-6xl md:text-7xl font-bold tracking-tight mb-6">
-					Hablemos
+	<main class="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-500 py-24 px-4 md:px-8">
+		<div class="max-w-6xl mx-auto">
+			
+			<!-- Header -->
+			<div class="text-center max-w-3xl mx-auto mb-16">
+				<p class="text-sm uppercase tracking-widest text-emerald-600 dark:text-emerald-400 font-semibold mb-3">Contacto</p>
+				<h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6">
+					¿Tienes una idea en mente?
 				</h1>
-				<p class="js-contact-intro text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-12">
-					Estoy disponible para proyectos, colaboraciones o simplemente para charlar sobre desarrollo y diseño digital.
+				<p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 font-light">
+					Envíame un mensaje a través del formulario o por mis redes sociales. Estoy disponible para proyectos, colaboraciones o consultas.
 				</p>
-
-				<!-- Contact Links -->
-				<div class="flex flex-col md:flex-row gap-8 justify-center items-center mb-16">
-					<a
-						href="mailto:joainsantos.m@gmail.com"
-						class="js-contact-link js-depth-hover flex items-center gap-3 px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-black rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300"
-					>
-						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-						</svg>
-						Email
-					</a>
-
-					<a
-						href="https://linkedin.com/in/jmonroys17"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="js-contact-link js-depth-hover flex items-center gap-3 px-8 py-4 bg-gray-200 dark:bg-gray-900 text-gray-900 dark:text-white rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300"
-					>
-						<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-							<path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
-						</svg>
-						LinkedIn
-					</a>
-
-					<a
-						href="https://github.com/17santo"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="js-contact-link js-depth-hover flex items-center gap-3 px-8 py-4 bg-gray-200 dark:bg-gray-900 text-gray-900 dark:text-white rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300"
-					>
-						<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-							<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v 3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
-						</svg>
-						GitHub
-					</a>
-				</div>
-
-				<!-- Email -->
-				<div class="js-contact-intro p-8 bg-gray-50 dark:bg-gray-950 rounded-2xl border border-gray-200 dark:border-gray-800 inline-block">
-					<p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Email</p>
-					<a href="mailto:joainsantos.m@gmail.com" class="js-depth-hover text-2xl font-semibold hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
-						joainsantos.m@gmail.com
-					</a>
-				</div>
 			</div>
-		</section>
 
-		<!-- Info Section -->
-		<section class="relative py-32 px-4 md:px-8 bg-gray-50 dark:bg-gray-950">
-			<div class="max-w-4xl mx-auto">
-				<h2 class="text-4xl font-bold mb-12">Disponibilidad</h2>
+			<!-- Grid de Contacto y Formulario -->
+			<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+				
+				<!-- Columna Izquierda: Información de contacto y Redes -->
+				<div class="lg:col-span-5 flex flex-col gap-8">
+					
+					<div class="p-8 bg-gray-50 dark:bg-gray-950 rounded-3xl border border-gray-200 dark:border-gray-800 shadow-sm">
+						<h2 class="text-2xl font-bold mb-6">Información directa</h2>
+						
+						<!-- Email -->
+						<div class="flex items-start gap-4 mb-6">
+							<div class="p-3 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-2xl">
+								<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+								</svg>
+							</div>
+							<div>
+								<span class="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 font-medium">Correo Electrónico</span>
+								<a href="mailto:joainsantos.m@gmail.com" class="block text-lg font-semibold hover:text-emerald-500 transition-colors mt-0.5">
+									joainsantos.m@gmail.com
+								</a>
+							</div>
+						</div>
 
-				<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-					<div class="js-contact-card js-depth-hover p-8 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800">
-						<h3 class="text-xl font-semibold mb-4">Proyectos</h3>
-						<p class="text-gray-600 dark:text-gray-400">
-							Disponible para proyectos de desarrollo full-stack, desde MVPs hasta aplicaciones complejas.
+						<!-- Redes -->
+						<div class="pt-6 border-t border-gray-200 dark:border-gray-800">
+							<span class="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 font-medium block mb-4">Redes sociales</span>
+							<div class="flex flex-wrap gap-3">
+								<a
+									href="https://linkedin.com/in/jmonroys17"
+									target="_blank"
+									rel="noopener noreferrer"
+									class="flex items-center gap-2 px-5 py-2.5 bg-gray-200/70 dark:bg-gray-900 hover:bg-gray-300 dark:hover:bg-gray-800 text-gray-900 dark:text-white rounded-full font-medium text-sm transition-all duration-300 hover:scale-105"
+								>
+									<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+										<path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
+									</svg>
+									LinkedIn
+								</a>
+
+								<a
+									href="https://github.com/17santo"
+									target="_blank"
+									rel="noopener noreferrer"
+									class="flex items-center gap-2 px-5 py-2.5 bg-gray-200/70 dark:bg-gray-900 hover:bg-gray-300 dark:hover:bg-gray-800 text-gray-900 dark:text-white rounded-full font-medium text-sm transition-all duration-300 hover:scale-105"
+								>
+									<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+										<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v 3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+									</svg>
+									GitHub
+								</a>
+							</div>
+						</div>
+					</div>
+
+					<!-- Card Disponibilidad -->
+					<div class="p-8 bg-gradient-to-br from-emerald-500/10 via-teal-500/5 to-transparent rounded-3xl border border-emerald-500/20">
+						<div class="flex items-center gap-3 mb-3">
+							<span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+							<span class="text-sm font-semibold text-emerald-600 dark:text-emerald-400">Disponible ahora</span>
+						</div>
+						<p class="text-sm text-gray-600 dark:text-gray-300">
+							Abierto a propuestas freelance, proyectos full-stack y posiciones a tiempo completo.
 						</p>
 					</div>
 
-					<div class="js-contact-card js-depth-hover p-8 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800">
-						<h3 class="text-xl font-semibold mb-4">Consultoría</h3>
-						<p class="text-gray-600 dark:text-gray-400">
-							Asesoría en arquitectura de sistemas, mejora de rendimiento y buenas prácticas de desarrollo.
-						</p>
-					</div>
-
-					<div class="js-contact-card js-depth-hover p-8 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800">
-						<h3 class="text-xl font-semibold mb-4">Colaboración</h3>
-						<p class="text-gray-600 dark:text-gray-400">
-							Interesado en colaboraciones, freelance o posiciones a tiempo completo en equipos innovadores.
-						</p>
-					</div>
-
-					<div class="js-contact-card js-depth-hover p-8 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800">
-						<h3 class="text-xl font-semibold mb-4">Mentoría</h3>
-						<p class="text-gray-600 dark:text-gray-400">
-							Disposición para compartir conocimiento y mentorizar desarrolladores en crecimiento.
-						</p>
-					</div>
 				</div>
+
+				<!-- Columna Derecha: Formulario de Contacto Interactivo -->
+				<div class="lg:col-span-7 p-8 md:p-10 bg-gray-50 dark:bg-gray-950 rounded-3xl border border-gray-200 dark:border-gray-800 shadow-xl relative overflow-hidden">
+					
+					<!-- Formulario -->
+					<form id="contact-form" class="space-y-6">
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+							<!-- Nombre -->
+							<div>
+								<label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+									Tu nombre <span class="text-emerald-500">*</span>
+								</label>
+								<input
+									type="text"
+									id="name"
+									name="name"
+									required
+									placeholder="Ej. Carlos Pérez"
+									class="w-full px-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+								/>
+							</div>
+
+							<!-- Email -->
+							<div>
+								<label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+									Tu correo electrónico <span class="text-emerald-500">*</span>
+								</label>
+								<input
+									type="email"
+									id="email"
+									name="email"
+									required
+									placeholder="tuemail@ejemplo.com"
+									class="w-full px-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+								/>
+							</div>
+						</div>
+
+						<!-- Asunto -->
+						<div>
+							<label for="subject" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+								Asunto
+							</label>
+							<input
+								type="text"
+								id="subject"
+								name="subject"
+								placeholder="Consulta sobre un proyecto web..."
+								class="w-full px-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+							/>
+						</div>
+
+						<!-- Mensaje -->
+						<div>
+							<label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+								Mensaje <span class="text-emerald-500">*</span>
+							</label>
+							<textarea
+								id="message"
+								name="message"
+								rows="5"
+								required
+								placeholder="Cuéntame sobre tu proyecto o duda..."
+								class="w-full px-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all resize-none"
+							></textarea>
+						</div>
+
+						<!-- Botón de Envío -->
+						<button
+							type="submit"
+							id="submit-btn"
+							class="w-full py-4 px-8 bg-gray-900 text-white dark:bg-white dark:text-black font-semibold rounded-2xl hover:bg-emerald-600 dark:hover:bg-emerald-400 dark:hover:text-black hover:shadow-xl active:scale-[0.99] transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer"
+						>
+							<span id="btn-text">Enviar mensaje</span>
+							<svg id="btn-spinner" class="hidden animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+								<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+								<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+							</svg>
+							<svg id="btn-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+							</svg>
+						</button>
+					</form>
+
+					<!-- Mensaje de Éxito -->
+					<div id="success-message" class="hidden flex-col items-center justify-center text-center py-12 space-y-4">
+						<div class="w-16 h-16 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center mb-2">
+							<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+							</svg>
+						</div>
+						<h3 class="text-2xl font-bold">¡Mensaje enviado con éxito!</h3>
+						<p class="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+							Gracias por escribir. He recibido tu mensaje en mi correo y te responderé lo antes posible.
+						</p>
+						<button
+							id="reset-btn"
+							class="mt-4 px-6 py-2.5 bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-sm font-medium rounded-full transition-colors"
+						>
+							Enviar otro mensaje
+						</button>
+					</div>
+
+					<!-- Mensaje de Error -->
+					<div id="error-message" class="hidden mt-4 p-4 bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 rounded-xl text-sm text-center">
+						Ocurrió un error al enviar el mensaje. Por favor inténtalo de nuevo o escríbeme directamente a <a href="mailto:joainsantos.m@gmail.com" class="underline font-semibold">joainsantos.m@gmail.com</a>.
+					</div>
+
+				</div>
+
 			</div>
-		</section>
+		</div>
 	</main>
 </Layout>
+
+<script>
+	const form = document.getElementById("contact-form") as HTMLFormElement;
+	const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement;
+	const btnText = document.getElementById("btn-text");
+	const btnSpinner = document.getElementById("btn-spinner");
+	const btnIcon = document.getElementById("btn-icon");
+	const successMsg = document.getElementById("success-message");
+	const errorMsg = document.getElementById("error-message");
+	const resetBtn = document.getElementById("reset-btn");
+
+	if (form) {
+		form.addEventListener("submit", async (e) => {
+			e.preventDefault();
+
+			// Estado de cargando
+			submitBtn.disabled = true;
+			btnText?.classList.add("opacity-70");
+			btnText!.textContent = "Enviando...";
+			btnSpinner?.classList.remove("hidden");
+			btnIcon?.classList.add("hidden");
+			errorMsg?.classList.add("hidden");
+
+			const formData = new FormData(form);
+
+			try {
+				const response = await fetch("https://formsubmit.co/ajax/joainsantos.m@gmail.com", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						"Accept": "application/json"
+					},
+					body: JSON.stringify({
+						name: formData.get("name"),
+						email: formData.get("email"),
+						subject: formData.get("subject") || "Nuevo mensaje desde el portafolio",
+						message: formData.get("message"),
+						_subject: `[Portafolio] ${formData.get("subject") || "Nuevo mensaje de contacto"}`
+					})
+				});
+
+				if (response.ok) {
+					form.reset();
+					form.classList.add("hidden");
+					successMsg?.classList.remove("hidden");
+					successMsg?.classList.add("flex");
+				} else {
+					throw new Error("Form submission failed");
+				}
+			} catch (err) {
+				console.error("Error al enviar mensaje:", err);
+				errorMsg?.classList.remove("hidden");
+			} finally {
+				submitBtn.disabled = false;
+				btnText?.classList.remove("opacity-70");
+				btnText!.textContent = "Enviar mensaje";
+				btnSpinner?.classList.add("hidden");
+				btnIcon?.classList.remove("hidden");
+			}
+		});
+	}
+
+	if (resetBtn) {
+		resetBtn.addEventListener("click", () => {
+			successMsg?.classList.add("hidden");
+			successMsg?.classList.remove("flex");
+			form?.classList.remove("hidden");
+		});
+	}
+</script>
