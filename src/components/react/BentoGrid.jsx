@@ -217,7 +217,7 @@ export default function BentoGrid() {
 
                     <div className="z-10 w-full">
                         <a 
-                            href="mailto:joainmonroy12@gmail.com" 
+                            href="mailto:joainsantos.m@gmail.com" 
                             className="w-full py-4 px-6 rounded-2xl bg-gray-900 text-white dark:bg-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors font-semibold tracking-tight text-center block text-sm shadow-xl active:scale-[0.98] transition-transform duration-100 cursor-none"
                         >
                             Hablemos hoy ➔
